@@ -1,0 +1,116 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getObject (java.lang.String, java.util.Map)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getObject (java.lang.String, java.util.Map)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Recupera el valor del parámetro designado como un objeto en el lenguaje de programación Java según el nombre de parámetro y mediante el uso del objeto <b>Map</b> determinado.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      El controlador JDBC de Microsoft SQL Server no admite este método en estos momentos. Al utilizar este método, siempre se devolverá la asignación predeterminada.<p />
+    </div>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public java.lang.Object <b>getObject</b>(java.lang.String <i>sCol</i>,
+                                  java.util.Map <i>m</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>sCol</i>
+      </p>
+      <p xmlns="">Un separador<b> String </b>que contiene el nombre del parámetro.</p>
+      <p xmlns="">
+        <i>m</i>
+      </p>
+      <p xmlns="">Un objeto <b>Map</b>.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un valor<b> Object </b>.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getObject</b> especifica este método <b>getObject</b> en la interfaz java.sql.CallableStatement.</p>
+      <p xmlns="">Este método devolverá el valor de la columna determinada como un objeto de Java. El tipo del objeto de Java será el tipo de objeto de Java predeterminado que corresponde al tipo SQL de la columna, tras la asignación para los tipos integrados que se indica en las especificaciones de JDBC. Si el valor es NULL de SQL, el controlador devuelve un NULL de Java. </p>
+      <p xmlns="">Este método también se puede utilizar para leer los tipos de datos abstractos específicos de la base de datos. En la API de JDBC 2.0, el comportamiento del método <b>getObject</b> se extiende para materializar datos de tipos de SQL definidos por el usuario. Cuando una columna contiene un valor estructurado o distinto, el comportamiento de este método es como si se llamara a <code>getObject(columnIndex, this.getStatement().getConnection().getTypeMap())</code>.</p>
+      <p xmlns="">Desde el controlador JDBC 3.0 de SQL Server:</p>
+      <ul xmlns=""><li>
+          Un valor de tipo <b>date</b> se devolverá como un objeto java.sql.Date.<br />
+        </li><li>
+          Un valor de tipo <b>time</b> se devolverá como un objeto java.sql.Time.<br />
+        </li><li>
+          Un valor de tipo <b>datetime2</b> se devolverá como un objeto java.sql.Timestamp.<br />
+        </li><li>
+          Un valor de tipo <b>datetimeoffset</b> se devolverá como un objeto microsoft.sql.DateTimeOffset.<br />
+        </li></ul>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">Clase SQLServerCallableStatement</a><br /><a href="c5cc562f-2c5a-4fdb-a552-dfb08c2bf0ad.htm">Método getObject (SQLServerCallableStatement)</a><br /><a href="5ebdc186-e50f-4d14-bbf4-95af5051e4a4.htm">Miembros SQLServerCallableStatement</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

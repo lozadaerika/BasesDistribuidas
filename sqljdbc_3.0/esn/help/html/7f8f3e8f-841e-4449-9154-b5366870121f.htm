@@ -1,0 +1,160 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar instrucciones con el controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar instrucciones con el controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El controlador JDBC de Microsoft SQL Server se puede usar para trabajar con los datos de una base de datos de SQL Server de distintos modos. El controlador JDBC se puede usar para ejecutar instrucciones de SQL contra la base de datos o para llamar a procedimientos almacenados en la base de datos, empleando parámetros de entrada y de salida. El controlador JDBC también admite el uso de secuencias de escape de SQL, claves generadas automáticamente y actualizaciones realizadas dentro de una operación por lotes. </p>
+    <p>El controlador JDBC proporciona tres clases para la recuperación de datos desde una base de datos de SQL Server.</p>
+    <ol><li>
+        
+          <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>, para ejecutar instrucciones de SQL sin parámetros.<br />
+      </li><li>
+        
+          <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> - (heredada de <b>SQLServerStatement</b>), para ejecutar instrucciones de SQL compiladas que pueden contener parámetros de entrada.<br />
+      </li><li>
+        
+          <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, (heredada de <b>SQLServerPreparedStatement</b>), para ejecutar procedimientos almacenados que pueden contener parámetros IN, OUT o de ambos tipos.<br />
+      </li></ol>
+    <p>Los temas de esta sección tratan cómo usar cada una de estas tres clases de instrucciones para trabajar con datos de una base de datos SQL Server.</p>
+  </div><h1 class="heading">En esta sección</h1><div id="inThisSectionSection" class="section">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Tema
+            </th>
+            <th>
+              Descripción
+            </th>
+          </tr><tr>
+          <td>
+            <p>
+              <a href="fe28f48a-e1bc-48ff-a5e7-c24cd6e5ecc7.htm">Usar instrucciones con SQL</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar instrucciones de SQL con el controlador JDBC para trabajar con datos de una base de datos de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="0041f9e1-09b6-4487-b052-afd636c8e89a.htm">Usar instrucciones con procedimientos almacenados</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar procedimientos almacenados con el controlador JDBC para trabajar con datos de una base de datos de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="ab6a3cfa-073b-44e9-afca-a8675cfe5fd1.htm">Usar múltiples conjuntos de resultados</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para recuperar datos de varios conjuntos de resultados.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="00f9e25a-088e-4ac6-aa75-43eacace8f03.htm">Usar secuencias de escape SQL</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar secuencias de escape de SQL, como literales y funciones de fecha y hora.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="55a062c7-45ce-40e3-9a6f-4a0f4da4e2a6.htm">Usar claves generadas automáticamente</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar claves generadas automáticamente.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="1a576d95-7da6-4b7b-8b32-59e5b4d354c4.htm">Realizar operaciones por lotes</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para llevar a cabo operaciones en lote.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="6b807a45-a8b5-4b1c-8b7b-d8175c710ce0.htm">Controlar instrucciones complejas</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar instrucciones complejas que realizan diversas tareas y pueden devolver tipos diferentes de datos.</p>
+          </td>
+        </tr></table>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

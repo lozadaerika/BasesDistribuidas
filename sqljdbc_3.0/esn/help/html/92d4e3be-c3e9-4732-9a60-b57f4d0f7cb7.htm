@@ -1,0 +1,139 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar el almacenamiento en búfer adaptable</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar el almacenamiento en búfer adaptable</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El almacenamiento en búfer adaptable está diseñado para recuperar cualquier tipo de datos de valores grandes sin sufrir la sobrecarga de los cursores de servidor. La aplicaciones pueden usar la característica de almacenamiento en búfer adaptable con todas las versiones de SQL Server que son compatibles con el controlador.</p>
+    <p>Normalmente, cuando el controlador JDBC de Microsoft SQL Server ejecuta una consulta, lleva todos los resultados del servidor a la memoria de la aplicación. Aunque este enfoque reduce el uso de recursos en SQL Server, puede iniciar una <b>OutOfMemoryError</b> en la aplicación JDBC para las consultas que producen resultados muy grandes. </p>
+    <p>Para permitir que las aplicaciones administren los resultados muy grandes, el controlador JDBC de Microsoft SQL Server proporciona el almacenamiento en búfer adaptable. Con el almacenamiento en búfer adaptable, el controlador JDBC recupera los resultados de la ejecución de una instrucción de SQL Server a medida que la aplicación los necesita, en lugar de todos a la vez. El controlador también descarta los resultados en cuanto la aplicación ya no puede tener acceso a ellos. Se incluyen a continuación algunos ejemplos en los que el almacenamiento en búfer adaptable puede ser útil: </p>
+    <ul><li>
+        
+          <b>La consulta genera un conjunto de resultados muy grande:</b> la aplicación puede ejecutar una instrucción SELECT que genera más filas de las que la aplicación puede almacenar en memoria. En las versiones anteriores, la aplicación tenía que utilizar un cursor de servidor para evitar un <b>OutOfMemoryError</b>. El almacenamiento en búfer adaptable permite hacer un paso de solo lectura y solo avance de un conjunto de resultados arbitrariamente grande sin requerir un cursor de servidor. <br />
+      </li><li>
+        
+          <b>La consulta genera columnas de </b>
+          <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet muy grandes</a>
+          <b> o valores de parámetros </b>
+          <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>
+          <b> OUT:</b> la aplicación puede recuperar un valor único (columna o el parámetro OUT) que es demasiado grande como para que quepa completamente en la memoria de la aplicación. El almacenamiento en búfer adaptable permite a la aplicación cliente recuperar este valor como un flujo, utilizando los métodos <b>getAsciiStream</b>, <b>getBinaryStream,</b> o <b>getCharacterStream</b>. La aplicación recupera el valor de SQL Server cuando lee del flujo.<br />
+        
+        <br />
+      </li></ul>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Con el almacenamiento en búfer adaptable, el controlador JDBC solamente almacena en búfer las cantidad de datos que debe almacenar. El controlador no proporciona un método público para controlar o limitar el tamaño del búfer.<p />
+    </div>
+  </div><h1 class="heading">Establecer el almacenamiento en búfer adaptable</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Desde la versión 2.0 del controlador JDBC, el comportamiento predeterminado del controlador es "<b>adaptive</b>". Dicho de otro modo, para obtener el comportamiento de almacenamiento en búfer adaptable, su aplicación no tiene que solicitar explícitamente el comportamiento adaptable. En la versión 1.2, sin embargo, el modo del almacenamiento en búfer era "<b>full</b>" de manera predeterminada y la aplicación tenía que solicitar el modo de almacenamiento en búfer adaptable explícitamente.</p>
+      <p xmlns="">Hay tres formas en las que una aplicación puede solicitar que la ejecución de una instrucción deba usar el almacenamiento en búfer adaptable:</p>
+      <ul xmlns=""><li>
+          La aplicación puede establecer la propiedad de conexión <b>responseBuffering</b> en "adaptative". Para obtener más información acerca de cómo configurar las propiedades de la conexión, vea  <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>. <br />
+        </li><li>
+          La aplicación puede utilizar el método <a href="c9e43ff2-8117-4dca-982d-83c863d0c8e1.htm">setResponseBuffering</a> del objeto <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a> para establecer el modo de almacenamiento en búfer de respuesta para todas las conexiones creadas a través de ese objeto <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>.<br />
+        </li><li>
+          La aplicación puede utilizar el método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a> para establecer el modo de almacenamiento en búfer de respuestas para un objeto de una instrucción determinada. <br />
+        </li></ul>
+      <p xmlns="">Al usar la versión 1.2 del controlador JDBC, la aplicación debe convertir el objeto de la instrucción en una clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a> para utilizar el método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a>. Los ejemplos de código de <a href="6c986144-3854-4352-8331-e79eccbefc28.htm">Leer un ejemplo de datos grandes</a> y de <a href="58c76635-a117-4661-8781-d6cb231c5809.htm">Leer datos grandes con un ejemplo de procedimientos almacenados</a> muestran el uso antiguo. </p>
+      <p xmlns="">Sin embargo, con la versión 2.0 del controlador JDBC, las aplicaciones pueden usar el método <a href="53f3291f-d43a-476b-a656-d86168dacf6c.htm">isWrapperFor</a> y el método <a href="ce680176-ef04-4e44-bb6c-ec50bd06e7e6.htm">unwrap</a> para obtener acceso a la funcionalidad específica del proveedor sin ninguna suposición sobre la jerarquía de clases de la implementación. Como código muestra, vea el tema <a href="76ecc05f-a77d-40a2-bab9-91a7fcf17347.htm">Actualizar un ejemplo de datos grandes</a>.</p>
+    </content></div><h1 class="heading">Recuperar datos grandes con el almacenamiento en búfer adaptable</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Cuando se leen valores grandes una vez con los métodos get&lt;Type&gt;Stream y se tiene acceso a las columnas ResultSet y a los parámetros OUT CallableStatement en el orden que devuelve SQL Server, el almacenamiento en búfer adaptable reduce la utilización de memoria de la aplicación al procesar los resultados. Al utilizar el almacenamiento en búfer adaptable:</p>
+      <ul xmlns=""><li>
+          Los métodos <b>get&lt;Type&gt;Stream</b> definidos en las clases <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> devuelven secuencias de una sola lectura de forma predeterminada, aunque se pueden restablecer las secuencias si lo determina la aplicación. Si la aplicación desea <code>reset</code> el flujo, tiene que llamar primero al método <code>mark</code> en ese flujo. <br />
+        </li><li>
+          Los métodos <b>get&lt;Type&gt;Stream</b> definidos en las clases <a href="24170524-e1ab-4e80-8fd1-6688efacfbde.htm">SQLServerClob</a> y <a href="88bd8623-889d-4b5d-99ff-c85b32f3ff5c.htm">SQLServerBlob</a> devuelven secuencias cuya posición siempre se puede cambiar a la inicial del flujo sin llamar al método <code>mark</code>. <br />
+        </li></ul>
+      <p xmlns="">Cuando la aplicación utiliza el almacenamiento en búfer adaptable, los valores recuperados por los métodos <b>get&lt;Type&gt;Stream</b> solo se pueden recuperar una vez.  Si intenta llamar a cualquier método <b>get&lt;Type&gt;</b> en la misma columna o parámetro después de llamar al método <b>get&lt;Type&gt;Stream</b> del mismo objeto, se produce una excepción con un mensaje similar a "Se obtuvo acceso a los datos y estos no están disponibles para esta columna o parámetro".</p>
+    </content></div><h1 class="heading">Directrices para el uso del almacenamiento en búfer adaptable</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los desarrolladores de software deberían seguir estas importantes directrices para disminuir la utilización de memoria por parte de la aplicación:</p>
+      <ul xmlns=""><li>
+          Evite utilizar la propiedad de cadena de conexión <b>selectMethod=cursor</b> para permitir a la aplicación procesar un conjunto de resultados muy grande. La característica de almacenamiento en búfer adaptable permite a las aplicaciones procesar los conjuntos de resultados de solo avance y solo lectura muy grandes sin utilizar un cursor de servidor. Tenga en cuenta que cuando configura <b>selectMethod=cursor</b>, se ven impactados todos los conjuntos de resultados de solo avance y solo lectura producidos por esa conexión. Dicho de otro modo, si su aplicación procesa rutinariamente conjuntos de resultados cortos con pocas filas, crear, leer y cerrar un cursor de servidor por cada conjunto de resultados usará más recursos del lado cliente y en el lado servidor de lo que sucede cuando <b>selectMethod</b> no está configurado en <b>cursor</b>.<br />
+        </li><li>
+          Lea los valores grandes de texto o binarios como flujos mediante los métodos <b>getAsciiStream</b>, <b>getBinaryStream,</b> o <b>getCharacterStream</b> en lugar de los métodos <b>getBlob</b> o <b>getClob</b>. Desde la versión 1.2, la clase <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> proporciona métodos nuevos <b>get&lt;Type&gt;Stream</b> para este propósito.<br />
+        </li><li>
+          Asegúrese de que las columnas con valores potencialmente grandes se colocan en último lugar en la lista de columnas en una instrucción SELECT y de que se usan los métodos <b>get&lt;Type&gt;Stream</b> de <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> para tener acceso a las columnas en el orden en que se seleccionan.<br />
+        </li><li>
+          Asegúrese de que los parámetros OUT con valores potencialmente grandes se declaran en último lugar en la lista de parámetros del código SQL que se usa para crea la <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>. Además, compruebe que se usan los métodos <b>get&lt;Type&gt;Stream</b> de <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> para tener acceso a los parámetros OUT en el orden en que se declaran.<br />
+        </li><li>
+          Evite ejecutar simultáneamente más de una instrucción en la misma conexión. Ejecutar otra instrucción antes de procesar los resultados de la anterior puede provocar que los resultados sin procesar se almacenen en el búfer en la memoria de la aplicación.<br />
+        </li><li>
+          Hay algunos casos en los que usar <b>selectMethod=cursor</b> en lugar de <b>responseBuffering=adaptive</b> sería más beneficioso, como por ejemplo:<br />
+          <ul><li>
+              Si su aplicación procesa lentamente un conjunto de resultados de solo avance y solo lectura, como la lectura de cada fila después de alguna entrada del usuario, utilizar <b>selectMethod=cursor</b> en lugar de<b>responseBuffering=adaptive</b> puede ayudar a reducir el uso de recursos por SQL Server. <br />
+            </li><li>
+              Si su aplicación procesa dos o más conjuntos de resultados de solo avance y solo lectura al mismo tiempo en la misma conexión, utilizar <b>selectMethod=cursor</b> en lugar de <b>responseBuffering=adaptive</b> podría ayudar a reducir la memoria necesaria para el controlador mientras procesa estos conjuntos de resultados.<br />
+            </li></ul>
+          En ambos casos, necesita considerar la sobrecarga de crear, leer y cerrar los cursores de servidor.<br />
+        </li></ul>
+      <p xmlns="">Además, la siguiente lista proporciona algunas recomendaciones para los conjuntos de resultados desplazables y actualizables de solo avance:</p>
+      <ul xmlns=""><li>
+          Para los conjuntos de resultados desplazables, cuando recupera un conjunto de filas el controlador siempre lee en la memoria el número de filas indicado por el método <a href="7bc96930-b0c9-42f6-8df9-1d8d824408b3.htm">getFetchSize</a> del objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>, incluso aunque esté habilitado el almacenamiento en búfer adaptable. Si el desplazamiento produce un <b>OutOfMemoryError</b>, puede reducir el número de filas recuperadas llamando al método <a href="233bf4f8-4758-42d0-a80b-33e34fa78027.htm">setFetchSize</a> del objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> para configurar el tamaño de captura en un número de filas más pequeño, incluso una sola fila si es necesario. Si esto no impide un <b>OutOfMemoryError, </b>, evite incluir columnas muy grandes en los conjuntos de resultados desplazables.<br />
+        </li><li>
+          Para los conjuntos de resultados de solo avance, cuando recupera un conjunto de filas el controlador normalmente lee en la memoria el número de filas indicado por el método <a href="7bc96930-b0c9-42f6-8df9-1d8d824408b3.htm">getFetchSize</a> del objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>, incluso aunque el almacenamiento en búfer adaptable esté habilitado en la conexión. Si la llamada al método <a href="60248447-6908-4036-a779-a501453cd553.htm">next</a> del objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> produce un <b>OutOfMemoryError</b>, puede reducir el número de filas recuperadas llamando al método <a href="233bf4f8-4758-42d0-a80b-33e34fa78027.htm">setFetchSize</a> del objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> para configurar el tamaño de captura en un número de filas más pequeño, incluso una sola fila si es necesario. También puede forzar el controlador para que no almacene filas en el almacenamiento den búfer llamando al método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a> del objeto <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a> con el parámetro "<b>adaptive</b>" antes de ejecutar la instrucción. Como el conjunto de resultados no es desplazable, si la aplicación obtiene acceso a un número de columna grande utilizando uno de los métodos <b>get&lt;Type&gt;Stream</b>, el controlador rechaza el valor en cuanto la aplicación lo lee, lo mismo que hace con los conjuntos de resultados de solo avance y solo lectura.<br />
+        </li></ul>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="e1592499-b87b-45ee-bab8-beaba8fde841.htm">Mejorar el rendimiento y la confiabilidad con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Configurar el modo en que los valores java.sql.Time se envían al servidor</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Configurar el modo en que los valores java.sql.Time se envían al servidor</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Si utiliza un objeto java.sql.Time o el tipo de JDBC java.sql.Types.TIME para establecer un parámetro, podrá configurar la forma en que el valor java.sql.Time se envía al servidor; es decir, como un tipo <b>time</b> o un tipo <b>datetime</b> de SQL Server.</p>
+    <p>Este escenario se aplica al utilizar uno de los siguientes métodos:</p>
+    <ul><li>
+        
+          <a href="169229c7-b75d-498b-a5ac-df300424c909.htm">SQLServerCallableStatement.registerOutParameter(int, int)</a>
+        <br />
+      </li><li>
+        
+          <a href="d902d4e0-881f-4182-814c-0ede9a8da7fd.htm">SQLServerCallableStatement.registerOutParameter(int, int, int)</a>
+        <br />
+      </li><li>
+        
+          <a href="04ea83b2-db5e-4b46-b016-9e496363827e.htm">SQLServerCallableStatement.setTime</a>
+        <br />
+      </li><li>
+        
+          <a href="b3a83ea3-6636-4096-842b-71b37340fa07.htm">SQLServerPreparedStatement.setTime</a>
+        <br />
+      </li><li>
+        
+          <a href="7110f6c5-4af3-4b50-a4d4-1bae1876c70d.htm">SQLServerCallableStatement.setObject</a>
+        <br />
+      </li><li>
+        
+          <a href="93a2b22c-82b4-48c7-a428-369ebe98a372.htm">SQLServerPreparedStatement.setObject</a>
+        <br />
+      </li></ul>
+    <p>Puede configurar la forma de enviar el valor java.sql.Time mediante el uso de la propiedad de conexión <b>sendTimeAsDatetime</b>. Para obtener más información, vea <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>.</p>
+    <p>Puede modificar mediante programación el valor de la propiedad de conexión <b>sendTimeAsDatetime</b> con <a href="705a0494-b5e2-43db-940a-1b8cec550cdb.htm">SQLServerDataSource.setSendTimeAsDatetime</a>.</p>
+    <p>Las versiones de SQL Server anteriores a SQL Server 2008 no admiten el tipo de datos <b>time</b>, por ello, las aplicaciones que utilicen java.sql.Time por lo general almacenan valores de java.sql.Time como tipos de datos <b>datetime</b> o <b>smalldatetime</b> de SQL Server.</p>
+    <p>Si desea utilizar los tipos de datos <b>datetime</b> y <b>smalldatetime</b> de SQL Server cuando trabaje con valores java.sql.Time, debería establecer la propiedad de conexión <b>sendTimeAsDatetime</b> en <b>true</b>. Si desea utilizar el tipo de datos de SQL Server <b>time</b> cuando trabaje con valores java.sql.Time, debería establecer la propiedad de conexión <b>sendTimeAsDatetime</b> en <b>false</b>.</p>
+    <p>Tenga en cuenta que al enviar valores java.sql.Time a un parámetro cuyo tipo de datos también pueda almacenar fechas, esos valores predeterminados de fecha serán distintos en función de si el valor java.sql.Time se envía como un valor <b>datetime</b> (1/1/1970) o un valor <b>time</b> (1/1/1900). Para obtener más información sobre las conversiones de datos al enviar datos a SQL Server, vea <a href="http://go.microsoft.com/fwlink/?LinkID=145211" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">Usar datos de fecha y hora</linkText></a>.</p>
+    <p>En el controlador JDBC 3.0 de SQL Server, <b>sendTimeAsDatetime</b> de forma predeterminada tiene el valor TRUE. En versiones futuras, la propiedad de conexión <b>sendTimeAsDatetime</b> puede establecerse de forma predeterminada en FALSE.</p>
+    <p>Para asegurarse de que su aplicación sigue funcionando como se había previsto independientemente del valor predeterminado de la propiedad de conexión <b>sendTimeAsDatetime</b> puede:</p>
+    <ul><li>
+        Utilizar java.sql.Time al trabajar con el tipo de datos <b>time</b>SQL Server.<br />
+      </li><li>
+        Utilizar java.sql.Timestamp al trabajar con los tipos de datos <b>datetime</b>, <b> smalldatetime</b> y <b>datetime2</b> de SQL Server.<br />
+      </li></ul>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7802328d-4d23-4775-9573-4169b127d258.htm">Describir los tipos de datos del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Descripción de la compatibilidad con Java EE</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Descripción de la compatibilidad con Java EE</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>En las secciones siguientes se documenta el modo en que el controlador JDBC de Microsoft SQL Server proporciona compatibilidad con las características de las API opcionales de Java Platform, Enterprise Edition (Java EE) y JDBC 3.0. Los ejemplos del código fuente que se proporcionan en este sistema de Ayuda proporcionan una referencia adecuada para comenzar a usar estas características. </p>
+    <p>Primero, asegúrese de que el entorno de Java (JDK, JRE) incluye el paquete javax.sql. Es un paquete necesario para cualquier aplicación JDBC que utilice la API opcional. JDK 1.5 y las versiones posteriores ya contienen este paquete, por lo que no tiene que instalarlo por separado. </p>
+  </div><h1 class="heading">Nombre del controlador</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El nombre de clase del controlador es <b>com.microsoft.sqlserver.jdbc.SQLServerDriver</b>. El controlador está contenido en el archivo sqljdbc.jar o sqljdb4.jar.</p>
+      <p xmlns="">El nombre de clase se utiliza cada vez que se carga el controlador con la clase <b>DriverManager</b> de JDBC. Se utiliza también cada vez que deba especificar el nombre de clase del controlador en la configuración de cualquier controlador. Por ejemplo, configurar un origen de datos dentro de un servidor de aplicaciones de Java EE podría requerir que se escribiera el nombre de clase del controlador.</p>
+    </content></div><h1 class="heading">Orígenes de datos</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC proporciona compatibilidad con los orígenes de datos de Java EE / JDBC 3.0. La clase <a href="95fc7b07-2498-4a7e-8f7f-ee0d86b598b4.htm">SQLServerXADataSource</a> del controlador JDBC se implementa mediante <b>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</b>. </p>
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Nombre de los orígenes de datos</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Puede realizar conexiones a bases de datos mediante orígenes de datos. Los orígenes de datos disponibles con el controlador JDBC se describen en la tabla siguiente:</p>
+          <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+                <th>
+                  Tipo de origen de datos
+                </th>
+                <th>
+                  Nombre de clase
+                </th>
+                <th>
+                  Descripción
+                </th>
+              </tr><tr>
+              <td>
+                <p>DataSource</p>
+              </td>
+              <td>
+                <p>com.microsoft.sqlserver.jdbc.SQLServerDataSource</p>
+              </td>
+              <td>
+                <p>Origen de datos que no es un grupo.</p>
+              </td>
+            </tr><tr>
+              <td>
+                <p>ConnectionPoolDataSource</p>
+              </td>
+              <td>
+                <p>com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource</p>
+              </td>
+              <td>
+                <p>Origen de datos para configurar los grupos de conexiones de servidor de aplicaciones de JAVA EE. Normalmente se usa cuando la aplicación se ejecuta dentro de un servidor de aplicaciones de JAVA EE.</p>
+              </td>
+            </tr><tr>
+              <td>
+                <p>XADataSource</p>
+              </td>
+              <td>
+                <p>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</p>
+              </td>
+              <td>
+                <p>Origen de datos para configurar orígenes de datos de JAVA EE XA. Normalmente se usa cuando la aplicación se ejecuta dentro de un servidor de aplicaciones de JAVA EE y un administrador de transacciones de XA.</p>
+              </td>
+            </tr></table>
+        </content></div>
+      <h1 class="heading" xmlns="">Propiedades del origen de datos</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Todos los orígenes de datos permiten establecer y obtener cualquier propiedad que esté asociada al conjunto de propiedades del controlador subyacente. </p>
+          <p xmlns="">Ejemplos:</p>
+          <p xmlns="">
+            <code>setServerName("localhost");</code>
+          </p>
+          <p xmlns="">
+            <code>setDatabaseName("AdventureWorks"); </code>
+          </p>
+          <p xmlns="">A continuación se muestra cómo se conecta una aplicación mediante un origen de datos:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>initialize JNDI ..
+Context ctx = new InitialContext(System.getProperties());
+...
+DataSource ds = (DataSource) ctx.lookup("MyDataSource");
+Connection c = ds.getConnection("user", "pwd");</pre></span></div>
+          <p xmlns="">Para obtener más información acerca de las propiedades del origen de datos, vea <a href="f3363d05-07fc-4bf8-ae5e-2a7a968808ad.htm">Establecer las propiedades de los orígenes de datos</a>.</p>
+        </content></div>
+    </sections></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

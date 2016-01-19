@@ -1,0 +1,98 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Realizar operaciones por lotes</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Realizar operaciones por lotes</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Con el fin de aumentar el rendimiento al realizar varias actualizaciones en una base de datos de SQL Server, el controlador JDBC de Microsoft SQL Server ofrece la posibilidad de enviar varias actualizaciones como una sola unidad de trabajo, denominada también lote. </p>
+    <p>Las clases <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>, <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> se pueden usar para enviar actualizaciones por lotes. El método <a href="134f1455-c98c-4112-ab2d-9205a0db73df.htm">addBatch</a> se usa para agregar un comando. El método <a href="6e5cda26-e24d-4637-8dfd-8135ba126e3b.htm">clearBatch</a> se usa para borrar la lista de comandos. El método <a href="fb034f63-2532-4da8-a1b0-bc125734585a.htm">executeBatch</a> se usa para enviar todos los comandos para su procesamiento. Tan solo las instrucciones de lenguaje de definición de datos (DDL) y lenguaje de manipulación de datos (DML) que devuelven un recuento de actualizaciones sencillo se pueden ejecutar como parte de un lote. </p>
+    <p>El método <b>executeBatch</b> devuelve una matriz de valores <b>int</b> que se corresponde con el recuento de actualizaciones de cada comando. Si se produce un error en uno de los comandos, se genera <b>BatchUpdateException</b> y debe usar el método <b>getUpdateCounts</b> de la clase <b>BatchUpdateException</b> para recuperar la matriz de recuento de actualizaciones. Si un comando produce un error, el controlador sigue procesando los comandos restantes. No obstante, si un comando contiene un error de sintaxis, las instrucciones del lote generan un error.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Si no necesita usar recuentos de actualizaciones, puede ejecutar primero la instrucción SET NOCOUNT ON para SQL Server. De este modo, se reduce el tráfico de red y, además, se aumenta el rendimiento de la aplicación.<p />
+    </div>
+    <p>A modo de ejemplo, cree la siguiente tabla en la base de datos de ejemplo AdventureWorks de SQL Server 2005:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>CREATE TABLE TestTable 
+   (Col1 int IDENTITY, 
+    Col2 varchar(50), 
+    Col3 int);</pre></span></div>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta a la base de datos de ejemplo AdventureWorks a la función, se usa el método <b>addBatch</b> para crear las instrucciones que se van a ejecutar y se llama al método <b>executeBatch</b> para enviar el lote a la base de datos.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeBatchUpdate(Connection con) {
+   try {
+      Statement stmt = con.createStatement();
+      stmt.addBatch("INSERT INTO TestTable (Col2, Col3) VALUES ('X', 100)");
+      stmt.addBatch("INSERT INTO TestTable (Col2, Col3) VALUES ('Y', 200)");
+      stmt.addBatch("INSERT INTO TestTable (Col2, Col3) VALUES ('Z', 300)");
+      int[] updateCounts = stmt.executeBatch();
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Usar instrucciones con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

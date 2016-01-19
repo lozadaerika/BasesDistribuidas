@@ -1,0 +1,99 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Conectar con el cifrado SSL</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Conectar con el cifrado SSL</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Los ejemplos en este tema describen cómo utilizar propiedades de cadena de conexión que permiten a las aplicaciones utilizar el cifrado de Capa de sockets seguros (SSL) en una aplicación Java. Para obtener más información sobre estas nuevas propiedades de cadena de conexión, como son <b>encrypt</b>, <b>trustServerCertificate</b>, <b>trustStore</b>, <b>trustStorePassword</b> y <b>hostNameInCertificate</b>, vea <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>.</p>
+    <p>Cuando la propiedad <b>encrypt</b> se establezca en <b>true</b> y la propiedad <b>trustServerCertificate</b> se establezca en <b>true</b>, el controlador JDBC de Microsoft SQL Server no validará el certificado SSL de SQL Server. Esto normalmente se requiere para permitir conexiones en entornos de pruebas, por ejemplo donde la instancia de SQL Server tiene solo un certificado autofirmado.</p>
+    <p>El ejemplo de código siguiente demuestra cómo establecer la propiedad <b>trustServerCertificate</b> en una cadena de conexión:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true;trustServerCertificate=true";</pre></span></div>
+    <p>Cuando se establezca la propiedad <b>encrypt</b> en <b>true</b> y la propiedad <b>trustServerCertificate</b> en <b>false</b>, el controlador JDBC de Microsoft SQL Server validará el certificado SSL de SQL Server. Validar el certificado de servidor es una parte del protocolo de enlace de SSL y asegurarse de que el servidor es el apropiado al que hay que conectarse. Para validar el certificado de servidor, se debe suministrar material de confianza en el momento de la conexión utilizando explícitamente las propiedades de conexión <b>trustStore</b> y <b>trustStorePassword</b>, o el almacén de confianza predeterminado de la máquina virtual Java (JVM) subyacente de forma implícita. </p>
+    <p>La propiedad <b>trustStore</b> especifica la ruta de acceso (incluido el nombre de archivo) del archivo trustStore de certificado, que contiene la lista de certificados en los que el cliente confía. La propiedad <b>trustStorePassword</b> especifica la contraseña que se usa para comprobar la integridad de los datos de trustStore. Para obtener más información sobre cómo utilizar el almacén de confianza predeterminado de la JVM, vea <a href="ae34cd1f-3569-4759-80c7-7c9b33b3e9eb.htm">Configurar el cliente para el cifrado SSL</a>.</p>
+    <p>El ejemplo de código siguiente muestra cómo establecer las propiedades <b>trustStore</b> y <b>trustStorePassword</b> en una cadena de conexión: </p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true; trustServerCertificate=false;" +
+     "trustStore=storeName;trustStorePassword=storePassword";</pre></span></div>
+    <p>El controlador JDBC proporciona una propiedad adicional, <b>hostNameInCertificate</b>, que especifica el nombre de host del servidor. El valor de esta propiedad debe coincidir con la propiedad de asunto del certificado. </p>
+    <p>El ejemplo de código siguiente muestra cómo utilizar la propiedad <b>hostNameInCertificate</b> en una cadena de conexión:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true; trustServerCertificate=false;" +
+     "trustStore=storeName;trustStorePassword=storePassword" +
+     "hostNameInCertificate=hostName";</pre></span></div>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      También puede establecer el valor de las propiedades de conexión mediante los métodos <b>setter</b> adecuados que proporciona la clase <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>.<p />
+    </div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8e566243-2f93-4b21-8065-3c8336649309.htm">Usar el cifrado SSL</a><br /><a href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Proteger las aplicaciones del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

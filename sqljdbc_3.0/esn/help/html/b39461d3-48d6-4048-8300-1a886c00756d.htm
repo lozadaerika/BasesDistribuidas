@@ -1,0 +1,229 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar tipos de datos avanzados</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar tipos de datos avanzados</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El controlador JDBC de Microsoft SQL Server usa los tipos de datos avanzados de JDBC para convertir los tipos de datos de SQL Server a un formato que el lenguaje de programación Java pueda comprender. </p>
+    <p>La siguiente tabla muestra las asignaciones predeterminadas entre los tipos de datos de SQL Server avanzados, JDBC y del lenguaje de programación Java.</p>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;"><tr>
+          <th colspan="">
+            Tipos de SQL Server
+          </th>
+          <th colspan="">
+            Tipos de JDBC (Tipos de java.sql.)
+          </th>
+          <th colspan="">
+            Tipos de lenguaje Java
+          </th>
+        </tr><tr>
+        <td colspan="">
+          <p>varbinary(max)</p>
+          <p>image</p>
+        </td>
+        <td colspan="">
+          <p>LONGVARBINARY</p>
+        </td>
+        <td colspan="">
+          <p>byte[] (default), Blob, InputStream, String</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>text</p>
+          <p>varchar(max)</p>
+        </td>
+        <td colspan="">
+          <p>LONGVARCHAR</p>
+        </td>
+        <td colspan="">
+          <p>String (default), Clob, InputStream</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>ntext</p>
+          <p>nvarchar(max)</p>
+        </td>
+        <td colspan="">
+          <p>LONGVARCHAR</p>
+          <p>LONGNVARCHAR (Java SE 6.0)</p>
+        </td>
+        <td colspan="">
+          <p>String (default), Clob, NClob (Java SE 6.0)</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>xml</p>
+        </td>
+        <td colspan="">
+          <p>LONGVARCHAR</p>
+          <p>SQLXML (Java SE 6.0)</p>
+        </td>
+        <td colspan="">
+          <p>String (default), InputStream, Clob, byte[],Blob, SQLXML (Java SE 6.0)</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>udt</p>
+        </td>
+        <td colspan="">
+          <p>VARBINARY</p>
+        </td>
+        <td colspan="">
+          <p>String (default), byte[], InputStream</p>
+        </td>
+      </tr></table>
+    <p>Las siguientes secciones proporcionan ejemplos de cómo puede usar el controlador JDBC y los tipos de datos avanzados.</p>
+  </div><h1 class="heading">Tipos de datos BLOB, CLOB y NCLOB</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC implementa todos los métodos de las interfaces java.sql.Blob, java.sql.Clob y java.sql.NClob. </p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Los valores CLOB se pueden usar con tipos de datos de valores grandes de SQL Server 2005 (o versiones posteriores). Específicamente, los tipos CLOB se pueden usar con los tipos de datos <b>varchar(max)</b> y <b>nvarchar(max)</b>, los tipos BLOB se pueden usar con los tipos de datos <b>varbinary(max)</b> y <b>image</b> y los tipos NCLOB se pueden usar con <b>ntext</b> y <b>nvarchar(max)</b>.<p />
+      </div>
+    </content></div><h1 class="heading">Tipos de datos de valores grandes</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">En versiones anteriores de SQL Server, el trabajo con tipos de datos de valores grandes requería un tratamiento especial. Los tipos de datos de valores grandes son aquellos que superan el tamaño máximo de fila, 8 KB.SQL Server introduce un especificador máximo para los tipos de datos <b>varchar</b>, <b>nvarchar</b> y <b>varbinary</b> para permitir el almacenamiento de valores de hasta 2^31 bytes. Las columnas de tablas y las variables Transact-SQL pueden especificar los tipos de datos <b>varchar(max)</b>, <b>nvarchar(max)</b> o <b>varbinary(max)</b>.</p>
+      <p xmlns="">Los escenarios principales en los que se trabaja con tipos de valores grandes implican su recuperación de una base de datos o agregarlos a una base de datos. Las siguientes secciones describen diferentes enfoques para realizar estas tareas.</p>
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Recuperar tipos de valores grandes de una base de datos</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Al recuperar un tipo de datos de valores grandes, que no sean binarios, de una base de datos, como el tipo de datos <b>varchar(max)</b>, un planteamiento es leer esos datos como un flujo de caracteres. En el siguiente ejemplo, se usa el método <a href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a> para recuperar datos de la base de datos y devolverlos como un conjunto de resultados. A continuación, se usa el método <a href="c70e210f-0288-47cc-9268-a29c45979729.htm">getCharacterStream</a> de la clase <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> para leer los datos de valores grandes en el conjunto de resultados.</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT TOP 1 * FROM Test1");
+rs.next();
+Reader reader = rs.getCharacterStream(2);</pre></span></div>
+          <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+            Este mismo enfoque también se puede utilizar para los tipos de datos <b>text</b>, <b>ntext</b> y <b>nvarchar(max)</b>.<p />
+          </div>
+          <p xmlns="">Al recuperar tipos de datos binarios de valores grandes, de una base de datos, como el tipo de datos <b>varbinary(max)</b>, hay varios enfoques que se pueden aplicar. El enfoque más eficaz es leer los datos como un flujo binario, como en el siguiente ejemplo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT photo FROM mypics");
+rs.next();
+InputStream is = rs.getBinaryStream(2);</pre></span></div>
+          <p xmlns="">También puede usar el método <a href="d16a0aea-6144-4fcb-bcbc-5d7daa36d327.htm">getBytes</a> para leer los datos como una matriz de bytes, como en el siguiente ejemplo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT photo FROM mypics");
+rs.next();
+byte [] b = rs.getBytes(2);</pre></span></div>
+          <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+            También puede leer los datos como un BLOB. No obstante, éste es el método menos eficaz de los dos que se han mostrado anteriormente.<p />
+          </div>
+        </content></div>
+      <h1 class="heading" xmlns="">Agregar tipos de valores grandes a una base de datos</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">La carga de datos grandes con el controlador JDBC funciona bien para los casos en que tienen el tamaño de la memoria y, en los casos en los que son más grandes que la memoria, la transmisión de datos es la opción principal. No obstante, la manera más eficaz de cargar datos grandes es mediante interfaces de transmisión de datos.</p>
+          <p xmlns="">Otra opción es usar un String o bytes, como se puede ver en el siguiente ejemplo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>PreparedStatement pstmt = con.prepareStatement("INSERT INTO test1 (c1_id, c2_vcmax) VALUES (?, ?)");
+pstmt.setInt(1, 1);
+pstmt.setString(2, htmlStr);
+pstmt.executeUpdate();</pre></span></div>
+          <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+            Este enfoque también se puede utilizar para los valores que están almacenados en columnas <b>text</b>, <b>ntext</b> y <b>nvarchar(max)</b>.<p />
+          </div>
+          <p xmlns="">Si tiene en el servidor una biblioteca de imágenes y debe cargar archivos binarios completos en una columna <b>varbinary(max)</b>, el método más eficaz con el controlador JDBC es usar directamente secuencias, como en el siguiente ejemplo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>PreparedStatement pstmt = con.prepareStatement("INSERT INTO test1 (Col1, Col2) VALUES(?,?)");
+File inputFile = new File("CLOBFile20mb.jpg");
+FileInputStream inStream = new FileInputStream(inputFile);
+int id = 1;
+pstmt.setInt(1,id);
+pstmt.setBinaryStream(2, inStream);
+pstmt.executeUpdate();
+inStream.close();</pre></span></div>
+          <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+            El método CLOB o BLOB no es una forma eficaz de cargar grandes volúmenes de datos.<p />
+          </div>
+        </content></div>
+      <h1 class="heading" xmlns="">Modificación de tipos de valores grandes en una base de datos</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">En la mayoría de los casos, el método recomendado para cargar o modificar valores grandes de una base de datos es pasar parámetros a través de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> usando comandos de Transact-SQL del tipo UPDATE, WRITE y SUBSTRING.</p>
+          <p xmlns="">Si tiene que reemplazar la instancia de una palabra en un archivo grande de texto, como un archivo de almacenamiento HTML, puede usar un objeto <b>Clob</b>, como en el siguiente ejemplo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>String SQL = "SELECT * FROM test1;";
+Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+ResultSet rs = stmt.executeQuery(SQL);
+rs.next();
+
+Clob clob = rs.getClob(2);
+long pos = clob.position("dog", 1);
+clob.setString(pos, "cat");
+rs.updateClob(2, clob);
+rs.updateRow();</pre></span></div>
+          <p xmlns="">Además, podría hacer el trabajo en el servidor y pasar los parámetros a una instrucción UPDATE preparada.</p>
+          <p xmlns="">Para obtener más información sobre tipos de valores grandes, consulte "Uso de tipos de valores grandes" en los Libros en pantalla de SQL Server.</p>
+        </content></div>
+    </sections></div><h1 class="heading">Tipos de datos XML</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        SQL Server proporciona un tipo de datos <b>xml</b> que le permite almacenar documentos y fragmentos XML en una base de datos de SQL Server. El tipo de datos <b>xml</b> es un tipo de datos integrado de SQL Server y en cierta forma es similar a otros tipos integrados como <b>int</b> y <b>varchar</b>. Como sucede con otros tipos integrados, puede usar el tipo de datos <b>xml</b> como un tipo de columna cuando crea una tabla, como tipo de variable, tipo de parámetro o tipo de devolución de función, o en funciones CAST y CONVERT de Transact-SQL.</p>
+      <p xmlns="">En el controlador JDBC, el tipo de datos <b>xml</b> se puede asignar como una cadena, una matriz de bytes, un flujo o un objeto CLOB, BLOB o SQLXML. Cadena es la asignación predeterminada. Desde la versión 2.0 del controlador JDBC, este controlador proporciona compatibilidad con la API de JDBC 4.0, que presenta la interfaz SQLXML. La interfaz SQLXML define métodos para interactuar con los datos XML y manipularlos. El tipo de datos <b>SQLXML</b> se asigna al tipo de datos <b>xml</b> de SQL Server. Para obtener más información acerca de cómo leer y escribir datos XML desde y en una base de datos relacional con el tipo de datos Java de  <b>SQLXML</b>, vea <a href="32b7217e-1f0c-473d-9a45-176daa81584e.htm">Compatibilidad con datos XML</a>.</p>
+      <p xmlns="">La implementación de los tipos de datos <b>xml</b> del controlador JDBC proporciona compatibilidad para lo siguiente:</p>
+      <ul xmlns=""><li>
+          Acceso a XML como una cadena UTF-16 estándar de Java para la mayoría de las situaciones comunes de programación.<br />
+        </li><li>
+          Compatibilidad con la escritura de UTF-8 y otros XML codificados de 8 bits.<br />
+        </li><li>
+          Acceso a XML como una matriz de bytes con un BOM inicial, cuando está codificado en UTF-16 para el intercambio con otros procesadores de XML y archivos en discos.<br />
+        </li></ul>
+      <p xmlns="">
+        SQL Server requiere un BOM inicial para XML codificado en UTF-16. La aplicación debe proporcionarlo cuando se suministran valores de parámetros XML como matrices de bytes. SQL Server siempre produce valores XML como cadenas de UTF-16 sin BOM o declaración de codificación integrada. Cuando se recuperan valores XML como byte[], BinaryStream o Blob, se agrega al principio del valor un BOM de UTF-16.</p>
+      <p xmlns="">Para obtener más información acerca de los tipos de datos <b>xml</b>, vea "Tipos de datos XML" en los Libros en pantalla de SQL Server.</p>
+    </content></div><h1 class="heading">Tipos de datos definidos por el usuario</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">La introducción de tipos definidos por el usuario (UDT) en SQL Server 2005 amplia el sistema de tipos de SQL al permitirle almacenar estructuras de datos y objetos personalizados en una base de datos SQL Server. Los UDTs pueden contener múltiples tipos de datos y tener comportamientos, lo que los diferencia de los tipos de datos de alias tradicionales que se componen de un solo tipo de datos de sistema SQL Server. Los UDT se definen con cualquiera de los lenguajes compatibles con Microsoft .NET Common Language Runtime (CLR)  que producen código comprobable. Esto incluye Microsoft Visual C# y Visual Basic .NET. Los datos se exponen como campos y propiedades de una clase o una estructura basada en .NET Framework, y los comportamientos se definen con métodos de la clase o la estructura. </p>
+      <p xmlns="">En SQL Server, se pueden usar los UDT como definiciones de columnas de una tabla, como una variable de un lote de Transact-SQL o como un argumento de una función o un procedimiento almacenado de Transact-SQL.</p>
+      <p xmlns="">Para obtener más información acerca de los tipos de datos definidos por el usuario, consulte "Usar y modificar instancias de tipos definidos por el usuario" en los Libros en pantalla de SQL Server.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7802328d-4d23-4775-9573-4169b127d258.htm">Describir los tipos de datos del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar un procedimiento almacenado con un estado de devolución</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar un procedimiento almacenado con un estado de devolución</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Un procedimiento almacenado de SQL Server al que puede llamar es el que devuelve un parámetro de estado o resultado. Se usa normalmente para indicar el funcionamiento correcto o incorrecto del procedimiento almacenado. El controlador JDBC de Microsoft SQL Server ofrece la clase <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, que puede usar para llamar a este tipo de procedimiento almacenado y procesar los datos que devuelve.</p>
+    <p>Al llamar a este tipo de procedimiento almacenado mediante el controlador JDBC, debe usar la secuencia de escape <code>call</code> de SQL junto con el método <a href="265b024c-898a-4bd0-98b5-f06076717b9e.htm">prepareCall</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. La sintaxis para la secuencia de escape <code>call</code> con un parámetro de estado de devolución es la siguiente:</p>
+    <p>
+      <code>{[?=]call procedure-name[([parameter][,[parameter]]...)]}</code>
+    </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener más información acerca de las secuencias de escape de SQL, consulte <a href="00f9e25a-088e-4ac6-aa75-43eacace8f03.htm">Usar secuencias de escape SQL</a>.<p />
+    </div>
+    <p>Al crear la secuencia de escape<code> call </code> especifique el parámetro de estado de devolución mediante el carácter ? (signo de interrogación). Este carácter actúa como un marcador de posición para el valor del parámetro que devolverá el procedimiento almacenado. Para especificar un valor para un parámetro de estado de devolución, debe especificar el tipo de datos del parámetro mediante el método <a href="82f8d608-efc1-4af8-a985-ec25d19420aa.htm">registerOutParameter</a> de la clase <b>SQLServerCallableStatement</b> antes de ejecutar el procedimiento almacenado. </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Al usar el controlador JDBC con una base de datos de SQL Server, el valor especificado para el parámetro de estado de devolución del método <b>registerOutParameter</b> siempre es un entero, que se puede especificar mediante el tipo de datos java.sql.Types.INTEGER.<p />
+    </div>
+    <p>Además, al pasar un valor al método <b>registerOutParameter</b> para un parámetro de estado de devolución, debe especificar no solo los tipos de datos usados para el parámetro, sino también la posición ordinal del parámetro en la llamada al procedimiento almacenado. En el caso del parámetro de estado de devolución, su posición ordinal siempre es 1 debido a que es siempre el primer parámetro de la llamada al procedimiento almacenado. Aunque la clase <b>SQLServerCallableStatement</b> proporciona la compatibilidad para utilizar el nombre del parámetro para indicar el parámetro concreto, puede utilizar el número de la posición ordinal de solo un parámetro para los parámetros de estado de retorno.</p>
+    <p>Cree, a modo de ejemplo, el siguiente procedimiento almacenado en la base de datos de ejemplo AdventureWorks de SQL Server 2005:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>CREATE PROCEDURE CheckContactCity
+   (@cityName CHAR(50))
+AS
+BEGIN
+   IF ((SELECT COUNT(*)
+   FROM Person.Address
+   WHERE City = @cityName) &gt; 1)
+   RETURN 1
+ELSE
+   RETURN 0
+END</pre></span></div>
+    <p>Este procedimiento almacenado devuelve un valor de estado de 1 ó 0 en función de si la ciudad especificada en el parámetro cityName se encuentra en la tabla Person.Address.</p>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta a la base de datos de ejemplo AdventureWorks a la función y se usa el método <a href="e1367f39-23d7-4e26-b160-6d988d7e6988.htm">execute</a> para llamar al procedimiento almacenado CheckContactCity:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeStoredProcedure(Connection con) {
+   try {
+      CallableStatement cstmt = con.prepareCall("{? = call dbo.CheckContactCity(?)}");
+      cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
+      cstmt.setString(2, "Atlanta");
+      cstmt.execute();
+      System.out.println("RETURN STATUS: " + cstmt.getInt(1));
+      cstmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="0041f9e1-09b6-4487-b052-afd636c8e89a.htm">Usar instrucciones con procedimientos almacenados</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

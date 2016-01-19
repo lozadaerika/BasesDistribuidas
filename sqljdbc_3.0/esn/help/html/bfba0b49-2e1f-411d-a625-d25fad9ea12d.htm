@@ -1,0 +1,96 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Solución de los problemas de conectividad</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Solución de los problemas de conectividad</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El controlador JDBC de Microsoft SQL Server requiere que TCP/IP esté instalado y en ejecución para comunicarse con la base de datos de SQL Server. Puede usar el Administrador de configuración de SQL Server para comprobar qué protocolos de biblioteca de red hay instalados. </p>
+    <p>Es posible que un intento de conexión con una base de datos no se realice por muchas razones. Entre otras:</p>
+    <ul><li>
+        El protocolo TCP/IP no está habilitado para SQL Server o el servidor o el número de puerto especificados no son correctos. Compruebe que SQL Server esté escuchando con TCP/IP en el puerto y el servidor especificados. Esto se puede notificar con una excepción similar a: "Error al establecer la conexión. Error al establecer la conexión de TCP/IP con el host". Esto indica una de las siguientes causas:<br />
+        <ul><li>
+            
+              SQL Server está instalado, pero TCP/IP no se ha instalado como protocolo de red para SQL Server mediante la Utilidad de red de SQL Server para SQL Server 2000 o el Administrador de configuraciones de SQL Server para SQL Server 2005 y versiones posteriores.<br />
+          </li><li>
+            TCP/IP está instalado como un protocolo de SQL Server, pero no está escuchando en el puerto especificado en la dirección URL de conexión de JDBC. El puerto predeterminado es 1433, pero SQL Server se puede configurar durante la instalación del producto para que escuche en cualquier puerto. Asegúrese de que SQL Server esté escuchando en el puerto 1433. O, si se ha cambiado el puerto, asegúrese de que el puerto especificado en la URL de conexión de JDBC coincide con el puerto modificado. Para obtener más información sobre las URL de conexión de JDBC, consulte <a href="44996746-d373-4f59-9863-a8a20bb8024a.htm">Generar URL de conexión</a>.<br />
+          </li><li>
+            La dirección del equipo especificado en la URL de conexión de JDBC no hace referencia a un servidor en el que esté instalado e iniciado SQL Server. <br />
+          </li><li>
+            La operación de conexión en red de TCP/IP entre el cliente y el servidor que esté ejecutando SQL Server no es factible. Puede comprobar la conectividad de TCP/IP con SQL Server por medio de telnet. Por ejemplo, en símbolo del sistema, escriba <code> telnet 192.168.0.0 1433 </code>, donde 192.168.0.0 es la dirección del equipo que está ejecutando SQL Server y 1433 es el puerto en el que se está escuchando. Si recibe un mensaje que indica "Telnet no se puede conectar", el protocolo TCP/IP no está escuchando en ese puerto para las conexiones de SQL Server. Use la Herramienta de red de cliente de SQL Server para SQL Server 2000 o el Administrador de configuración de SQL Server para SQL Server 2005 y versiones posteriores para asegurarse de que SQL Server está configurado para usar TCP/IP en el puerto 1433. <br />
+          </li><li>
+            El puerto que usa el servidor no está abierto en el firewall. Incluye el puerto usado por el servidor u, opcionalmente, el puerto asociado a una instancia con nombre del servidor.<br />
+          </li></ul>
+      </li><li>
+        El nombre de base de datos especificado es incorrecto. Asegúrese de estar conectándose a una base de datos de SQL Server existente.<br />
+      </li><li>
+        El nombre de usuario o la contraseña son incorrectos. Asegúrese de tener los valores correctos.<br />
+      </li><li>
+        Cuando usa la Autenticación de SQL Server, el controlador JDBC requiere que SQL Server esté instalado con Autenticación SQL Server, que no es la predeterminada. Asegúrese de que esta opción esté incluida cuando instale o configure su copia de SQL Server.<br />
+      </li></ul>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="723e2680-a0c5-4a7d-a319-1e49e41078cf.htm">Diagnosticar problemas del controlador JDBC</a><br /><a href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Conectar SQL Server con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

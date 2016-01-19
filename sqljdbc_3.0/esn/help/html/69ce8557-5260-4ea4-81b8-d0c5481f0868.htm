@@ -1,0 +1,77 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Proteger las cadenas de conexión</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Proteger las cadenas de conexión</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>La protección del acceso al origen de datos es uno de los objetivos más importantes a la hora de proteger una aplicación. Para limitar el acceso al origen de datos, debe tomar precauciones y proteger la información de conexión como el Id. de usuario, la contraseña y el nombre del origen de datos. El almacenamiento del Id. de usuario en texto sin formato, como en el código fuente, supone un problema de seguridad grave. Incluso si proporciona una versión compilada del código que contiene la información de Id. de usuario y contraseña en una fuente externa, el código compilado se puede desensamblar y el Id. de usuario y la contraseña pueden quedar expuestos. Por consiguiente, es fundamental no incluir información clave como el Id. de usuario y la contraseña en el código. </p>
+    <p>Se recomienda no almacenar la contraseña junto con la URL de conexión en el código fuente de la aplicación. En su lugar, puede almacenar la contraseña en un archivo independiente con acceso restringido. Se puede conceder acceso a este archivo en el contexto en que se ejecuta la aplicación. </p>
+    <p>Otro enfoque consiste en almacenar la contraseña cifrada en un archivo. Asegúrese de usar una API de cifrado que no requiera el almacenamiento de la clave en cualquier parte y no se derive de la contraseña del usuario. Por ejemplo, puede usar pares de claves públicas o privada basadas en certificados o usar un método en que dos partes usen un protocolo de intercambio de claves (algoritmo Diffie-Hellman) para generar claves secretas idénticas para el cifrado sin tener que transmitir la clave secreta. </p>
+    <p>Si obtiene la información de cadena de conexión de una fuente externa (por ejemplo, si un usuario proporciona un Id. de usuario y una contraseña), debe validar las entradas desde el origen para asegurarse de que presentan el formato correcto y no contienen parámetros adicionales que afecten a la conexión.</p>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Proteger las aplicaciones del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Interfaz SQLXML</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Interfaz SQLXML</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Desde la versión 2.0 del controlador JDBC de Microsoft SQL Server, el controlador JDBC proporciona compatibilidad con la API 4.0 de JDBC, que presenta la interfaz java.sql.SQLXML. La interfaz SQLXML define métodos para interactuar con los datos XML y manipularlos. El tipo de datos <b>SQLXML</b> se asigna al tipo de datos <b>xml</b> de SQL Server.</p>
+    <p>La interfaz SQLXML proporciona métodos para obtener acceso al valor XML como <b>String</b>, <b>Reader</b> o <b>Writer</b>, o como <b>Stream</b>. También se puede obtener acceso al valor XML mediante un <b>Source</b> o establecerse como un <b>Result</b>, que se usan con las API del analizador XML, como Document Object Model (DOM), Simple API for XML (SAX) y Streaming API for XML (StAX), así como con las transformaciones XSLT y con XPath. </p>
+    <p>La tabla siguiente describe los métodos definidos en la interfaz SQLXML: </p>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;"><tr>
+          <th colspan="">
+            Sintaxis del método
+          </th>
+          <th colspan="">
+            Descripción del método
+          </th>
+        </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131685" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">void free()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Este método libera el objeto SQLXML y los recursos que contiene.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131754" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">InputStream getBinaryStream()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve un flujo de entrada para leer datos desde SQLXML.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131755" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">Reader getCharacterStream()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve los datos <b>XML</b> como un objeto <b>java.io.Reader</b> o como un flujo de caracteres.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131756" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">T extends Source T getSource(Class&lt;T&gt; sourceClass)</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve un <b>Source</b> para leer el valor <b>XML</b> especificado por este objeto de <b>SQLXML</b>.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            El método <b>getSource</b> es compatible con los siguientes datos: javax.xml.transform.dom.DOMSource, javax.xml.transform.sax.SAXSource, javax.xml.transform.stax.StAXSource y java.io.InputStream.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131757" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">String getString()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve una representación de cadena del valor <b>XML</b> designado por este objeto SQLXML.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131758" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">OutputStream setBinaryStream()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Recupera un flujo que puede ser usada para escribir el valor <b>XML</b> que representa este objeto SQLXML.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131759" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">Writer setCharacterStream()</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve un flujo que es usada para escribir el valor <b>XML</b> que representa este objeto SQLXML.</p>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131760" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">T extends Result T setResult(Class&lt;T&gt; resultClass)</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Devuelve un <b>Result</b> para establecer el valor <b>XML</b> especificado por este objeto de <b>SQLXML</b>. </p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            El método <b>setResult</b> es compatible con los siguientes datos: javax.xml.transform.dom.DOMResult, javax.xml.transform.sax.SAXResult, javax.xml.transform.stax.StaxResult y java.io.OutputStream.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td colspan="">
+          <p>
+            <a href="http://go.microsoft.com/fwlink/?LinkId=131762" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">void setString(String value)</linkText></a>
+          </p>
+        </td>
+        <td colspan="">
+          <p>Configura el valor XML designado por este objeto SQLXML en la representación <b>String</b> especificada.</p>
+        </td>
+      </tr></table>
+    <p>Las aplicaciones pueden leer y escribir valores XML en o desde un objeto SQLXML solamente una vez. </p>
+    <p>Cuando se llama al método <b>free()</b>, un objeto SQLXML se vuelve no válido y no puede ser leído ni escrito. Si la aplicación intenta invocar un método en un objeto SQLXML distinto del método <b>free()</b>, se devuelve una excepción. </p>
+    <p>El objeto SQLXML no puede ser leído ni escrito cuando la aplicación llama a cualquiera de los siguientes métodos captador: <b>getSource</b>, <b>getCharacterStream</b>, <b>getBinaryStream</b> y <b>getString</b>.</p>
+    <p>El objeto SQLXML no puede ser leído ni escrito cuando la aplicación llama a cualquiera de los siguientes métodos establecedores: <b>setResult</b>, <b>setCharacterStream</b>, <b>setBinaryStream</b> y <b>setString</b>.</p>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="32b7217e-1f0c-473d-9a45-176daa81584e.htm">Compatibilidad con datos XML</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

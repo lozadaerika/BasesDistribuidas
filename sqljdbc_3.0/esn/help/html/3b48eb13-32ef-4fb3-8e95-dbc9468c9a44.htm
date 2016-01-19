@@ -1,0 +1,101 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar puntos de retorno</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar puntos de retorno</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Los puntos de retorno ofrecen un mecanismo para revertir partes de una transacción. En SQL Server, puede crear un punto de retorno con la instrucción SAVE TRANSACTION savepoint_name. Más adelante, ejecute una instrucción ROLLBACK TRANSACTION savepoint_name para revertir al punto de retorno en vez de revertir al inicio de la transacción. </p>
+    <p>Los puntos de retorno son útiles en situaciones en que no es probable que se produzcan errores. El uso de un punto de retorno para revertir parte de una transacción, en caso de producirse un error no frecuente, puede resultar más eficaz que hacer que cada transacción pruebe si una actualización es válida antes de realizarla. Las operaciones de actualización y reversión son costosas, por lo que los puntos de retorno solamente son eficaces si la probabilidad de encontrar un error es baja y el costo de comprobar de antemano la validez de una actualización es relativamente alto.</p>
+    <p>El controlador JDBC de Microsoft SQL Server admite el uso de puntos de retorno mediante el método <a href="c39c6b4f-b9e2-423b-94ae-9f82d9e6d08d.htm">setSavepoint</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. Con el método <b>setSavepoint</b>, puede crear un punto de retorno con o sin nombre en la transacción actual y el método devolverá un objeto <a href="1ae7db7b-959f-4142-8d9f-aa427869c6ac.htm">SQLServerSavepoint</a>. Se pueden crear varios puntos de retorno en una transacción. Para revertir una transacción a un punto de retorno determinado, puede pasar el objeto <b>SQLServerSavepoint</b> al método <a href="d5dbd9ef-194f-4130-bfcc-7901a4fa8ded.htm">rollback (java.sql.Savepoint)</a>.</p>
+    <p>En el siguiente ejemplo, se usa un punto de retorno a la vez que se realiza una transacción local consistente en dos instrucciones independientes del bloque <code>try</code>. Las instrucciones se ejecutan en la tabla Production.ScrapReason en la base de datos de ejemplo AdventureWorks de SQL Server 2005 y se usa un punto de retorno para revertir la segunda instrucción. Como resultado, solo se confirma en la base de datos la primera instrucción.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeTransaction(Connection con) {
+   try {
+      con.setAutoCommit(false);
+      Statement stmt = con.createStatement();
+      stmt.executeUpdate("INSERT INTO Production.ScrapReason(Name) VALUES('Correct width')");
+      Savepoint save = con.setSavepoint();
+      stmt.executeUpdate("INSERT INTO Production.ScrapReason(Name) VALUES('Wrong width')");
+      con.rollback(save);
+      con.commit();
+      stmt.close();
+      System.out.println("Transaction succeeded.");
+   }
+   catch (SQLException ex) {
+      ex.printStackTrace();
+      try {
+         System.out.println("Transaction failed.");
+         con.rollback();
+      }
+      catch (SQLException se) {
+         se.printStackTrace();
+      }
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="afbb776f-05dc-4e79-bb25-2c340483e401.htm">Realizar transacciones con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

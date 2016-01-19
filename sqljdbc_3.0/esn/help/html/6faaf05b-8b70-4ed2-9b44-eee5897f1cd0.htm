@@ -1,0 +1,122 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar el controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar el controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>En esta sección se proporciona una serie de instrucciones rápidas para establecer una conexión sencilla a una base de datos de SQL Server con el controlador JDBC de Microsoft SQL Server. Antes de establecer la conexión a una base de datos de SQL Server, SQL Server se debe instalar en el equipo local o en un servidor y el controlador JDBC se debe instalar en el equipo local. </p>
+  </div><h1 class="heading">Elegir el archivo JAR adecuado</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC de Microsoft SQL Server proporciona los archivos de la biblioteca de clases <b>sqljdbc.jar</b>
+y <b>sqljdbc4.jar</b> que hay que usar dependiendo de su configuración preferida de Java Runtime Environment (JRE). Para obtener más información acerca del archivo JAR que hay que elegir, vea <a href="447792bb-f39b-49b4-9fd0-1ef4154c74ab.htm">Requisitos del sistema para el controlador JDBC</a>.</p>
+    </content></div><h1 class="heading">Establecer la ruta de clase</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC no forma parte del SDK de Java. Si lo quiere usar, debe configurar la ruta de clase para que incluya el archivo sqljdbc4.jar. Si en la ruta de clase falta una entrada para sqljdbc.jar o sqljdbc4.jar, su aplicación producirá la excepción común "Clase no encontrada".</p>
+      <p xmlns="">El archivo sqljdbc.jar y el archivo sqljdbc4.jar se instalan en la siguiente ubicación:</p>
+      <p xmlns="">&lt;<i>directorio de instalación</i>&gt;\sqljdbc_&lt;<i>versión</i>&gt;\&lt;<i>idioma</i>&gt;\sqljdbc.jar</p>
+      <p xmlns="">&lt;<i>directorio de instalación</i>&gt;\sqljdbc_&lt;<i>versión</i>&gt;\&lt;<i>idioma</i>&gt;\sqljdbc.jar</p>
+      <p xmlns="">El siguiente es un ejemplo de la instrucción CLASSPATH usada para una aplicación Windows:</p>
+      <p xmlns="">
+        <code>CLASSPATH =.;C:\Program Files\Microsoft SQL Server JDBC Driver\sqljdbc_3.0\enu\sqljdbc.jar</code>
+      </p>
+      <p xmlns="">El siguiente es un ejemplo de la instrucción CLASSPATH usada para una aplicación de Unix/Linux:</p>
+      <p xmlns="">
+        <code>CLASSPATH =.:/home/usr1/mssqlserverjdbc/Driver/sqljdbc_3.0/enu/sqljdbc.jar</code>
+      </p>
+      <p xmlns="">Debe asegurarse de que la instrucción CLASSPATH solo contiene un controlador JDBC de Microsoft SQL Server, como sqljdbc.jar o sqljdbc4.jar.</p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        En los sistemas de Windows, los nombres de directorio mayores que 8.3 o los nombres de carpetas con espacios pueden causar problemas con las rutas de clase. Si considera que se da este tipo de problema, debe mover temporalmente el archivo sqljdbc.jar o el archivo sqljdbc4.jar a un nombre de directorio sencillo, como<code> C:\Temp</code>, cambiar la ruta de clase y determinar si de este modo se corrige el problema.<p />
+      </div>
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Aplicaciones que se ejecutan directamente en el símbolo del sistema</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">La ruta de clase se configura en el sistema operativo. Anexe sqljdbc.jar o sqljdbc4.jar a la ruta de clase del sistema. Además, puede especificar la ruta de clase en la línea de comandos de Java que ejecuta la aplicación con la opción<code> java -classpath </code>.</p>
+        </content></div>
+      <h1 class="heading" xmlns="">Aplicaciones que se ejecutan en un IDE</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Cada proveedor de IDE ofrece un método distinto para establecer la ruta de clase en el IDE. Establecer sin más la ruta de clase en el sistema operativo no funciona. Debe agregar sqljdbc.jar o sqljdbc4.jar a la ruta de clase IDE.</p>
+        </content></div>
+      <h1 class="heading" xmlns="">Servlets y JSP</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Los servlets y JSP se ejecutan en un motor de servlet/JSP, como Tomcat. La ruta de clase se debe establecer de acuerdo con la documentación del motor de servlet/JSP. Establecer sin más la ruta de clase en el sistema operativo no funciona. Algunos motores de servlet/JSP incluyen pantallas de configuración que puede utilizar para establecer la ruta de clase del motor. En este caso, debe adjuntar el archivo JAR del controlador JDBC correcto a la ruta de clase del motor y reiniciar el motor. En otras situaciones, puede configurar el controlador copiando sqljdbc.jar o  sqljdbc4.jar en un directorio específico, como lib, durante la instalación del motor. La ruta de clase del controlador del motor también se puede especificar en un archivo de configuración específico del motor.</p>
+        </content></div>
+      <h1 class="heading" xmlns="">Enterprise Java Beans</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Enterprise Java Beans (EJB) se ejecuta en un contenedor EJB. Los contenedores EJB son distribuidos por varios proveedores. Los applets Java se ejecutan en un explorador, pero se descargan desde un servidor web. Copie sqljdbc.jar o sqljdbc4.jar en la raíz del servidor web y especifique el nombre del archivo JAR en la ficha de archivo HTML del applet; por ejemplo, <code>&lt;applet ... archive=sqljdbc.jar&gt;</code>.</p>
+        </content></div>
+    </sections></div><h1 class="heading">Establecer una conexión sencilla con una base de datos</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Mediante la biblioteca de clases sqljdbc.jar, primero las aplicaciones deben registrar el controlador del modo siguiente:</p>
+      <p xmlns="">
+        <code>Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");</code>
+      </p>
+      <p xmlns="">Una vez cargado el controlador, puede establecer una conexión con una URL de conexión y el método <b>getConnection</b> de la clase <b>DriverManager</b>:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>String connectionUrl = "jdbc:sqlserver://localhost:1433;" +
+   "databaseName=AdventureWorks;user=MyUserName;password=*****;";
+Connection con = DriverManager.getConnection(connectionUrl);</pre></span></div>
+      <p xmlns="">En la API 4.0 de JDBC, el método <b>DriverManager.getConnection</b> se ha mejorado para que se carguen los controladores JDBC automáticamente. Por tanto, no es necesario que las aplicaciones llamen al método <b>Class.forName</b> para registrar o cargar el controlador cuando se use la biblioteca de clases sqljdbc4.jar.</p>
+      <p xmlns="">Cuando se llama al método <b>getConnection</b> de la clase <b>DriverManager</b>, se encuentra un controlador apropiado en el conjunto de controladores JDBC. El archivo sqljdbc4.jar incluye el archivo "META-INF/services/java.sql.Driver", que contiene el <b>com.microsoft.sqlserver.jdbc.SQLServerDriver</b> como un controlador registrado. Las aplicaciones existentes, que actualmente cargan los controladores usando el método <b>Class.forName</b>, seguirán trabajando sin modificación.</p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        La biblioteca de clases sqljdbc4.jar necesita la versión 6.0 de Java Runtime Environment (JRE) o una posterior.<p />
+      </div>
+      <p xmlns="">Para obtener más información acerca de la conexión con orígenes de datos y el uso de una URL de conexión, vea <a href="44996746-d373-4f59-9863-a8a20bb8024a.htm">Generar URL de conexión</a> y <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

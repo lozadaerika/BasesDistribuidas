@@ -1,0 +1,272 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar secuencias de escape SQL</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar secuencias de escape SQL</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El controlador JDBC de Microsoft SQL Server permite el uso de secuencias de escape SQL, según se define en la API JDBC. Las secuencias de escape se usan dentro de una instrucción SQL para indicar al controlador que la parte de la secuencia de escape de la cadena SQL se debería tratar de forma diferente. Cuando el controlador JDBC procesa la parte de la secuencia de escape de una cadena SQL, traduce esa parte de la cadena en código SQL que SQL Server entiende. </p>
+    <p>Hay cinco tipos de secuencias de escape que la API JDBC requiere, y el controlador JDBC las admite todas:</p>
+    <ul><li>
+        Literales comodín LIKE<br />
+      </li><li>
+        Tratamiento de funciones<br />
+      </li><li>
+        Literales de fecha y hora<br />
+      </li><li>
+        Llamadas a procedimientos almacenados<br />
+      </li><li>
+        Combinaciones externas<br />
+      </li></ul>
+    <p>La sintaxis de las secuencias de escape que usa el controlador JDBC es la siguiente: </p>
+    <p>
+      <code>{keyword ...parameters...}</code>
+    </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      El proceso de escape SQL siempre está activado para el controlador JDBC.<p />
+    </div>
+    <p>En las secciones siguientes se describen los cinco tipos de secuencias de escape y cómo las admite el controlador JDBC.</p>
+  </div><h1 class="heading">Literales comodín LIKE</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador admite la sintaxis de <code>{escape 'escape character'}</code> para usar comodines de cláusulas LIKE como literales. Por ejemplo, el código siguiente devolverá valores para col3, donde el valor de col2 comienza literalmente con un guión (y no con su uso como comodín).</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>ResultSet rst = stmt.executeQuery("SELECT col3 FROM test1 WHERE col2 
+LIKE '\\_%' {escape '\\'}");</pre></span></div>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        La secuencia de escape debe estar al final de la instrucción SQL. Para que haya varias instrucciones SQL en una cadena de comandos, la secuencia de escape tiene que estar al final de cada instrucción SQL pertinente.<p />
+      </div>
+    </content></div><h1 class="heading">Tratamiento de funciones</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC admite las secuencias de escape de funciones en instrucciones SQL con la sintaxis siguiente:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>{fn functionName}</pre></span></div>
+      <p xmlns="">donde <code>functionName</code> es una función que admite el controlador JDBC. Por ejemplo:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>SELECT {fn UCASE(Name)} FROM Employee</pre></span></div>
+      <p xmlns="">En la tabla siguiente se muestran las diversas funciones que el controlador JDBC admite al usar una secuencia de escape de funciones.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Funciones de cadena
+            </th>
+            <th>
+              Funciones numéricas
+            </th>
+            <th>
+              Funciones de fecha y hora
+            </th>
+            <th>
+              Funciones del sistema
+            </th>
+          </tr><tr>
+          <td>
+            <p>ASCII</p>
+            <p>CHAR</p>
+            <p>CONCAT</p>
+            <p>DIFFERENCE</p>
+            <p>INSERT</p>
+            <p>LCASE</p>
+            <p>LEFT</p>
+            <p>LENGTH</p>
+            <p>LOCATE</p>
+            <p>LTRIM</p>
+            <p>REPEAT</p>
+            <p>REPLACE</p>
+            <p>RIGHT</p>
+            <p>RTRIM</p>
+            <p>SOUNDEX</p>
+            <p>SPACE</p>
+            <p>SUBSTRING</p>
+            <p>UCASE</p>
+          </td>
+          <td>
+            <p>ABS</p>
+            <p>ACOS</p>
+            <p>ASIN</p>
+            <p>ATAN</p>
+            <p>ATAN2</p>
+            <p>CEILING</p>
+            <p>COS</p>
+            <p>COT</p>
+            <p>DEGREES</p>
+            <p>EXP</p>
+            <p>FLOOR</p>
+            <p>LOG</p>
+            <p>LOG10</p>
+            <p>MOD</p>
+            <p>PI</p>
+            <p>POWER</p>
+            <p>RADIANS</p>
+            <p>RAND</p>
+            <p>ROUND</p>
+            <p>SIGN</p>
+            <p>SIN</p>
+            <p>SQRT</p>
+            <p>TAN</p>
+            <p>TRUNCATE</p>
+          </td>
+          <td>
+            <p>CURDATE</p>
+            <p>CURTIME</p>
+            <p>DAYNAME</p>
+            <p>DAYOFMONTH</p>
+            <p>DAYOFWEEK</p>
+            <p>DAYOFYEAR</p>
+            <p>EXTRACT</p>
+            <p>HOUR</p>
+            <p>MINUTE</p>
+            <p>MONTH</p>
+            <p>MONTHNAME</p>
+            <p>NOW</p>
+            <p>QUARTER</p>
+            <p>SECOND</p>
+            <p>TIMESTAMPADD</p>
+            <p>TIMESTAMPDIFF</p>
+            <p>WEEK</p>
+            <p>YEAR</p>
+          </td>
+          <td>
+            <p>DATABASE</p>
+            <p>IFNULL</p>
+            <p>USER</p>
+          </td>
+        </tr></table>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Si intenta utilizar una función que la base de datos no admita, se producirá un error.<p />
+      </div>
+    </content></div><h1 class="heading">Literales de fecha y hora</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">La sintaxis de las secuencias de escape para los literales de fecha, hora y marca de tiempo es la siguiente: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>{literal-type 'value'}</pre></span></div>
+      <p xmlns="">donde <code>literal-type</code> es uno de los siguientes:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Tipo de literal
+            </th>
+            <th>
+              Descripción
+            </th>
+            <th>
+              Formato del valor
+            </th>
+          </tr><tr>
+          <td>
+            <p>d</p>
+          </td>
+          <td>
+            <p>Fecha</p>
+          </td>
+          <td>
+            <p>aaaa-mm-dd</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>t</p>
+          </td>
+          <td>
+            <p>Hora</p>
+          </td>
+          <td>
+            <p>hh:mm:ss [1]</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>ts</p>
+          </td>
+          <td>
+            <p>TimeStamp</p>
+          </td>
+          <td>
+            <p>aaaa-mm-dd hh:mm:ss[.f...]</p>
+          </td>
+        </tr></table>
+      <p xmlns="">Por ejemplo:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>UPDATE Orders SET OpenDate={d '2005-01-31'} 
+WHERE OrderID=1025</pre></span></div>
+    </content></div><h1 class="heading">Llamadas a procedimientos almacenados</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC es compatible con la sintaxis de escape <code>{? = call proc_name(?,...)}</code> y <code>{call proc_name(?,...)}</code> para las llamadas a procedimientos almacenados, según si tiene que procesar un parámetro de devolución. </p>
+      <p xmlns="">Un procedimiento almacenado es un objeto ejecutable almacenado en la base de datos. Normalmente, se trata de una o varias instrucciones SQL compiladas. La sintaxis de las secuencias de escape para llamar a un procedimiento almacenado es la siguiente: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>{[?=]call procedure-name[([parameter][,[parameter]]...)]}</pre></span></div>
+      <p xmlns="">donde <code>procedure-name</code> y <code>parameter</code> especifican el nombre y un parámetro de un procedimiento almacenado, respectivamente.</p>
+      <p xmlns="">Para obtener más información acerca de cómo usar la secuencia de escape <code>call</code> con los procedimientos almacenados, vea <a href="0041f9e1-09b6-4487-b052-afd636c8e89a.htm">Usar instrucciones con procedimientos almacenados</a>.</p>
+    </content></div><h1 class="heading">Combinaciones externas</h1><div id="sectionSection4" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC admite la sintaxis de combinación externa completa, derecha e izquierda de SQL92. La secuencia de escape para las combinaciones externas es: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>{oj outer-join}</pre></span></div>
+      <p xmlns="">donde outer-join es:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>table-reference {LEFT | RIGHT | FULL} OUTER JOIN  
+{table-reference | outer-join} ON search-condition</pre></span></div>
+      <p xmlns="">donde <code>table-reference</code> es un nombre de tabla y <code>search-condition</code> es la condición de combinación que desea usar para las tablas.</p>
+      <p xmlns="">Por ejemplo:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>SELECT Customers.CustID, Customers.Name, Orders.OrderID, Orders.Status 
+   FROM {oj Customers LEFT OUTER JOIN 
+      Orders ON Customers.CustID=Orders.CustID} 
+   WHERE Orders.Status='OPEN'</pre></span></div>
+      <p xmlns="">El controlador JDBC admite las siguientes secuencias de escape de combinaciones externas:</p>
+      <ul xmlns=""><li>
+          Combinaciones externas izquierdas<br />
+        </li><li>
+          Combinaciones externas derechas<br />
+        </li><li>
+          Combinaciones externas completas<br />
+        </li><li>
+          Combinaciones externas anidadas<br />
+        </li></ul>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Usar instrucciones con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

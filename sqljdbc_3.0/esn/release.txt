@@ -1,0 +1,114 @@
+Información de la versión
+Controlador JDBC de Microsoft SQL Server 3.0 
+Abril de 2010
+
+
+INTRODUCCIÓN
+------------
+Este archivo contiene información de última hora u otra información importante
+que complementa la documentación del controlador JDBC de Microsoft SQL Server.
+Debe leer este archivo en su totalidad antes de instalar el controlador JDBC.
+
+Sus comentarios son muy importantes y haremos lo posible para responderle puntualmente.
+Si desea obtener información sobre cómo hacer llegar sus comentarios mediante
+el grupo de noticias y los foros de Internet del controlador JDBC, visite la página
+del controlador JDBC de Microsoft SQL Server en http://msdn.microsoft.com/data/jdbc.
+
+
+INSTALACIÓN
+------------
+Las instrucciones para instalar el controlador JDBC se encuentran en install.txt.
+Consulte este archivo si desea obtener información sobre cómo instalar el
+controlador en los sistemas operativos Windows y Unix.
+
+SISTEMAS OPERATIVOS ADMITIDOS
+---------------------------
+El controlador de Microsoft SQL Server JDBC:3.0 admite los sistemas operativos siguientes: 
+Linux, Unix, Windows Server 2003 Service Pack 2; Windows Server 2008;
+Windows Vista Service Pack 1; Windows XP Service Pack 3,
+Windows Server 2008 R2 y Windows 7.
+
+Esta lista es un ejemplo de algunos de los sistemas operativos admitidos.
+El controlador JDBC se ha diseñado para funcionar en cualquier sistema
+operativo que admita el uso de una máquina virtual Java (JVM). No obstante,
+solo se han probado los sistemas operativos Sun Solaris, SUSE Linux y Windows XP
+o sistemas operativos posteriores.
+
+CONTENIDO DE LA VERSIÓN
+----------------
+El archivo zip o tar ejecutable del controlador JDBC de Microsoft SQL Server
+desempaqueta los siguientes archivos en las ubicaciones especificadas,
+relativas al directorio de instalación:
+
+<installation directory>\sqljdbc_<version>\<language>\install.txt
+<installation directory>\sqljdbc_<version>\<language>\release.txt
+<installation directory>\sqljdbc_<version>\<language>\license.txt
+<installation directory>\sqljdbc_<version>\<language>\sqljdbc.jar
+<installation directory>\sqljdbc_<version>\<language>\sqljdbc4.jar
+<installation directory>\sqljdbc_<version>\<language>\auth\x86\sqljdbc_auth.dll
+<installation directory>\sqljdbc_<version>\<language>\auth\x64\sqljdbc_auth.dll
+<installation directory>\sqljdbc_<version>\<language>\auth\ia64\sqljdbc_auth.dll
+<installation directory>\sqljdbc_<version>\<language>\help\default.htm
+<installation directory>\sqljdbc_<version>\<language>\help\index.htm
+<installation directory>\sqljdbc_<version>\<language>\help\toc.htm
+<installation directory>\sqljdbc_<version>\<language>\help\html\<doc pages...>
+<installation directory>\sqljdbc_<version>\<language>\help\local\<doc files...>
+<installation directory>\sqljdbc_<version>\<language>\help\samples\<sample files...>
+<installation directory>\sqljdbc_<version>\<language>\xa\xa_install.sql
+<installation directory>\sqljdbc_<version>\<language>\xa\x86\sqljdbc_xa.dll
+<installation directory>\sqljdbc_<version>\<language>\xa\x64\sqljdbc_xa.dll
+<installation directory>\sqljdbc_<version>\<language>\xa\ia64\sqljdbc_xa.dll
+
+
+LISTA DE CAMBIOS
+-----------
+Cambios entre la versión 2.0 y la 3.0:
+
+327029 La excepción "No se pudo cargar sqljdbc_auth.dll" ahora contiene información
+       adicional sobre la razón del error.
+
+329180 Los servidores de aplicaciones ahora pueden utilizar la interfaz Wrapper para
+       implementar instancias proxy de SQLServerDataSource y otras clases que implementan
+       la interfaz Wrapper.
+
+293533 El valor devuelto por un procedimiento almacenado ejecutado por un desencadenador
+       de tabla ya no tiene efecto en el recuento de actualización de una consulta INSERT,
+       UPDATE, o DELETE cuando lastUpdateCount=true
+
+345336 Se ha arreglado el bucle infinito en Statement.close() cuando su conexión subyacente
+       se cerraba inesperadamente.
+
+351393 executeUpdate ahora devuelve el recuento de actualización correcto para una 
+       consulta BULK INSERT.
+
+327052 ResultSet.getHoldability() ahora devuelve ResultSet.HOLD_CURSORS_OVER_COMMIT
+       cuando la conversión implicita de cursores produce un conjunto de resultados no
+       apoyados por un cursor de servidor.
+
+374320 Se ha arreglado un bucle infinito en ResultSet.close() cuando el método encuentra
+       un tiempo de espera del bloqueo u otro error de fila.
+
+373923 El controlador ahora utiliza el protocolo TLS para sus comunicaciones SSL para cumplir
+       el estándar federal de procesamiento de información (FIPS, Federal Information Processing Standard).
+
+376322 El controlador ahora se conecta a un asociado de conmutación que actua como primario
+       en un entorno de Kerberos. 
+
+305612 ResultSet.getInt("DATA_TYPE") ya no inicia una NullPointerException con el tipo TABLE SQL.
+
+411695 getSchemas debería devolver información de esquema. En versiones anteriores del controlador,
+       este devolvía. Información de usuario en lugar de información de esquema. El controlador ahora
+       devuelve información de esquema y admite búsqueda de patrones para nombre de esquema según
+       la especificación de JDBC.
+
+
+PROBLEMAS CONOCIDOS
+------------
+A continuación, se describen los problemas conocidos del controlador de Microsoft SQL Server JDBC 3.0:
+
+
+1) LIMITACIONES PARA LA OBTENCIÓN DE METADATOS DE PARÁMETROS CON LA INSTRUCCIÓN MERGE DE SQL.
+
+PreparedStatement.getParameterMetadata() inicia una SQLException cuando se utiliza
+con una consulta MERGE con parametros.
+

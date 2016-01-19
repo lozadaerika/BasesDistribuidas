@@ -1,0 +1,203 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Descripción del control de la simultaneidad</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Descripción del control de la simultaneidad</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El control de la simultaneidad se refiere a las diversas técnicas que se utilizan para conservar la integridad de la base de datos cuando varios usuarios actualizan filas al mismo tiempo. Una simultaneidad incorrecta puede causar problemas, como la lectura de datos sucios, las lecturas fantasmas y las lecturas no repetibles. El controlador JDBC de Microsoft SQL Server proporciona interfaces a todas las técnicas de simultaneidad que usa SQL Server para resolver estos problemas. </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener más información sobre la simultaneidad de SQL Server, vea "Administrar el acceso simultáneo a datos" en los Libros en pantalla de SQL Server.<p />
+    </div>
+    <p>El controlador JDBC es compatible con los tipos de simultaneidad siguientes:</p>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;"><tr>
+          <th>
+            Tipo de simultaneidad
+          </th>
+          <th>
+            Características
+          </th>
+          <th>
+            Bloqueos de fila
+          </th>
+          <th>
+            Descripción
+          </th>
+        </tr><tr>
+        <td>
+          <p>CONCUR_READ_ONLY</p>
+        </td>
+        <td>
+          <p>Solo lectura</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>No se permiten las actualizaciones a través del cursor y no se mantienen los bloqueos en las filas que forman el conjunto de resultados.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>CONCUR_UPDATABLE</p>
+        </td>
+        <td>
+          <p>Lectura-escritura optimista</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>La base de datos supone que la contención de la fila es improbable, pero posible. La integridad de las filas se comprueba con una comparación de la marca de tiempo.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>CONCUR_SS_SCROLL_LOCKS</p>
+        </td>
+        <td>
+          <p>Lectura-escritura pesimista</p>
+        </td>
+        <td>
+          <p>Sí</p>
+        </td>
+        <td>
+          <p>La base de datos supone que la contención de la fila es probable. La integridad de la fila se garantiza con el bloqueo de filas.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>CONCUR_SS_OPTIMISTIC_CC</p>
+        </td>
+        <td>
+          <p>Lectura-escritura optimista</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>La base de datos supone que la contención de la fila es improbable, pero posible. La integridad de las filas se comprueba con una comparación de la marca de tiempo. </p>
+          <p>En SQL Server 2005 y versiones posteriores, el servidor cambiará esto por CONCUR_SS_OPTIMISTIC_CCVAL si la tabla no contiene una columna de marca de tiempo.</p>
+          <p>En SQL Server 2000, si la tabla subyacente tiene una columna de marca de tiempo se utiliza OPTIMISTIC WITH ROW VERSIONING incluso si se especifica OPTIMISTIC WITH VALUES. Si se especifica OPTIMISTIC WITH ROW VERSIONING y la tabla no incluye marcas de tiempo, se utiliza OPTIMISTIC WITH VALUES.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>CONCUR_SS_OPTIMISTIC_CCVAL</p>
+        </td>
+        <td>
+          <p>Lectura-escritura optimista</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>La base de datos supone que la contención de la fila es improbable, pero posible. La integridad de las filas se comprueba con una comparación de los datos de las filas.</p>
+        </td>
+      </tr></table>
+  </div><h1 class="heading">Conjuntos de resultados que no son actualizables</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un conjunto de resultados actualizable es aquel en el que las filas se pueden insertar, actualizar y eliminar. En los casos siguientes, SQL Server no puede crear un cursor actualizable. La excepción que se genera es: "El conjunto de resultados no es actualizable". </p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Causa
+            </th>
+            <th>
+              Descripción
+            </th>
+            <th>
+              Solución
+            </th>
+          </tr><tr>
+          <td>
+            <p>La instrucción no se crea con la sintaxis de JDBC 2.0 (o versiones posteriores)</p>
+          </td>
+          <td>
+            <p>JDBC 2.0 introdujo métodos nuevos para crear instrucciones. Si se usa la sintaxis de JDBC 1.0, el conjunto de resultados se establece de forma predeterminada como de solo lectura.</p>
+          </td>
+          <td>
+            <p>Especifique el tipo del conjunto de resultados y la simultaneidad al crear la instrucción.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>La instrucción se crea con TYPE_SCROLL_INSENSITIVE</p>
+          </td>
+          <td>
+            <p>
+              SQL Server crea un cursor de instantánea estático. Se desconecta de las filas de la tabla subyacente para ayudar a proteger el cursor de las actualizaciones de filas de otros usuarios.</p>
+          </td>
+          <td>
+            <p>Use TYPE_SCROLL_SENSITIVE, TYPE_SS_SCROLL_KEYSET, TYPE_SS_SCROLL_DYNAMIC o TYPE_FORWARD_ONLY con CONCUR_UPDATABLE para evitar crear un cursor estático.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>El diseño de la tabla imposibilita el uso de un cursor KEYSET o DYNAMIC</p>
+          </td>
+          <td>
+            <p>La tabla subyacente no tiene claves únicas para habilitar SQL Server para que identifique de forma única una fila.</p>
+          </td>
+          <td>
+            <p>Agregue claves únicas a la tabla para permitir la identificación exclusiva de cada fila.</p>
+          </td>
+        </tr></table>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="9ed5ad41-22e0-4e4a-8a79-10512db60d50.htm">Administrar conjuntos de resultados con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

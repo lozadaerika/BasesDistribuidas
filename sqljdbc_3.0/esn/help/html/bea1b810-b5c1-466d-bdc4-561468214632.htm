@@ -1,0 +1,103 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getBytes (SQLServerBlob)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getBytes (SQLServerBlob)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Obtiene los datos Blob como una matriz de bytes. </p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public byte[] <b>getBytes</b>(long <i>pos</i>,
+                       int <i>length</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>pos</i>
+      </p>
+      <p xmlns="">Posición inicial; comienza en 1 (no en 0).</p>
+      <p xmlns="">
+        <i>length</i>
+      </p>
+      <p xmlns="">Longitud de los datos que se van a obtener.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Una matriz de<b> byte </b>que contiene los datos que se han solicitado.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getBytes</b> especifica este método <b>getBytes</b> en la interfaz java.sql.Blob.</p>
+      <p xmlns="">Si la longitud del objeto BLOB es NULL o cero y se intentan obtener cero bytes exactamente en la posición 1, se devuelve una matriz de<b> byte </b>vacía (matriz de bytes de longitud 0).</p>
+      <p xmlns="">Si el valor del objeto BLOB es NULL o tiene longitud cero y se intenta obtener una longitud de bytes determinada en una posición que no sea 1, se producirá una excepción relativa a la posición.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="88bd8623-889d-4b5d-99ff-c85b32f3ff5c.htm">Clase SQLServerBlob</a><br /><a href="0d57940a-90bc-4f1b-a20f-5a97d7d20b61.htm">Métodos SQLServerBlob</a><br /><a href="90e48555-ea83-4a90-80a3-51bc685015ec.htm">Miembros SQLServerBlob</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,328 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getExportedKeys (SQLServerDatabaseMetaData)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getExportedKeys (SQLServerDatabaseMetaData)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Recupera una descripción de las columnas de clave externa que hacen referencia a las columnas de clave principal de la tabla determinadas.</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public java.sql.ResultSet <b>getExportedKeys</b>(java.lang.String <i>cat</i>,
+                                          java.lang.String <i>schema</i>,
+                                          java.lang.String <i>table</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>cat</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el nombre del catálogo.</p>
+      <p xmlns="">
+        <i>schema</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el nombre del esquema.</p>
+      <p xmlns="">
+        <i>table</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el nombre de la tabla.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getExportedKeys</b> especifica este método <b>getExportedKeys</b> en la interfaz java.sql.DatabaseMetaData.</p>
+      <p xmlns="">El conjunto de resultados devuelto por el método <b>getExportedKeys</b> contendrá la siguiente información:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Nombre
+            </th>
+            <th colspan="">
+              Tipo
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>PKTABLE_CAT</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre del catálogo que contiene la tabla de la clave principal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>PKTABLE_SCHEM</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre del esquema de la tabla de la clave principal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>PKTABLE_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la tabla de la clave principal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>PKCOLUMN_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la columna de la clave principal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FKTABLE_CAT</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre del catálogo que contiene la tabla de la clave externa.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FKTABLE_SCHEM</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre del esquema de la tabla de la clave externa.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FKTABLE_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la tabla de la clave externa.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FKCOLUMN_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la columna de la clave externa.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>KEY_SEQ</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Número de secuencia de la columna en una clave principal en varias columnas.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>UPDATE_RULE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Acción aplicada a la clave externa cuando la operación de SQL sea una actualización. Puede ser uno de los siguientes valores:</p>
+            <p>importedKeyNoAction (3)</p>
+            <p>importedKeyCascade (0)</p>
+            <p>importedKeySetNull (2)</p>
+            <p>importedKeySetDefault (4)</p>
+            <p>importedKeyRestrict (1)</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>DELETE_RULE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Acción aplicada a la clave externa cuando la operación de SQL sea una eliminación. Puede ser uno de los siguientes valores:</p>
+            <p>importedKeyNoAction (3)</p>
+            <p>importedKeyCascade (0)</p>
+            <p>importedKeySetNull (2)</p>
+            <p>importedKeySetDefault (4)</p>
+            <p>importedKeyRestrict (1)</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FK_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la clave externa.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>PK_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre de la clave principal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>DEFERRABILITY</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica si la evaluación de la restricción de la clave externa se puede diferir hasta que se efectúe una confirmación. Puede ser uno de los siguientes valores:</p>
+            <p>importedKeyInitiallyDeferred (5)</p>
+            <p>importedKeyInitiallyImmediate (6)</p>
+            <p>importedKeyNotDeferrable (7)</p>
+          </td>
+        </tr></table>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Para obtener más información sobre los datos que devuelve el método <b>getExportedKeys</b>, vea "sp_fkeys (Transact-SQL)" en los Libros en pantalla de SQL Server.<p />
+      </div>
+    </content>
+  </div><h1 class="heading">Ejemplo</h1><div id="codeExampleSection" class="section" name="collapseableSection">
+    <description xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <content>
+        <p xmlns="">En el siguiente ejemplo se muestra cómo utilizar el método <b>getExportedKeys</b> para devolver información sobre todas las claves externas que hacen referencia a las claves principales de la tabla Person.Contact en la base de datos de ejemplo SQL Server 2005 AdventureWorks.</p>
+      </content>
+    </description>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeGetExportedKeys(Connection con) {
+   try {
+      DatabaseMetaData dbmd = con.getMetaData();
+      ResultSet rs = dbmd.getExportedKeys("AdventureWorks", "Person", "Contact");
+      ResultSetMetaData rsmd = rs.getMetaData();
+
+      // Display the result set data.
+      int cols = rsmd.getColumnCount();
+      while(rs.next()) {
+         for (int i = 1; i &lt;= cols; i++) {
+            System.out.println(rs.getString(i));
+         }
+      }
+      rs.close();
+   } 
+
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">Clase SQLServerDatabaseMetaData</a><br /><a href="772de447-c922-4b85-8e10-5f0d9277966c.htm">Métodos SQLServerDatabaseMetaData</a><br /><a href="327ba0bc-438a-494c-b119-1cd4a096bb58.htm">Miembros SQLServerDatabaseMetaData</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

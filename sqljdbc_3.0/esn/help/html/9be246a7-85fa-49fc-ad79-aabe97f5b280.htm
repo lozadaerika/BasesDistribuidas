@@ -1,0 +1,105 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método updateBinaryStream (java.lang.String, java.io.InputStream, int)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método updateBinaryStream (java.lang.String, java.io.InputStream, int)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Actualiza la columna designada con un valor de flujo binario, que tendrá el número especificado de bytes. </p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public void <b>updateBinaryStream</b>(java.lang.String <i>columnLabel</i>,
+                               java.io.InputStream <i>x</i>,
+                               int <i>length</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>columnLabel</i>
+      </p>
+      <p xmlns="">Un<b> </b><b>String<b> </b></b>que contiene la etiqueta de columna.</p>
+      <p xmlns="">
+        <i>x</i>
+      </p>
+      <p xmlns="">Un objeto <b>InputStream</b>.</p>
+      <p xmlns="">
+        <i>length</i>
+      </p>
+      <p xmlns="">Un valor<b> int </b>que indica la longitud del flujo.</p>
+    </content>
+  </div></div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>updateBinaryStream</b> especifica este método <b>updateBinaryStream</b> en la interfaz java.sql.ResultSet.</p>
+      <p xmlns="">Este método pasa bytes desde un objeto <b>InputStream</b> a las columnas binarias de SQL Server seleccionadas, como binary, varbinary, varbinary(max), image, xml y udt. Este método no admite la actualización de columnas de caracteres. Para actualizar las columnas de caracteres con un <b>InputStream</b>, utilice el método <a href="4959a0a9-ae55-4c4e-80a8-21119aaceb92.htm">updateAsciiStream</a>.</p>
+      <p xmlns="">Si la longitud del flujo es distinta a la especificada en el parámetro <i>length</i>, el controlador JDBC produce una excepción cuando la fila se actualiza o inserta. </p>
+      <p xmlns="">Si se desconoce la longitud del flujo, el parámetro <i>length</i> puede establecerse en -1 para indicar que el controlador debería aceptar el flujo independientemente de su longitud. Con sqljdbc4.jar, recomendamos utilizar el método <a href="56883144-26a0-4f45-ad36-4f616369af3e.htm">Método updateBinaryStream (java.lang.String, java.io.InputStream)</a> de JDBC 4.0 cuando la aplicación desee actualizar la columna desde un flujo cuya longitud se desconozca.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="eaffcff1-286c-459f-83da-3150778480c9.htm">Clase SQLServerResultSet</a><br /><a href="1af26ac2-76e5-4a26-a600-9919211333ba.htm">Método updateBinaryStream (ISQLServerResultSet)</a><br /><a href="2a438d5d-2d6a-46a0-a2ae-f35fbae4a472.htm">Miembros de ISQLServerResultSet</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

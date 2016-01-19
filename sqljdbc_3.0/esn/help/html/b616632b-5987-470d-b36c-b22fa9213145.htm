@@ -1,0 +1,86 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Clase SQLServerDataSourceObjectFactory</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Clase SQLServerDataSourceObjectFactory</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Representa un servicio de generación de objetos para materializar los orígenes de datos de la interfaz Java Naming and Directory Interface (JNDI). </p>
+    <p>
+      <b>Paquete:</b> com.microsoft.sqlserver.jdbc</p>
+    <p>
+      <b>Extiende:</b> java.lang.Object</p>
+    <p>
+      <b>Implementa:</b> javax.naming.spi.ObjectFactory</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public class <b>SQLServerDataSourceObjectFactory</b></pre></span></div></div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Este método lo heredan todas las clases de orígenes de datos. El controlador JDBC de Microsoft SQL Server expone esta clase que implementa un objeto <b>ObjectFactory</b>, como parte de la compatibilidad que ofrece a la interfaz Referenceable. Cuando los servidores de la aplicación Java llamen a <b>getReference</b> en una clase de origen de datos, esto creará un objeto <b>Reference</b> que utilizará internamente el nombre de la case como su servicio de generación de clases.</p>
+      <p xmlns="">Cuando el servidor de la aplicación Java tenga que eliminar referencias del objeto <b>Reference</b>, crea una instancia del objeto <b>SQLServerDataSourceObjectFactory</b> y llama al método <a href="0a1503e2-e991-4d70-a223-087fc63baf73.htm">getObjectInstance</a> para pasar el objeto <b>Reference</b> y recuperar la instancia del origen de datos.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="52c6b133-f7ed-468d-8f34-bc2e4b81553e.htm">Miembros de SQLServerDataSourceObjectFactory</a><br /><a href="e4e1ae9d-18a6-41db-8bd2-9cf0eee4cccb.htm">Referencia de API del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

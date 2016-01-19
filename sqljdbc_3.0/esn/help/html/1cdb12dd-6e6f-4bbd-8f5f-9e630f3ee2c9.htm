@@ -1,0 +1,85 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getEncrypt (SQLServerDataSource)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getEncrypt (SQLServerDataSource)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Devuelve un valor<b> boolean </b>que indica si la propiedad de cifrado está habilitada.</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public boolean <b>getEncypt</b>()</pre></span></div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <b>true</b> si el cifrado está habilitado. En caso contrario, es <b>false</b>.</p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Si la propiedad de cifrado se establece en <b>true</b>, el controlador JDBC de Microsoft SQL Server se asegura de que SQL Server utiliza el cifrado SSL para todos los datos que se envían entre el cliente y el servidor si el servidor tiene un certificado instalado. </p>
+      <p xmlns="">Si la propiedad de cifrado no se ha especificado o se ha establecido en <b>false</b>, el controlador no aplicará SQL Server para admitir el cifrado SSL. Si la instancia de SQL Server no se configura para exigir el cifrado SSL, se establece una conexión sin cifrado. Si la instancia de SQL Server se configura para exigir el cifrado SSL, el controlador JDBC de Microsoft SQL Server habilitará automáticamente el cifrado SSL al ejecutarse en una máquina virtual Java (JVM, Java Virtual Machine) que se haya configurada adecuadamente, o si no la conexión se termina y el controlador generará un error. Si no se establece la propiedad de cifrado, el método <a href="1cdb12dd-6e6f-4bbd-8f5f-9e630f3ee2c9.htm">getEncrypt</a> devuelve el valor predeterminado <b>false</b>.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">Clase SQLServerDataSource</a><br /><a href="7e749bc5-d765-4864-be2b-7822d4c20c09.htm">Miembros SQLServerDataSource</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

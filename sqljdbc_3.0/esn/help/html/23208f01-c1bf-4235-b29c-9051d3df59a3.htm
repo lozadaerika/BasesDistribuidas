@@ -1,0 +1,377 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getTypeInfo (SQLServerDatabaseMetaData)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getTypeInfo (SQLServerDatabaseMetaData)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Recupera una descripción de todos los tipos SQL estándar que se admiten en la base de datos actual.</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public java.sql.ResultSet <b>getTypeInfo</b>()</pre></span></div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getTypeInfo</b> especifica este método <b>getTypeInfo</b> en la interfaz java.sql.DatabaseMetaData.</p>
+      <p xmlns="">El conjunto de resultados devuelto por el método <b>getTypeInfo</b> contendrá la siguiente información:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Nombre 
+            </th>
+            <th colspan="">
+              Type
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>TYPE_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre del tipo de datos.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>DATA_TYPE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Tipo de datos SQL de java.sql.Types.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>PRECISION</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Número total de dígitos significativos.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>LITERAL_PREFIX</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Carácter o caracteres utilizados antes de una constante.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>LITERAL_SUFFIX</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Carácter o caracteres utilizados para terminar una constante.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>CREATE_PARAMS</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Descripción de los parámetros de creación para el tipo de datos.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>NULLABLE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica si la columna puede contener un valor NULL. Puede ser uno de los siguientes valores:</p>
+            <p>typeNoNulls (0)</p>
+            <p>typeNullable (1)</p>
+            <p>typeNullableUnknown (2)</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>CASE_SENSITIVE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>boolean</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica si el tipo de datos distingue mayúsculas de minúsculas. "<b>true</b>" si el tipo distingue mayúsculas de minúsculas; de lo contrario, es "<b>false</b>".</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>SEARCHABLE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica si la columna se puede utilizar en una cláusula WHERE de SQL. Puede ser uno de los siguientes valores:</p>
+            <p>typePredNone (0)</p>
+            <p>typePredChar (1)</p>
+            <p>typePredBasic (2)</p>
+            <p>typeSeachable (3)</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>UNSIGNED_ATTRIBUTE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>boolean</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica el signo del tipo de datos. "<b>true</b>" si el tipo no tiene signo; de lo contrario, es "<b>false</b>".</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>FIXED_PREC_SCALE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>boolean</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica que el tipo de datos puede ser un valor de moneda. "<b>true</b>" si el tipo de datos es de tipo moneda; de lo contrario, es "<b>false</b>".</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>AUTO_INCREMENT</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>boolean</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Indica que el tipo de datos se puede incrementarse automáticamente. "<b>true</b>" si el tipo se puede incrementar automáticamente; de lo contrario, es "<b>false</b>".</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>LOCAL_TYPE_NAME</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Nombre localizado del tipo de datos.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>MINIMUM_SCALE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Número máximo de dígitos a la derecha del signo decimal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>MAXIMUM_SCALE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Número mínimo de dígitos a la derecha del signo decimal.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>SQL_DATA_TYPE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>El controlador JDBC no lo admite.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>SQL_DATETIME_SUB</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>El controlador JDBC no lo admite.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>NUM_PREC_RADIX</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>El número de bits o dígitos para calcular el número máximo que puede tener una columna.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>INTERVAL_PRECISION</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Valor de la precisión del principio del intervalo.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>USERTYPE</p>
+          </td>
+          <td colspan="">
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td colspan="">
+            <p>Valor <b>usertype</b> en la tabla <b>systypes</b>. Para obtener más información, vea los Libros en pantalla de SQL Server.</p>
+          </td>
+        </tr></table>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Para obtener más información sobre los datos que devuelve el método <b>getTypeInfo</b>, vea "sp_datatype_info (Transact-SQL)" en los Libros en pantalla de SQL Server.<p />
+      </div>
+    </content>
+  </div><h1 class="heading">Ejemplo</h1><div id="codeExampleSection" class="section" name="collapseableSection">
+    <description xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <content>
+        <p xmlns="">En el siguiente ejemplo se muestra cómo utilizar el método <b>getTypeInfo</b> para devolver información sobre los tipos de datos que se utilizan en una base de datos de SQL Server 2005 (o versiones posteriores).</p>
+      </content>
+    </description>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeGetTypeInfo(Connection con) {
+   try {
+      DatabaseMetaData dbmd = con.getMetaData();
+      ResultSet rs = dbmd.getTypeInfo();
+      ResultSetMetaData rsmd = rs.getMetaData();
+
+      // Display the result set data.
+      int cols = rsmd.getColumnCount();
+      while(rs.next()) {
+         for (int i = 1; i &lt;= cols; i++) {
+            System.out.println(rs.getString(i));
+         }
+      }
+      rs.close();
+   } 
+
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">Clase SQLServerDatabaseMetaData</a><br /><a href="772de447-c922-4b85-8e10-5f0d9277966c.htm">Métodos SQLServerDatabaseMetaData</a><br /><a href="327ba0bc-438a-494c-b119-1cd4a096bb58.htm">Miembros SQLServerDatabaseMetaData</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Administrar conjuntos de resultados con el controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Administrar conjuntos de resultados con el controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Un conjunto de resultados es un objeto que representa un grupo de datos que ha devuelto un origen de datos, normalmente como resultado de una consulta. Los conjuntos de resultados contienen filas y columnas que alojan los elementos de datos solicitados. Además, se puede navegar por ellos con un cursor. Los conjuntos de resultados pueden ser actualizables, lo que significa que se pueden modificar e incluir esas modificaciones en el origen de datos. Los conjuntos de resultados también pueden tener varios niveles de sensibilidad a los cambios en el origen de datos subyacente. </p>
+    <p>El tipo de conjunto de resultados se determina cuando se crea una instrucción, que es cuando se hace una llamada al método <a href="6d043ba9-b8ec-41d3-bb22-ad2c4aebda6f.htm">createStatement</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. El papel fundamental de los conjuntos de resultados es proporcionar a las aplicaciones Java una representación utilizable de los datos de la base de datos. Esto normalmente se realiza con los métodos de tipo de establecimiento y obtención en los elementos de los datos del conjunto de resultados.</p>
+    <p>En el siguiente ejemplo, que está basado en la base de datos de ejemplo AdventureWorks de SQL Server 2005, se crea un conjunto de resultados llamando al método <a href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>. A continuación, los datos del conjunto de resultados se muestran mediante el método <a href="f81dde01-d328-4b32-8871-1efac645b68e.htm">getString</a> de la clase <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeStatement(Connection con) {
+   try {
+      String SQL = "SELECT TOP 10 * FROM Person.Contact";
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(SQL);
+
+      while (rs.next()) {
+         System.out.println(rs.getString(4) + " " + rs.getString(6));
+      }
+      rs.close();
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+    <p>Los temas de esta sección describen diferentes aspectos del uso de los conjuntos de resultados, incluyendo los tipos de cursor, la simultaneidad y el bloqueo de filas.</p>
+  </div><h1 class="heading">En esta sección</h1><div id="inThisSectionSection" class="section">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Tema
+            </th>
+            <th>
+              Descripción
+            </th>
+          </tr><tr>
+          <td>
+            <p>
+              <a href="4f4d3db7-4f76-450d-ab63-141237a4f034.htm">Descripción de los tipos de cursor</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe los diferentes tipos de cursor compatibles con el controlador JDBC de Microsoft SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="98b7dabe-9b12-4e1d-adeb-e5b5cb0c96f3.htm">Descripción del control de la simultaneidad</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe la compatibilidad del controlador JDBC con el control de simultaneidad.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="63c76a2f-f2b9-461f-8904-acbda0169ac3.htm">Descripción del bloqueo de filas</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe la compatibilidad del controlador JDBC con el bloqueo de filas.</p>
+          </td>
+        </tr></table>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

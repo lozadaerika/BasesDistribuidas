@@ -1,0 +1,105 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Controlar instrucciones complejas</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Controlar instrucciones complejas</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Al usar el controlador JDBC de Microsoft SQL Server, puede que tenga que controlar instrucciones complejas, entre las que se incluyen las instrucciones generadas dinámicamente en tiempo de ejecución. Las instrucciones complejas suelen realizar tareas diversas como actualizaciones, inserciones y eliminaciones. Estos tipos de instrucciones pueden devolver varios conjuntos de resultados y parámetros de salida. En estos casos, el código Java que ejecuta las instrucciones puede no saber por anticipado los tipos y el número de objetos y datos devueltos. </p>
+    <p>Para procesar las instrucciones complejas del modo adecuado, el controlador JDBC proporciona una serie de métodos para consultar los objetos y datos devueltos para que la aplicación pueda procesarlos correctamente. La clave para procesar las instrucciones complejas es el método <a href="e1367f39-23d7-4e26-b160-6d988d7e6988.htm">execute</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>. Este método devuelve un valor <b>boolean</b>. Si el valor es true, el primer resultado devuelto de las instrucciones es un conjunto de resultados. Si el valor es false, el primer resultado devuelto es un recuento de actualizaciones.</p>
+    <p>Cuando sepa el tipo de objeto o datos devueltos, puede usar el método <a href="929a14e2-8e98-4c32-89aa-86733c717ec1.htm">getResultSet</a> o <a href="e9570228-4500-44b6-b2f1-84ac050b5112.htm">getUpdateCount</a> para procesar los datos. Para continuar con el objeto o datos siguientes devueltos desde la instrucción compleja, puede llamar al método <a href="df89db50-0b2f-4094-820a-30be25ad72fe.htm">getMoreResults</a>.</p>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta con la base de datos de ejemplo AdventureWorks de SQL Server 2005 a la función, se genera una instrucción compleja que combina una llamada al procedimiento almacenado con una instrucción SQL, se ejecutan las instrucciones y, a continuación, se usa un bucle <code>do</code> para procesar todos los conjuntos de resultados y recuentos de actualizaciones devueltos.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeComplexStatement(Connection con) {
+   try {
+      String sqlStringWithUnknownResults = "{call dbo.uspGetEmployeeManagers(50)};SELECT TOP 10 * FROM Person.Contact";
+      Statement stmt = con.createStatement();
+      boolean results = stmt.execute(sqlStringWithUnknownResults);
+      int count = 0;
+      do {
+         if (results) {
+            ResultSet rs = stmt.getResultSet();
+            System.out.println("Result set data displayed here.");
+            rs.close();
+         } else {
+            count = stmt.getUpdateCount();
+            if (count &gt;= 0) {
+               System.out.println("DDL or update data displayed here.");
+            } else {
+               System.out.println("No more results to process.");
+            }
+         }
+         results = stmt.getMoreResults();
+      } while (results || count != -1);
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Usar instrucciones con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,947 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getColumns (SQLServerDatabaseMetaData)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getColumns (SQLServerDatabaseMetaData)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Recupera una descripción de las columnas de la tabla que están disponibles en el catálogo especificado.</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public java.sql.ResultSet <b>getColumns</b>(java.lang.String <i>catalog</i>,
+                                     java.lang.String <i>schema</i>,
+                                     java.lang.String <i>table</i>,
+                                     java.lang.String <i>col</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>catalog</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el nombre del catálogo.</p>
+      <p xmlns="">
+        <i>schema</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el modelo de nombre del esquema.</p>
+      <p xmlns="">
+        <i>table</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el modelo de nombre de la tabla.</p>
+      <p xmlns="">
+        <i>col</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene el modelo de nombre de la columna.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getColumns</b> especifica este método <b>getColumns</b> en la interfaz java.sql.DatabaseMetaData.</p>
+      <p xmlns="">El conjunto de resultados devuelto por el método <b>getColumns</b> contendrá la siguiente información:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Descripción
+            </th>
+          </tr><tr>
+          <td>
+            <p>TABLE_CAT</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>TABLE_SCHEM</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema de tabla.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>TABLE_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de la tabla.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo de datos SQL de java.sql.Types.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>TYPE_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del tipo de datos.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_SIZE</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Precisión de la columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>BUFFER_LENGTH</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Tamaño de transferencia de los datos.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>DECIMAL_DIGITS</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Escala de la columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>NUM_PREC_RADIX</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Base de la columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>NULLABLE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Indica si la columna acepta valores NULL. Puede ser uno de los siguientes valores:</p>
+            <p>columnNoNulls (0)</p>
+            <p>columnNullable (1)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>REMARKS</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Comentarios asociados con la columna.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              SQL Server siempre devuelve el valor NULL para esta columna.<p />
+            </div>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_DEF</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Valor predeterminado de la columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SQL_DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Valor del tipo de datos SQL tal como aparece en el campo TYPE del descriptor. Esta columna es igual que la columna DATA_TYPE, salvo por los tipos de datos datetime e interval de SQL-92. Esta columna siempre devuelve un valor.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SQL_DATETIME_SUB</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Código de subtipo para los tipos de datos interval de SQL-92 y datetime. Para otros tipos de datos, esta columna devuelve NULL.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>CHAR_OCTET_LENGTH</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Número máximo de bytes en la columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>ORDINAL_POSITION</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Índice de la columna en la tabla.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>IS_NULLABLE</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Indica si la columna admite valores NULL.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_IS_SPARSE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Si la columna es una columna dispersa, esto tiene el valor VARIANT_TRUE; de lo contrario, VARIANT_FALSE.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_IS_COLUMN_SET</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Si la columna es la columna column_set dispersa, esto tiene el valor VARIANT_TRUE; de lo contrario, VARIANT_FALSE.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_IS_COMPUTED</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Indica si una columna en un TABLE_TYPE es una columna calculada.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>IS_AUTOINCREMENT</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Es "SÍ" si la columna se incrementa automáticamente. Es "NO" si la columna no se incrementa automáticamente. Es "" (cadena vacía) si el controlador no puede determinar si la columna se incrementa automáticamente.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_CATALOG_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_SCHEMA_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_ASSEMBLY_TYPE_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo definido por el usuario (UDT) del nombre completo.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_CATALOG_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo donde se define el nombre de una colección de esquemas XML. Si no se encuentra el nombre de catálogo, esta variable contiene una cadena vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_SCHEMA_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema donde se define el nombre de una colección de esquemas XML. Si no se puede encontrar el nombre de esquema, esta cadena estará vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de una colección de esquemas XML. Si no se puede encontrar el nombre, esta cadena estará vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>tinyint</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo de datos de SQL Server que utilizan los procedimientos almacenados extendidos.</p>
+            <p>
+              <b>Nota</b>  Para obtener más información sobre los tipos de datos que ha devuelto SQL Server, vea "Tipos de datos (Transact-SQL)" en los Libros en pantalla de SQL Server. </p>
+          </td>
+        </tr></table>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Para obtener más información sobre los datos que devuelve el método <b>getColumns</b>, vea "sp_columns (Transact-SQL)" en los Libros en pantalla de SQL Server.<p />
+      </div>
+      <p xmlns="">En el controlador JDBC 3.0 de Microsoft SQL Server, observará que existen los siguientes cambios de comportamiento con respecto a las versiones anteriores del controlador JDBC:</p>
+      <p xmlns="">La columna DATA_TYPE tiene los siguientes cambios:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de datos de SQL Server
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 2.0 y la constante numérica asociada
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>tipo definido por el usuario mayor que 8 KB</p>
+          </td>
+          <td>
+            <p>LONGVARBINARY (-4)</p>
+          </td>
+          <td>
+            <p>VARBINARY (-3)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>geografía</p>
+          </td>
+          <td>
+            <p>LONGVARBINARY (-4)</p>
+          </td>
+          <td>
+            <p>VARBINARY (-3)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>geometría</p>
+          </td>
+          <td>
+            <p>LONGVARBINARY (-4)</p>
+          </td>
+          <td>
+            <p>VARBINARY (-3)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>varbinary(max)</p>
+          </td>
+          <td>
+            <p>LONGVARBINARY (-4)</p>
+          </td>
+          <td>
+            <p>VARBINARY (-3)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>nvarchar(max)</p>
+          </td>
+          <td>
+            <p>LONGVARCHAR (-1) o LONGNVARCHAR (JDBC 4) (-16)</p>
+          </td>
+          <td>
+            <p>VARCHAR (12) o NVARCHAR (JDBC 4) (-9)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>varchar(max)</p>
+          </td>
+          <td>
+            <p>LONGVARCHAR (-1)</p>
+          </td>
+          <td>
+            <p>VARCHAR (12)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>time</p>
+          </td>
+          <td>
+            <p>VARCHAR (12) o NVARCHAR (JDBC 4) (-9)</p>
+          </td>
+          <td>
+            <p>TIME (-154)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>date</p>
+          </td>
+          <td>
+            <p>VARCHAR (12) o NVARCHAR (JDBC 4) (-9)</p>
+          </td>
+          <td>
+            <p>DATE (91)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetime2</p>
+          </td>
+          <td>
+            <p>VARCHAR (12) o NVARCHAR (JDBC 4) (-9)</p>
+          </td>
+          <td>
+            <p>TIMESTAMP (93)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetimeoffset</p>
+          </td>
+          <td>
+            <p>VARCHAR (12) o NVARCHAR (JDBC 4) (-9)</p>
+          </td>
+          <td>
+            <p>microsoft.sql.Types.DATETIMEOFFSET  (-155)</p>
+          </td>
+        </tr></table>
+      <p xmlns="">La columna COLUMN_SIZE tiene los siguientes cambios:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de datos de SQL Server
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 2.0
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>nvarchar(max)</p>
+          </td>
+          <td>
+            <p>1073741823</p>
+          </td>
+          <td>
+            <p>2147483647 (metadatos de base de datos)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>xml</p>
+          </td>
+          <td>
+            <p>1073741823</p>
+          </td>
+          <td>
+            <p>2147483647 (metadatos de base de datos)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>tipo definido por el usuario menor o igual que 8 KB</p>
+          </td>
+          <td>
+            <p>8 KB (conjunto de resultados y metadatos de parámetro)</p>
+          </td>
+          <td>
+            <p>Tamaño real que devuelve el procedimiento almacenado.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>time</p>
+          </td>
+          <td>
+            <p> </p>
+          </td>
+          <td>
+            <p>La longitud en caracteres de la representación de cadena del tipo (suponiendo la precisión máxima permitida del componente de fracciones de segundo).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>date</p>
+          </td>
+          <td>
+            <p> </p>
+          </td>
+          <td>
+            <p>igual que time</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetime2</p>
+          </td>
+          <td>
+            <p> </p>
+          </td>
+          <td>
+            <p>igual que time</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetimeoffset</p>
+          </td>
+          <td>
+            <p> </p>
+          </td>
+          <td>
+            <p>igual que time</p>
+          </td>
+        </tr></table>
+      <p xmlns="">La columna BUFFER_LENGTH tiene el siguiente cambio:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de datos de SQL Server
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 2.0
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>tipo definido por el usuario mayor que 8 KB</p>
+          </td>
+          <td>
+          </td>
+          <td>
+            <p>2147483647</p>
+          </td>
+        </tr></table>
+      <p xmlns="">La columna TYPE_NAME tiene los siguientes cambios:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de datos de SQL Server
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 2.0
+            </th>
+            <th>
+              Tipo devuelto en el controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>varchar(max)</p>
+          </td>
+          <td>
+            <p>text</p>
+          </td>
+          <td>
+            <p>varchar</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>varbinary(max)</p>
+          </td>
+          <td>
+            <p>image</p>
+          </td>
+          <td>
+            <p>varbinary</p>
+          </td>
+        </tr></table>
+      <p xmlns="">La columna DECIMAL_DIGITS tiene los siguientes cambios:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de SQL Server
+            </th>
+            <th>
+              Controlador JDBC 2.0
+            </th>
+            <th>
+              Controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>time</p>
+          </td>
+          <td>
+            <p>null</p>
+          </td>
+          <td>
+            <p>7 (o menor si se especifica)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>date</p>
+          </td>
+          <td>
+            <p>null</p>
+          </td>
+          <td>
+            <p>null</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetime2</p>
+          </td>
+          <td>
+            <p>null</p>
+          </td>
+          <td>
+            <p>7 (o menor si se especifica)</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetimeoffset</p>
+          </td>
+          <td>
+            <p>null</p>
+          </td>
+          <td>
+            <p>7 (o menor si se especifica)</p>
+          </td>
+        </tr></table>
+      <p xmlns="">La columna SQL_DATA_TYPE tiene los siguientes cambios:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              
+                Tipo de datos de SQL Server
+            </th>
+            <th>
+              
+                Valor de datos de SQL Server2008 en el controlador JDBC 2.0
+            </th>
+            <th>
+              
+                Valor de datos de SQL Server 2008 en el controlador JDBC 3.0
+            </th>
+          </tr><tr>
+          <td>
+            <p>varchar(max)</p>
+          </td>
+          <td>
+            <p>-10</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>nvarchar(max)</p>
+          </td>
+          <td>
+            <p>-1</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>xml</p>
+          </td>
+          <td>
+            <p>-10</p>
+          </td>
+          <td>
+            <p>-152</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>tipo definido por el usuario menor o igual que 8 KB</p>
+          </td>
+          <td>
+            <p>-3</p>
+          </td>
+          <td>
+            <p>-151</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>tipo definido por el usuario mayor que 8 KB</p>
+          </td>
+          <td>
+            <p>No está disponible en el controlador JDBC 2.0</p>
+          </td>
+          <td>
+            <p>-151</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>geografía</p>
+          </td>
+          <td>
+            <p>-4</p>
+          </td>
+          <td>
+            <p>-151</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>geometría</p>
+          </td>
+          <td>
+            <p>-4</p>
+          </td>
+          <td>
+            <p>-151</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>hierarchyid</p>
+          </td>
+          <td>
+            <p>-4</p>
+          </td>
+          <td>
+            <p>-151</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>time</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+          <td>
+            <p>92</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>date</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+          <td>
+            <p>91</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetime2</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+          <td>
+            <p>93</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>datetimeoffset</p>
+          </td>
+          <td>
+            <p>-9</p>
+          </td>
+          <td>
+            <p>-155</p>
+          </td>
+        </tr></table>
+    </content>
+  </div><h1 class="heading">Ejemplo</h1><div id="codeExampleSection" class="section" name="collapseableSection">
+    <description xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <content>
+        <p xmlns="">En el siguiente ejemplo se muestra cómo utilizar el método <b>getColumns</b> para devolver información para la columna FirstName en la tabla Person.Contact en la base de datos de ejemplo SQL Server 2005 AdventureWorks.</p>
+      </content>
+    </description>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeGetColumns(Connection con) {
+   try {
+      DatabaseMetaData dbmd = con.getMetaData();
+      ResultSet rs = dbmd.getColumns("AdventureWorks", "Person", "Contact", "FirstName");
+      ResultSetMetaData rsmd = rs.getMetaData();
+
+      // Display the result set data.
+      int cols = rsmd.getColumnCount();
+      while(rs.next()) {
+         for (int i = 1; i &lt;= cols; i++) {
+            System.out.println(rs.getString(i));
+         }
+      }
+      rs.close();
+   } 
+
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">Clase SQLServerDatabaseMetaData</a><br /><a href="772de447-c922-4b85-8e10-5f0d9277966c.htm">Métodos SQLServerDatabaseMetaData</a><br /><a href="327ba0bc-438a-494c-b119-1cd4a096bb58.htm">Miembros SQLServerDatabaseMetaData</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

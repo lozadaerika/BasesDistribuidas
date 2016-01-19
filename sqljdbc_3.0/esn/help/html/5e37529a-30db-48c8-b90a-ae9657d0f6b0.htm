@@ -1,0 +1,96 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar metadatos del conjunto de resultados</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar metadatos del conjunto de resultados</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para consultar un conjunto de resultados y obtener información sobre las columnas que contiene, el controlador JDBC de Microsoft SQL Server implementa la clase <a href="9a36885f-83f3-44af-85f0-2b849dfd20d4.htm">SQLServerResultSetMetaData</a>. Esta clase contiene varios métodos que devuelven información como un solo valor. </p>
+    <p>Para crear un objeto <b>SQLServerResultSetMetaData</b>, puede usar el método <a href="9dcdbf69-1d47-422c-842e-0bed5afdcb93.htm">getMetaData</a> de la clase <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta a la base de datos de ejemplo AdventureWorks de SQL Server 2005 a la función, el método <b>getMetaData</b> de la clase <b>SQLServerResultSet</b> se usa para devolver un objeto <b>SQLServerResultSetMetaData</b> y, a continuación, se usan varios métodos del objeto <b>SQLServerResultSetMetaData</b> para mostrar información acerca del nombre y el tipo de datos de las columnas contenidas en el conjunto de resultados.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void getResultSetMetaData(Connection con) {
+   try {
+      String SQL = "SELECT TOP 10 * FROM Person.Contact";
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(SQL);
+      ResultSetMetaData rsmd = rs.getMetaData();
+
+      // Display the column name and type.
+      int cols = rsmd.getColumnCount();
+      for (int i = 1; i &lt;= cols; i++) {
+         System.out.println("NAME: " + rsmd.getColumnName(i) + " " + "TYPE: " + rsmd.getColumnTypeName(i));
+      }
+      rs.close();
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="5cfb35d4-ddcd-40a2-8091-f29cddc32552.htm">Controlar metadatos con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

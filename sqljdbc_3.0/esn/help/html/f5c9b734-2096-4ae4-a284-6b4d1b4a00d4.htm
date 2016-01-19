@@ -1,0 +1,102 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método unwrap (SQLServerConnectionPoolDataSource)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método unwrap (SQLServerConnectionPoolDataSource)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Devuelve un objeto que implementa la interfaz especificada para permitir el acceso a los métodos específicos del controlador JDBC de Microsoft SQL Server.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Esta característica se incorpora a partir de la versión 2.0 del controlador JDBC de Microsoft SQL Server.<p />
+    </div>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public &lt;T&gt; T <b>unwrap</b>(Class&lt;T&gt; <i>iface</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>iface</i>
+      </p>
+      <p xmlns="">Una clase de tipo <b>T</b> que define una interfaz.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto que implementa la interfaz especificada.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <a href="f5c9b734-2096-4ae4-a284-6b4d1b4a00d4.htm">unwrap</a> queda definido por la interfaz java.sql.Wrapper, que se incorpora en las especificaciones de JDBC 4.0.</p>
+      <p xmlns="">Es posible que las aplicaciones necesiten tener acceso a las extensiones para la API de JDBC que sean específicas del controlador JDBC de Microsoft SQL. El método <b>unwrap</b> admite la acción de desencapsular para las clases públicas que amplía este objeto, si las clases tienen extensiones de proveedor.</p>
+      <p xmlns="">La clase <a href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">SQLServerConnectionPoolDataSource</a> extiende la clase <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>. Cuando se llama a este método, el objeto desencapsula la clase <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a> y la clase <a href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">SQLServerConnectionPoolDataSource</a>.</p>
+      <p xmlns="">Para obtener más información, vea <a href="27fc9b72-9f21-4728-abcb-5c015f28a6ab.htm">Contenedores e interfaces</a>.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">Clase SQLServerConnectionPoolDataSource</a><br /><a href="b021a248-e046-4709-bece-9966d3961677.htm">Métodos SQLServerConnectionPoolDataSource</a><br /><a href="dac0337e-8088-488c-a25a-801a2190f6ca.htm">Miembros SQLServerConnectionPoolDataSource</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

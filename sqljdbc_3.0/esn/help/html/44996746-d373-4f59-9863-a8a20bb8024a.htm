@@ -1,0 +1,175 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Generar URL de conexión</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Generar URL de conexión</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El formato general de la URL de conexión es</p>
+    <p>
+      <code>jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]</code>
+    </p>
+    <p>donde: </p>
+    <ul><li>
+        
+          <b>jdbc:sqlserver://</b> (obligatorio) es el subprotocolo y es constante. <br />
+      </li><li>
+        
+          <b>serverName</b> (opcional) es la dirección del servidor con el que se establece la conexión. Puede ser un DNS o una dirección IP o bien un host local o 127.0.0.1 para el equipo local. Si no se especifica en la URL de conexión, es necesario especificar el nombre del servidor en la colección de propiedades.<br />
+      </li><li>
+        
+          <b>instanceName</b> (opcional) es la instancia para establecer la conexión con serverName. Si no se especifica, se establece una conexión con la instancia predeterminada.<br />
+      </li><li>
+        
+          <b>portNumber</b> (opcional) es el puerto para establecer la conexión con serverName. El valor predeterminado es 1433. Si usa el valor predeterminado, no es necesario especificar el puerto ni el signo ":" precedente en la dirección URL.<br />
+        <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+          Para obtener un rendimiento óptimo de la conexión, debe establecer portNumber al conectar con una instancia con nombre. De este modo se evita un ciclo de ida y vuelta en el servidor para determinar el número de puerto. Si se usan portNumber e instanceName, portNumber tiene prioridad e instanceName se omite.<p />
+        </div>
+      </li><li>
+        
+          <b>property</b> (opcional) es una o más propiedades de conexión de la opción. Para obtener más información, vea <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>. Se puede especificar cualquier propiedad de la lista. Las propiedades solo se pueden delimitar mediante punto y coma (";") y no se pueden duplicar. <br />
+      </li></ul>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Advertencia: </b>
+      Por motivos de seguridad, debe evitar la generación de direcciones URL de conexión basadas en la entrada del usuario. Debe especificar solo el nombre del servidor y el controlador de la URL. Para los valores de nombre y contraseña, utilice las colecciones de propiedades de conexión. Para obtener más información acerca de la seguridad de las aplicaciones JDBC, consulte <a href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Proteger las aplicaciones del controlador JDBC</a>.<p />
+    </div>
+  </div><h1 class="heading">Ejemplos de conexión</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Conexión a la base de datos predeterminada del equipo local con un nombre de usuario y una contraseña:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost;user=MyUserName;password=*****;</code>
+      </p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Aunque en el ejemplo anterior se usan un nombre de usuario y una contraseña en la cadena de conexión, si ejecuta la aplicación en un sistema operativo Windows, debe usar la seguridad integrada dado que resulta más seguro. Para obtener más información, consulte la sección sobre <a href="#Connectingintegrated">conexión con la autenticación integrada</a> más adelante en este tema.<p />
+      </div>
+      <p xmlns="">Conexión con la base de datos predeterminada del equipo local con autenticación integrada:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost;integratedSecurity=true;</code>
+      </p>
+      <p xmlns="">Conexión a la base de datos con nombre de un servidor remoto:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost;databaseName=AdventureWorks;integratedSecurity=true;</code>
+      </p>
+      <p xmlns="">Conexión en el puerto predeterminado con el servidor remoto:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true;</code>
+      </p>
+      <p xmlns="">Conectar mediante la especificación de un nombre de aplicación personalizada:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost;databaseName=AdventureWorks;integratedSecurity=true;applicationName=MyApp;</code>
+      </p>
+    </content></div><h1 class="heading">Instancias de SQL múltiples y con nombre</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        SQL Server permite la instalación de varias instancias de base de datos por servidor. Cada instancia se identifica con un nombre concreto. Para conectarse a una instancia con nombre de SQL Server, puede especificar el número de puerto de la instancia con nombre (opción preferida) o bien el nombre de instancia como propiedad de URL de JDBC o propiedad <b>datasource</b>. Si no se especifica ningún nombre de instancia o propiedad de número de puerto, se crea una conexión a la instancia predeterminada. Vea los ejemplos siguientes:</p>
+      <p xmlns="">Para usar un número de puerto, haga lo siguiente:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost:1433;integratedSecurity=true;&lt;more properties as required&gt;;</code>
+      </p>
+      <p xmlns="">Para usar una propiedad URL de JDBC, haga lo siguiente:</p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://localhost;instanceName=instance1;integratedSecurity=true;&lt;more properties as required&gt;;</code>
+      </p>
+    </content></div><h1 class="heading">Escape de valores en la URL de conexión</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Puede que tenga que aplicar un escape a determinadas partes de los valores URL de conexión debido a la inclusión de caracteres especiales como espacios, puntos y comas, y comillas. El controlador JDBC admite el escape de estos caracteres si se incluyen entre llaves. Por ejemplo, {;} aplica el escape al punto y coma.</p>
+      <p xmlns="">Los valores de escape pueden contener caracteres especiales (sobre todo "=", ";", "[]'" y espacio), pero no pueden contener llaves. Los valores a los que se debe aplicar el escape y contengan llaves se deben agregar a la colección de propiedades.</p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        El espacio en blanco dentro de las llaves es literal y no se reduce.<p />
+      </div>
+    </content></div><a name="Connectingintegrated"> </a><h1 class="heading">Conexión con la autenticación integrada</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC admite el uso de la autenticación integrada de tipo 2 en los sistemas operativos Windows mediante la propiedad de cadena de conexión integratedSecurity. Para usar la autenticación integrada, copie el archivo sqljdbc_auth.dll en un directorio de la ruta del sistema de Windows en que esté instalado el controlador JDBC. </p>
+      <p xmlns="">Los archivos sqljdbc_auth.dll se instalan en la siguiente ubicación:</p>
+      <p xmlns="">&lt;<i>directorio de instalación</i>&gt;\sqljdbc_&lt;<i>version</i>&gt;\&lt;<i>language</i>&gt;\auth\</p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Si está ejecutando una máquina virtual Java de (JVM, Java Virtual Machine) 32 bits, utilice el archivo sqljdbc_auth.dll en la carpeta x86, aun cuando la versión del sistema operativo sea la x64. Si está ejecutando una JVM de 64 bits en un procesador x64, utilice el archivo sqljdbc_auth.dll de la carpeta x64. Si está ejecutando una JVM de 64 bits en un procesador Itanium, utilice el archivo sqljdbc_auth.dll de la carpeta IA64.<p />
+      </div>
+      <p xmlns="">Alternativamente, puede especificar la propiedad del sistema java.libary.path para especificar el directorio de sqljdbc_auth.dll. Por ejemplo, si el controlador JDBC está instalado en el directorio predeterminado, puede especificar la ubicación de la DLL con el siguiente argumento de máquina virtual (VM) si la aplicación de Java se ha iniciado: </p>
+      <p xmlns="">
+        <code>-Djava.library.path=C:\Microsoft SQL Server JDBC Driver\sqljdbc_&lt;version&gt;\enu\auth\x86</code>
+      </p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        El controlador JDBC no admite la autenticación integrada cuando el controlador se ejecuta en sistemas operativos que no son de Windows. El controlador no proporciona funcionalidad para proporcionar las credenciales de autenticación de Windows, como el nombre de usuario y la contraseña al conectar con SQL desde sistemas operativos que no sean Windows. En tales casos, las aplicaciones deben usar la autenticación de SQL Server.<p />
+      </div>
+    </content></div><h1 class="heading">Conectar con direcciones IPv6</h1><div id="sectionSection4" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC admite el uso de direcciones IPv6 con la colección de propiedades de conexión y con la propiedad de cadena de conexión serverName. El valor serverName inicial, como jdbc:<i>sqlserver</i>://<i>serverName</i>, no se admite para las direcciones IPv6 de las cadenas de conexión. El uso de un nombre para <i>serverName</i> en lugar de una dirección IPv6 sin formato funciona en todos los casos en la conexión. En los siguientes ejemplos se proporciona más información.</p>
+      <p xmlns="">
+        <b>Para usar la propiedad serverName</b>
+      </p>
+      <p xmlns="">
+        <code>jdbc:sqlserver://;serverName=3ffe:8311:eeee:f70f:0:5eae:10.203.31.9\\instance1;integratedSecurity=true;</code>
+      </p>
+      <p xmlns="">
+        <b>Para usar la colección de propiedades</b>
+      </p>
+      <p xmlns="">
+        <code>Properties pro = new Properties();</code>
+      </p>
+      <p xmlns="">
+        <code>pro.setProperty("serverName", "serverName=3ffe:8311:eeee:f70f:0:5eae:10.203.31.9\\instance1");</code>
+      </p>
+      <p xmlns="">
+        <code>Connection con = DriverManager.getConnection("jdbc:sqlserver://;integratedSecurity=true;", pro);</code>
+      </p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Conectar SQL Server con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

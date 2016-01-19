@@ -1,0 +1,96 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método setTrustStore (SQLServerDataSource)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método setTrustStore (SQLServerDataSource)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Establece la ruta de acceso (incluido el nombre de archivo) del archivo trustStore del certificado. </p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public void <b>setTrustStore</b>(java.lang.String trustStore)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>trustStore</i>
+      </p>
+      <p xmlns="">Un<b> String </b>que contiene la ruta de acceso (incluido el nombre de archivo) del archivo trustStore del certificado.</p>
+    </content>
+  </div></div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Si la propiedad trustStore no se especifica o se establece en NULL, el controlador JDBC de Microsoft SQL Server se basará en las reglas de búsqueda del generador del administrador de confianza para determinar qué almacén de certificados se usará. El generador TrustManagerFactory SunX509 predeterminado intenta buscar material de confianza en el orden de búsqueda de ubicaciones siguiente:</p>
+      <ul xmlns=""><li>
+          1. Un archivo especificado por la propiedad del sistema "javax.net.ssl.trustStore" de la máquina virtual Java (JVM). <br />
+        </li><li>
+          2. Archivo "&lt;java-home&gt;/lib/security/jssecacerts". <br />
+        </li><li>
+          3. Archivo "&lt;java-home&gt;/lib/security/cacerts".<br />
+        </li></ul>
+      <p xmlns="">Para obtener más información, consulte la documentación de la interfaz de SunX509 TrustManager en el sitio web de Sun Microsystems.</p>
+      <p xmlns="">Si la propiedad trustStore está establecida en una cadena o en una cadena vacía "", el controlador utilizará ese valor para buscar el archivo trustStore con el fin de validar el certificado SSL del servidor.</p>
+      <p xmlns="">La propiedad trustStorePassword se puede especificar junto con la propiedad trustStore y su valor se utiliza para abrir el archivo trustStore. Para obtener más información, vea <a href="fa87cbde-71cc-4f21-bc07-f8ba2b6a0a3f.htm">setTrustStorePassword</a>.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">Clase SQLServerDataSource</a><br /><a href="7e749bc5-d765-4864-be2b-7822d4c20c09.htm">Miembros SQLServerDataSource</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

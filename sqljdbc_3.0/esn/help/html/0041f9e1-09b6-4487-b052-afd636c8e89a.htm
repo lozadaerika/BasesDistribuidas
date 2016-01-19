@@ -1,0 +1,152 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar instrucciones con procedimientos almacenados</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar instrucciones con procedimientos almacenados</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Un procedimiento almacenado es un procedimiento de base de datos, similar a un procedimiento en otros lenguajes de programación, que está contenido en la misma base de datos. En SQL Server, se pueden crear procedimientos almacenados mediante Transact-SQL o mediante Common Language Runtime (CLR) y uno de los lenguajes de programación de Visual Studio, como por ejemplo Visual Basic o C#. Por lo general, los procedimientos almacenados de SQL Server pueden realizar lo siguiente: </p>
+    <ul><li>
+        Aceptar parámetros de entrada y devolver múltiples valores en forma de parámetros de salida al procedimiento de llamada o el lote.<br />
+      </li><li>
+        Contener instrucciones de programación que realicen operaciones en la base de datos, incluyendo llamadas a otros procedimientos. <br />
+      </li><li>
+        Devolver un valor de estado a un procedimiento de llamada o lote para indicar la correcta realización o el error (y la razón del error).<br />
+      </li></ul>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener más información sobre los procedimientos almacenados de SQL Server, consulte "Procedimientos almacenados" en los Libros en pantalla de SQL Server.<p />
+    </div>
+    <p>Para trabajar con los datos de una base de datos de SQL Server con un procedimiento almacenado, el controlador JDBC de Microsoft SQL Server proporciona las clases <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>, <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>. La clase usada depende de si el procedimiento almacenado requiere los parámetros IN (entrada) u OUT (salida). Si el procedimiento almacenado no requiere ningún parámetro IN u OUT, puede usar la clase <b>SQLServerStatement</b>; si se llama al procedimiento almacenado varias veces o el procedimiento requiere solo parámetros IN, puede usar la clase <b>SQLServerPreparedStatement</b>. Si el procedimiento almacenado requiere parámetros IN y OUT, debe usar la clase <b>SQLServerCallableStatement</b>. Solo si el procedimiento almacenado requiere parámetros OUT, necesita usar la clase <b>SQLServerCallableStatement</b>.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Los procedimientos almacenados también pueden devolver recuentos de actualizaciones y múltiples conjuntos de resultados. Para obtener más información, consulte <a href="64cf4877-5995-4bfc-8865-b7618a5c8d01.htm">Usar un procedimiento almacenado con un recuento de actualizaciones</a> y <a href="ab6a3cfa-073b-44e9-afca-a8675cfe5fd1.htm">Usar múltiples conjuntos de resultados</a>.<p />
+    </div>
+    <p>Si usa el controlador JDBC para llamar a un procedimiento almacenado con parámetros, debe usar la secuencia de escape de SQL <code> call </code> junto con el método <a href="265b024c-898a-4bd0-98b5-f06076717b9e.htm">prepareCall</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. La sintaxis completa de la secuencia de escape <code> call </code> es la siguiente:</p>
+    <p>
+      <code>{[?=]call procedure-name[([parameter][,[parameter]]...)]}</code>
+    </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener más información sobre <code> call </code> y otras secuencias de escape de SQL, consulte <a href="00f9e25a-088e-4ac6-aa75-43eacace8f03.htm">Usar secuencias de escape SQL</a>.<p />
+    </div>
+    <p>Los temas de esta sección describen las formas en las que puede llamar a los procedimientos almacenados de SQL Server con el controlador JDBC y la secuencia de escape de SQL <code> call </code>.</p>
+  </div><h1 class="heading">En esta sección</h1><div id="inThisSectionSection" class="section">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Tema
+            </th>
+            <th>
+              Descripción
+            </th>
+          </tr><tr>
+          <td>
+            <p>
+              <a href="e9470a6d-a758-4c56-96ec-7b37139e36a7.htm">Usar un procedimiento almacenado sin parámetros</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar procedimientos almacenados que no contengan parámetros de entrada o de salida.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="8f491b70-7d1b-42bd-964f-9a8b86af5eaa.htm">Usar un procedimiento almacenado con parámetros de entrada</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar procedimientos almacenados que contengan parámetros de entrada.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="1c006f27-7e99-43d5-974c-7b782659290c.htm">Usar un procedimiento almacenado con parámetros de salida</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar procedimientos almacenados que contengan parámetros de salida.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="4b126e95-8458-41d6-af37-fc6662859f19.htm">Usar un procedimiento almacenado con un estado de devolución</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar procedimientos almacenados que contengan valores de estado de devolución.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>
+              <a href="64cf4877-5995-4bfc-8865-b7618a5c8d01.htm">Usar un procedimiento almacenado con un recuento de actualizaciones</a>
+            </p>
+          </td>
+          <td>
+            <p>Describe cómo usar el controlador JDBC para ejecutar procedimientos almacenados que devuelvan recuentos de actualizaciones.</p>
+          </td>
+        </tr></table>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Usar instrucciones con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

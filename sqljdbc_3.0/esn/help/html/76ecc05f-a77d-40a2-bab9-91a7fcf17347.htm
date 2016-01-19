@@ -1,0 +1,177 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Actualizar un ejemplo de datos grandes</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Actualizar un ejemplo de datos grandes</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Esta aplicación de ejemplo del controlador JDBC de Microsoft SQL Server muestra cómo actualizar una columna grande en una base de datos.</p>
+    <p>El archivo de código para este ejemplo se llama updateLargeData.java y se encuentra en la siguiente ubicación:</p>
+    <p>&lt;<i>directorio de instalación</i>&gt;\sqljdbc_&lt;<i>versión</i>&gt;\&lt;<i>idioma</i>&gt;\help\samples\adaptive</p>
+  </div><h1 class="heading">Requisitos</h1><div id="requirementsSection" class="section">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para ejecutar esta aplicación de ejemplo, deberá tener acceso a la base de datos de ejemplo SQL Server 2005 AdventureWorks. También deberá establecer la ruta de clase para incluir el archivo sqljdbc4.jar. Si en la ruta de clase falta una entrada para sqljdbc4.jar, la aplicación de ejemplo produce la excepción común "Clase no encontrada". Para obtener más información acerca de cómo establecer la ruta de clase, vea <a href="6faaf05b-8b70-4ed2-9b44-eee5897f1cd0.htm">Usar el controlador JDBC</a>. </p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        El controlador JDBC de Microsoft SQL Server proporciona los archivos de la biblioteca de clases sqljdbc.jar y sqljdbc4.jar que hay que usar dependiendo de su configuración preferida de Java Runtime Environment (JRE). Este ejemplo usa los métodos <a href="53f3291f-d43a-476b-a656-d86168dacf6c.htm">isWrapperFor</a> y <a href="ce680176-ef04-4e44-bb6c-ec50bd06e7e6.htm">unwrap</a>, que se incluyen en la API de JDBC 4.0, para obtener los métodos de almacenamiento en búfer de respuesta específicos del controlador. Para compilar y ejecutar este ejemplo, necesitará la biblioteca de clases sqljdbc4.jar, que proporciona compatibilidad con JDBC 4.0. Para obtener más información acerca del archivo JAR que hay que elegir, vea <a href="447792bb-f39b-49b4-9fd0-1ef4154c74ab.htm">Requisitos del sistema para el controlador JDBC</a>.<p />
+      </div>
+    </content>
+  </div><h1 class="heading">Ejemplo</h1><div id="codeExampleSection" class="section">
+    <description xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <content>
+        <p xmlns="">En el siguiente ejemplo, el código muestra realiza una conexión a la base de datos SQL Server 2005 AdventureWorks. Después, el código muestra crea un objeto Statement  y usa el método <a href="53f3291f-d43a-476b-a656-d86168dacf6c.htm">isWrapperFor</a> para comprobar si el objeto es un contenedor de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a> especificada. El método <a href="ce680176-ef04-4e44-bb6c-ec50bd06e7e6.htm">unwrap</a> se usa para obtener acceso a los métodos de almacenamiento en búfer de respuestas específicas del controlador. </p>
+        <p xmlns="">Después, el código muestra establece el modo de almacenamiento en búfer de respuestas como "<b>adaptive</b>" mediante el uso del método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>, además de mostrar cómo obtener el modo de almacenamiento en búfer adaptable.</p>
+        <p xmlns="">Después, ejecuta la instrucción SQL y coloca los datos que devuelve en un objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a> actualizable. </p>
+        <p xmlns="">Finalmente, el código muestra recorre en iteración las filas de datos que están contenidas en el conjunto de resultados. Si encuentra un resumen de documento vacío, usa la combinación de los métodos <a href="0cf286c7-9dcd-4b02-a568-ba6b6eb27e82.htm">updateString</a> y <a href="cfced0ca-a281-40dc-8d2f-370d5f0bf12b.htm">updateRow</a> para actualizar las filas de datos y vuelve a almacenar los datos en la base de datos. Si hay ya datos, usa el método <a href="f81dde01-d328-4b32-8871-1efac645b68e.htm">getString</a> para mostrar algunos de los datos que contiene.</p>
+        <p xmlns="">Tenga en cuenta que desde la versión 2.0 del controlador JDBC, el comportamiento predeterminado del controlador es "<b>adaptive.</b>". Sin embargo, para los conjuntos de resultados adaptables de solo avance y cuando los datos del conjunto de resultados es mayor que la memoria de la aplicación, la aplicación tiene que configurar explícitamente el modo de almacenamiento en búfer adaptable usando el método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>.</p>
+      </content>
+    </description>
+    <div class="sampleCode"><span codeLanguage="other"><pre>import java.sql.*;
+import java.io.*;
+import com.microsoft.sqlserver.jdbc.SQLServerStatement;
+
+public class updateLargeData {
+	
+   public static void main(String[] args) {
+
+      // Create a variable for the connection string.
+      String connectionUrl = 
+    	    "jdbc:sqlserver://localhost:1433;" +
+            "databaseName=AdventureWorks;integratedSecurity=true;";
+
+      // Declare the JDBC objects.
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet rs = null;  
+      Reader reader = null;
+           
+      try {
+          // Establish the connection.
+          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+          con = DriverManager.getConnection(connectionUrl);
+         
+          stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+
+          // Since the summaries could be large, make sure that
+          // the driver reads them incrementally from a database, 
+          // even though a server cursor is used for the updatable result sets.
+          
+          // The recommended way to access the Microsoft SQL Server JDBC Driver 
+          // specific methods is to use the JDBC 4.0 Wrapper functionality. 
+          // The following code statement demonstrates how to use the 
+          // Statement.isWrapperFor and Statement.unwrap methods
+          // to access the driver specific response buffering methods.
+          
+          if (stmt.isWrapperFor(com.microsoft.sqlserver.jdbc.SQLServerStatement.class)) {
+              SQLServerStatement SQLstmt = 
+                 stmt.unwrap(com.microsoft.sqlserver.jdbc.SQLServerStatement.class);
+        	  
+              SQLstmt.setResponseBuffering("adaptive");
+              System.out.println("Response buffering mode has been set to " +
+                 SQLstmt.getResponseBuffering());
+          }
+
+          // Select all of the document summaries.
+          rs = stmt.executeQuery("SELECT Title, DocumentSummary FROM Production.Document");
+
+          // Update each document summary.
+          while (rs.next()) {
+
+               // Retrieve the original document summary.
+               reader = rs.getCharacterStream("DocumentSummary");
+
+               if (reader == null)
+               {
+                   // Update the document summary.
+                   System.out.println("Updating " + rs.getString("Title"));
+                   rs.updateString("DocumentSummary", "Work in progress");
+                   rs.updateRow();
+               }
+               else
+               {
+            	   // Do something with the chunk of the data that was                   
+                   // read.
+                   System.out.println("reading " + rs.getString("Title"));
+                   reader.close();
+                   reader = null;
+               }
+          }
+      }
+      // Handle any errors that may have occurred.
+      catch (Exception e) {
+         e.printStackTrace();
+      }
+      finally {
+          if (reader != null) try { reader.close(); } catch(Exception e) {}
+          if (rs != null) try { rs.close(); } catch(Exception e) {}
+          if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+    	  if (con != null) try { con.close(); } catch(Exception e) {}
+      }
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="5b93569f-eceb-4f05-b49c-067564cd3c85.htm">Trabajar con datos grandes</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

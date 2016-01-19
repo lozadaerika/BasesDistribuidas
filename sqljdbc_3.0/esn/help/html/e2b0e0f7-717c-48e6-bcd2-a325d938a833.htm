@@ -1,0 +1,505 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Método getFunctionColumns (SQLServerDatabaseMetaData)</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Método getFunctionColumns (SQLServerDatabaseMetaData)</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Recupera una descripción de los parámetros de las funciones del sistema o de usuario del catálogo y del tipo de devolución. </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Esta característica se incorpora a partir de la versión 2.0 del controlador JDBC de Microsoft SQL Server.<p />
+    </div>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public ResultSet <b>getFunctionColumns</b>(java.lang.String <i>catalog</i>,
+                       java.lang.String <i>schemaPattern</i>,
+                       java.lang.String <i>functionNamePattern</i>
+                       java.lang.String <i>columnNamePattern</i>)</pre></span></div><h1 class="heading">Parámetros</h1><div id="parametersSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <i>catalog</i>
+      </p>
+      <p xmlns="">Un <b>String</b> que contiene el nombre del catálogo. Si es una cadena vacía "", el resultado incluye las funciones sin un catálogo. Si es <b>null</b>, el nombre del catálogo no se utiliza para la búsqueda.</p>
+      <p xmlns="">
+        <i>schemaPattern</i>
+      </p>
+      <p xmlns="">Un <b>String</b> que contiene el modelo de nombre del esquema. Si es una cadena vacía "", el resultado incluye las funciones sin un esquema. Si es <b>null</b>, el nombre del esquema no se utiliza para la búsqueda.</p>
+      <p xmlns="">
+        <i>functionNamePattern</i>
+      </p>
+      <p xmlns="">Un <b>String</b> que contiene el nombre de una función.</p>
+      <p xmlns="">
+        <i>columnNamePattern</i>
+      </p>
+      <p xmlns="">Un <b>String</b> que contiene el nombre de un parámetro.</p>
+    </content>
+  </div></div><h1 class="heading">Valor devuelto</h1><div id="returnValueSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>.</p>
+    </content>
+  </div><h1 class="heading">Excepciones</h1><div id="exceptionsSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">
+        <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+      </p>
+    </content>
+  </div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El método <b>getFunctionColumns</b> especifica este método <b>getFunctionColumns</b> en la interfaz java.sql.DatabaseMetaData.</p>
+      <p xmlns="">Este método devuelve solamente las funciones y parámetros que coinciden con el esquema, nombre de función y nombre de parámetro especificados dentro del catálogo indicado.</p>
+      <p xmlns="">Cada fila en el conjunto de resultados incluye las siguientes columnas para una descripción del parámetro, una descripción de la columna o un tipo de devolución:</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Descripción
+            </th>
+          </tr><tr>
+          <td>
+            <p>FUNCTION_CAT</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de la base de datos en que reside la función.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>FUNCTION_SCHEM</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Esquema para la función.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>FUNCTION_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de la función.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de un parámetro o columna.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo de la columna. Puede ser uno de los siguientes valores:</p>
+            <ul><li>
+                functionColumnUnknown (0): tipo desconocido.<br />
+              </li><li>
+                functionColumnIn (1): parámetro de entrada.<br />
+              </li><li>
+                functionColumnInOut (2): parámetro de entrada y salida.<br />
+              </li><li>
+                functionColumnOut (3): parámetro de salida.<br />
+              </li><li>
+                functionReturn (4): valor devuelto de una función.<br />
+              </li><li>
+                functionColumnResult (5): un parámetro o columna es una columna en el conjunto de resultados.<br />
+              </li></ul>
+          </td>
+        </tr><tr>
+          <td>
+            <p>DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Valor del tipo de datos SQL de <b>Java.sql.Types</b>.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>TYPE_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del tipo de datos.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>PRECISION</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Número total de dígitos significativos.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>LENGTH</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Longitud de los datos, en bytes.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SCALE</p>
+          </td>
+          <td>
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td>
+            <p>Número de dígitos a la derecha del signo decimal.</p>
+            <p>
+            </p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>RADIX</p>
+          </td>
+          <td>
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td>
+            <p>Base de tipos numéricos.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>NULLABLE</p>
+          </td>
+          <td>
+            <p>
+              <b>short</b>
+            </p>
+          </td>
+          <td>
+            <p>Indica si el parámetro o valor devuelto puede contener un valor <b>null</b>. </p>
+            <p> Puede ser uno de los siguientes valores:</p>
+            <ul><li>
+                functionNoNulls (0): no se permite un valor NULL.<br />
+              </li><li>
+                functionNullable (1): se permite un valor NULL.<br />
+              </li><li>
+                functionNullableUnknown (2): desconocido.<br />
+              </li></ul>
+          </td>
+        </tr><tr>
+          <td>
+            <p>REMARKS</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Comentarios sobre una columna o un parámetro.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>COLUMN_DEF</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Valor predeterminado de la columna.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              Esta información está disponible con SQL Server y es específica del controlador JDBC.<p />
+            </div>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SQL_DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>Esta columna es igual que la columna <b>DATA_TYPE</b>, salvo por los tipos de datos <b>datetime</b> e <b>interval</b> de ISO.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              Esta información está disponible con SQL Server y es específica del controlador JDBC.<p />
+            </div>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SQL_DATETIME_SUB</p>
+          </td>
+          <td>
+            <p>
+              <b>smallint</b>
+            </p>
+          </td>
+          <td>
+            <p>El subcódigo <b>datetime</b> <b>interval</b> de ISO si el valor de <b>SQL_DATA_TYPE</b> es <b>SQL_DATETIME</b> o <b>SQL_INTERVAL</b>. Para otros tipos de datos distintos de <b>datetime</b> e <b>interval</b> de ISO, esta columna es NULL.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              Esta información está disponible con SQL Server y es específica del controlador JDBC.<p />
+            </div>
+          </td>
+        </tr><tr>
+          <td>
+            <p>CHAR_OCTET_LENGTH</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Longitud máxima de los parámetros o columnas basados en valores binarios o caracteres. Para los demás tipos de datos, es NULL.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>ORDINAL_POSITION</p>
+          </td>
+          <td>
+            <p>
+              <b>int</b>
+            </p>
+          </td>
+          <td>
+            <p>Para los parámetros de entrada y salida, representa la posición a partir de 1. </p>
+            <p>Para las columnas de conjunto de resultados, es la posición de la columna en el conjunto de resultados a partir de 1.</p>
+            <p>Para el valor devuelto, es 0.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>IS_NULLABLE</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Determina la nulabilidad de un parámetro o columna.</p>
+            <p>Puede ser uno de los siguientes valores:</p>
+            <p>
+              <b>YES</b>: el parámetro o la columna puede incluir los valores NULL.</p>
+            <p>
+              <b>NO</b>: el parámetro o la columna no puede incluir los valores NULL.</p>
+            <p>Cadena vacía (""): desconocido.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_TYPE_CATALOG_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_TYPE_SCHEMA_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_CATALOG_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo definido por el usuario (UDT) del nombre completo.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_SCHEMA_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo donde se define el nombre de una colección de esquemas XML. Si no se encuentra el nombre de catálogo, esta variable contiene una cadena vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_UDT_ASSEMBLY_TYPE_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema donde se define el nombre de una colección de esquemas XML. Si no se puede encontrar el nombre de esquema, esta cadena estará vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_CATALOG_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre de una colección de esquemas XML. Si no se puede encontrar el nombre, esta cadena estará vacía.</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_SCHEMA_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del catálogo que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_XML_SCHEMACOLLECTION_NAME</p>
+          </td>
+          <td>
+            <p>
+              <b>String</b>
+            </p>
+          </td>
+          <td>
+            <p>Nombre del esquema que contiene el tipo definido por el usuario (UDT).</p>
+          </td>
+        </tr><tr>
+          <td>
+            <p>SS_DATA_TYPE</p>
+          </td>
+          <td>
+            <p>
+              <b>tinyint</b>
+            </p>
+          </td>
+          <td>
+            <p>Tipo de datos de SQL Server que utilizan los procedimientos almacenados extendidos.</p>
+            <p>
+              <b>Nota</b>  Para obtener más información sobre los tipos de datos que ha devuelto SQL Server, vea "Tipos de datos (Transact-SQL)" en los Libros en pantalla de SQL Server.</p>
+          </td>
+        </tr></table>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">Clase SQLServerDatabaseMetaData</a><br /><a href="327ba0bc-438a-494c-b119-1cd4a096bb58.htm">Miembros SQLServerDatabaseMetaData</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

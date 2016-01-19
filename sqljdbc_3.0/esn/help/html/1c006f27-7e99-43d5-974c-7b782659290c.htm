@@ -1,0 +1,129 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar un procedimiento almacenado con parámetros de salida</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar un procedimiento almacenado con parámetros de salida</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Un procedimiento almacenado de SQL Server al que se puede llamar es el que devuelve uno o más parámetros OUT, que son los parámetros que el procedimiento almacenado usa para devolver los datos a la aplicación que realiza la llamada. El controlador JDBC de Microsoft SQL Server ofrece la clase <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, que puede usar para llamar a este tipo de procedimiento almacenado y procesar los datos que devuelve. </p>
+    <p>Cuando se llama a este tipo de procedimiento almacenado con el controlador JDBC, se debe usar la secuencia de escape de SQL <code> call </code> junto con el método <a href="265b024c-898a-4bd0-98b5-f06076717b9e.htm">prepareCall</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. La sintaxis para la secuencia de escape <code>call</code> con parámetros OUT es la siguiente:</p>
+    <p>
+      <code>{call procedure-name[([parameter][,[parameter]]...)]}</code>
+    </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener más información acerca de las secuencias de escape de SQL, consulte <a href="00f9e25a-088e-4ac6-aa75-43eacace8f03.htm">Usar secuencias de escape SQL</a>.<p />
+    </div>
+    <p>Al crear la secuencia de escape <code> call </code>, especifique los parámetros OUT mediante el carácter ? (signo de interrogación). Este carácter actúa como un marcador de posición para los valores de parámetros devueltos por el procedimiento almacenado. Para especificar un valor para un parámetro OUT, debe especificar el tipo de datos de cada parámetro mediante el método <a href="82f8d608-efc1-4af8-a985-ec25d19420aa.htm">registerOutParameter</a> de la clase <b>SQLServerCallableStatement</b> antes de ejecutar el procedimiento almacenado. </p>
+    <p>El valor especificado para el parámetro OUT en el método <b>registerOutParameter</b> debe ser uno de los tipos de datos JDBC incluidos en java.sql.Types, que se asigna a su vez a uno de los tipos de datos de SQL Server nativos. Para obtener más información acerca de los tipos de datos JDBC y de SQL Server, consulte <a href="7802328d-4d23-4775-9573-4169b127d258.htm">Describir los tipos de datos del controlador JDBC</a>.</p>
+    <p>Cuando pasa un valor al método <b>registerOutParameter</b> para un parámetro OUT, debe especificar no solo los tipos de datos usados para el parámetro, sino también la posición ordinal del parámetro o el nombre del mismo en el procedimiento almacenado. Por ejemplo, si el procedimiento almacenado contiene un solo parámetro OUT, su valor ordinal es 1 y, si el procedimiento almacenado contiene dos parámetros, el primer valor ordinal es 1 y el segundo 2.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      El controlador JDBC no admite el uso de los tipos de datos CURSOR, SQLVARIANT, TABLE y TIMESTAMP SQL Server como parámetros OUT.<p />
+    </div>
+    <p>Cree, a modo de ejemplo, el siguiente procedimiento almacenado en la base de datos de ejemplo AdventureWorks de SQL Server 2005:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>CREATE PROCEDURE GetImmediateManager
+   @employeeID INT,
+   @managerID INT OUTPUT
+AS
+BEGIN
+   SELECT @managerID = ManagerID 
+   FROM HumanResources.Employee 
+   WHERE EmployeeID = @employeeID
+END</pre></span></div>
+    <p>Este procedimiento almacenado devuelve un solo parámetro OUT (managerID), que es un entero, en función del parámetro IN (employeeID) especificado, que también es un entero. El valor devuelto en el parámetro OUT es ManagerID en función de EmployeeID en la tabla HumanResources.Employee. </p>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta a la base de datos de ejemplo AdventureWorks a la función y se usa el método <a href="e1367f39-23d7-4e26-b160-6d988d7e6988.htm">execute</a> para llamar al procedimiento almacenado GetImmediateManager:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeStoredProcedure(Connection con) {
+   try {
+      CallableStatement cstmt = con.prepareCall("{call dbo.GetImmediateManager(?, ?)}");
+      cstmt.setInt(1, 5);
+      cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
+      cstmt.execute();
+      System.out.println("MANAGER ID: " + cstmt.getInt(2));
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span></div>
+    <p>Este ejemplo utiliza las posiciones ordinales para identificar los parámetros. También puede identificar un parámetro utilizando su nombre en lugar de su posición ordinal. En el ejemplo de código siguiente se modifica el ejemplo anterior para demostrar cómo utilizar los parámetros con nombre en una aplicación Java. Observe que los nombres de parámetros se corresponden con los nombres de parámetros en la definición del procedimiento almacenado:</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeStoredProcedure(Connection con) {
+   try {
+      CallableStatement cstmt = con.prepareCall("{call dbo.GetImmediateManager(?, ?)}");
+      cstmt.setInt("employeeID", 5);
+      cstmt.registerOutParameter("managerID", java.sql.Types.INTEGER);
+      cstmt.execute();
+      System.out.println("MANAGER ID: " + cstmt.getInt("managerID"));
+      cstmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }</pre></span></div>
+    <p>}</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      En estos ejemplos se usa el método <b>execute</b> de la clase <b>SQLServerCallableStatement</b> para ejecutar el procedimiento almacenado. Se usa dicho método porque el procedimiento almacenado no ha devuelto ningún conjunto de resultados. En caso contrario, se usaría el método <a href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a>.<p />
+    </div>
+    <p>Los procedimientos almacenados también pueden devolver recuentos de actualizaciones y múltiples conjuntos de resultados. El controlador JDBC de Microsoft SQL Server sigue la especificación de JDBC 3.0, que indica que se deben recuperar varios conjuntos de resultados y actualizaciones antes de que se recuperen los parámetros OUT. Es decir, la aplicación debería recuperar todos los objetos <b>ResultSet</b> y recuentos de actualizaciones antes de recuperar los parámetros OUT con los métodos <b>CallableStatement.getter</b>. De lo contrario, los objetos <b>ResultSet</b> y recuentos de actualizaciones que aún no se hayan recuperado se perderán cuando se recuperen los parámetros OUT. Para obtener más información acerca de los recuentos de actualizaciones y los conjuntos de resultados múltiples, vea <a href="64cf4877-5995-4bfc-8865-b7618a5c8d01.htm">Usar un procedimiento almacenado con un recuento de actualizaciones</a> y <a href="ab6a3cfa-073b-44e9-afca-a8675cfe5fd1.htm">Usar múltiples conjuntos de resultados</a>.</p>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="0041f9e1-09b6-4487-b052-afd636c8e89a.htm">Usar instrucciones con procedimientos almacenados</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

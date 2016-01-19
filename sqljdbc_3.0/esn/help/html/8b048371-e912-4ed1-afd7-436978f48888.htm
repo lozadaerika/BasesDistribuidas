@@ -1,0 +1,89 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar metadatos de una base de datos</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar metadatos de una base de datos</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para consultar en una base de datos información sobre compatibilidad, el controlador JDBC de Microsoft SQL Server implementa la clase <a href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">SQLServerDatabaseMetaData</a>. Esta clase contiene numerosos métodos que devuelven información en forma de un solo valor o de conjunto de resultados. </p>
+    <p>Para crear un objeto <b>SQLServerDatabaseMetaData</b>, puede utilizar el método <a href="86223cb5-3bf4-489a-8c82-669a91764f2b.htm">getMetaData</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a> para obtener información sobre la base de datos a la que está conectado.</p>
+    <p>En el ejemplo siguiente, una conexión abierta a la base de datos de ejemplo SQL Server 2005 AdventureWorks se pasa a la función, el método <b>getMetaData</b> de la clase <b>SQLServerConnection</b> se utiliza para devolver un objeto <b>SQLServerDatabaseMetadata</b> y, a continuación, se usan los diversos métodos del objeto <b>SQLServerDatabaseMetaData</b> para mostrar información sobre el controlador, su versión y el nombre y la versión de la base de datos.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void getDatabaseMetaData(Connection con) {
+   try {
+      DatabaseMetaData dbmd = con.getMetaData();
+      System.out.println("dbmd:driver version = " + dbmd.getDriverVersion());
+      System.out.println("dbmd:driver name = " + dbmd.getDriverName());
+      System.out.println("db name = " + dbmd.getDatabaseProductName());
+      System.out.println("db ver = " + dbmd.getDatabaseProductVersion());
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="5cfb35d4-ddcd-40a2-8091-f29cddc32552.htm">Controlar metadatos con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

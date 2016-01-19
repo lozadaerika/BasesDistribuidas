@@ -1,0 +1,93 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar una instrucción SQL para modificar objetos de la base de datos</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar una instrucción SQL para modificar objetos de la base de datos</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para modificar objetos de la base de datos SQL Server mediante una instrucción SQL, puede usar el método <a href="10ae662a-ce3c-4b24-875c-5c2df319d93b.htm">executeUpdate</a> de la clase <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>. El método <b>executeUpdate</b> pasará la instrucción SQL a la base de datos para su procesamiento y luego devolverá un valor de 0 porque no se vio afectada ninguna fila. </p>
+    <p>Para ello, primero debe crear un objeto <b>SQLServerStatement</b> mediante el método <a href="6d043ba9-b8ec-41d3-bb22-ad2c4aebda6f.htm">createStatement</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Las instrucciones SQL que modifican objetos dentro de una base de datos, se llaman instrucciones de lenguaje de definición de datos (DDL). Estas instrucciones incluyen CREATE TABLE, DROP TABLE, CREATE INDEX y DROP INDEX. Para obtener más información sobre los tipos de instrucciones DDL compatibles con SQL Server, consulte los Libros en pantalla de SQL Server.<p />
+    </div>
+    <p>En el siguiente ejemplo, se pasa a la función una conexión abierta a la base de datos de muestra SQL Server 2005 AdventureWorks, se construye una instrucción SQL que creará la TestTable sencilla en la base de datos, para posteriormente ejecutar la instrucción y mostrar el valor de devolución.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeUpdateStatement(Connection con) {
+   try {
+      String SQL = "CREATE TABLE TestTable (Col1 int IDENTITY, Col2 varchar(50), Col3 int)";
+      Statement stmt = con.createStatement();
+      int count = stmt.executeUpdate(SQL);
+      stmt.close();
+
+      System.out.println("ROWS AFFECTED: " + count);
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="fe28f48a-e1bc-48ff-a5e7-c24cd6e5ecc7.htm">Usar instrucciones con SQL</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Clase SQLServerXADataSource</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Clase SQLServerXADataSource</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Representa una fábrica para los objetos <a href="5ecb4bf1-b8d1-47cf-9cb1-7a18acc11ce2.htm">SQLServerXAConnection</a>, la cual se utiliza internamente.</p>
+    <p>
+      <b>Paquete:</b> com.microsoft.sqlserver.jdbc</p>
+    <p>
+      <b>Extiende:</b> <a href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">SQLServerConnectionPoolDataSource</a></p>
+    <p>
+      <b>Implementa:</b> javax.sql.XADataSource</p>
+  </div><h1 class="heading">Sintaxis</h1><div id="syntaxSection" class="section"><div class="sampleCode"><span codeLanguage="other"><pre>
+public class <b>SQLServerXADataSource</b></pre></span></div></div><h1 class="heading">Notas</h1><div id="remarksSection" class="section" name="collapseableSection">
+    <content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Un objeto que implementa la interfaz <b>SQLServerXADataSource</b> se registra normalmente con un servicio de asignación de nombres que utiliza la interfaz Java Naming and Directory Interface (JNDI). </p>
+      <p xmlns="">La clase <b>SQLServerXADataSource</b> proporciona las conexiones a bases de datos para su utilización en transacciones distribuidas (XA). La clase <b>SQLServerXADataSource</b> también admite la agrupación de conexiones físicas. SQL Server implementa las interfaces <b>SQLServerXADataSource</b> y <b>SQLServerXAConnection</b>, las cuales se definen en el paquete javax.sql.</p>
+      <p xmlns="">Un objeto <b>SQLServerXAConnection</b> es una conexión agrupada que puede participar en una transacción distribuida. Para ser precisos, <b>SQLServerXAConnection</b> extiende la interfaz <b>SQLServerPooledConnection</b>, para ello, agrega el método <a href="e1d2828f-fd20-44b0-b796-dc70f77c5b03.htm">getXAResource</a>. Este método genera un objeto <a href="df957b79-536f-4db7-b6ac-3d59343559fc.htm">SQLServerXAResource</a> que puede utilizar un administrador de transacciones para coordinar el trabajo realizado en esta conexión con los otros participantes en la transacción distribuida. Dado que extienden la interfaz <b>SQLServerPooledConnection</b>, los objetos <b>SQLServerXAConnection</b> admiten todos los métodos de los objetos <b>SQLServerPooledConnection</b>. Se trata de conexiones físicas reutilizables a un origen de datos subyacente y generan controladores de conexión lógicos que se pueden devolver a una aplicación JDBC.</p>
+      <p xmlns="">
+        Un objeto <b>SQLServerXADataSource</b> genera objetos <b>SQLServerXAConnection</b>. Los objetos <b>SQLServerConnectionPoolDataSource</b> y los objetos <b>SQLServerXADataSource</b> son similares porque ambos se implementan bajo un nivel del origen de datos que está visible para la aplicación JDBC. Con esta arquitectura SQL Server puede admitir transacciones distribuidas de forma que sea transparente para la aplicación. <b>SQLServerXADataSource</b> se puede configurar para integrarse con Microsoft DTC (Coordinador de transacciones distribuidas) con el fin de proporcionar un procesamiento verdadero de transacciones distribuidas.</p>
+    </content>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="04178645-915f-4569-8907-d45e299bbe7d.htm">Miembros de clase SQLServerXADataSource</a><br /><a href="e4e1ae9d-18a6-41db-8bd2-9cf0eee4cccb.htm">Referencia de API del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

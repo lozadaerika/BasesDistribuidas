@@ -1,0 +1,100 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Características internacionales del controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Características internacionales del controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Las características de internacionalización del controlador JDBC de Microsoft SQL Server incluyen: </p>
+    <ul><li>
+        Compatibilidad con el trabajo en los mismos idiomas que SQL Server.<br />
+      </li><li>
+        Compatibilidad con las conversiones de idioma de Java para datos de SQL Server en los que el idioma sea importante.<br />
+      </li><li>
+        Compatibilidad con idiomas internacionales, independientemente del sistema operativo.<br />
+      </li></ul>
+  </div><h1 class="heading">Tratamiento de los datos de caracteres</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los datos de caracteres en Java se tratan de forma predeterminada como Unicode, el objeto <b>String</b> de Java representa datos de caracteres Unicode. En el controlador JDBC, la única excepción a esta regla son los métodos establecedor y captador de flujos ASCII, que son casos especiales porque usan flujos de bytes con la presunción implícita de páginas de códigos únicas conocidas (ASCII).</p>
+      <p xmlns="">Además, el controlador JDBC proporciona la propiedad de cadena de conexión <b>sendStringParametersAsUnicode</b>. Esta propiedad se puede usar para especificar que los parámetros preparados para los datos de caracteres se envíen como ASCII o juego de caracteres multibyte (MBCS) en lugar de Unicode. Para obtener más información acerca de la propiedad de conexión <b>sendStringParametersAsUnicode</b>, vea <a href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Establecer las propiedades de conexión</a>. </p>
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Conversiones entrantes en el controlador</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Los datos de texto Unicode que provengan del servidor no necesitan conversión. Se pasan directamente como Unicode. Los datos que no sean Unicode y provengan del servidor se convierten de una página de códigos de datos, en el nivel de la base de datos o de columna, a Unicode. El controlador JDBC emplea las rutinas de conversión de la Máquina Virtual Java (JVM) para realizar estas conversiones. Estas conversiones se realizan en todos los métodos establecedores de flujos String y Character.</p>
+          <p xmlns="">Si la JVM no posee la compatibilidad adecuada de la página de códigos para los datos de la base de datos, el controlador JDBC lanza la excepción "la página de códigos XXX no es compatible con el entorno Java". Para solucionar este problema, debería instalar la compatibilidad completa con caracteres internacionales necesaria para esa JVM. Como ejemplo, vea la documentación relativa a las codificaciones compatibles (Supported Encodings) en el sitio web de Sun Microsystems.</p>
+        </content></div>
+      <h1 class="heading" xmlns="">Conversiones salientes del controlador</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Los datos de caracteres que vayan desde el controlador hasta el servidor pueden ser ASCII o Unicode. Por ejemplo, los nuevos métodos de caracteres nacionales de JDBC 4.0, como los métodos <b>setNString</b>, <b>setNCharacterStream</b> y <b>setNClob</b> de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, envían siempre sus valores de parámetro al servidor de Unicode.</p>
+          <p xmlns="">Por ejemplo, los nuevos métodos de caracteres nacionales de JDBC 4.0, como los métodos <b>setString</b>, <b>setCharacterStream</b> y <b>setClob</b> de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, envían siempre sus valores de parámetro al servidor de Unicode solamente cuando la propiedad <b>sendStringParametersAsUnicode</b> está configurada en  "true", que es el valor predeterminado. </p>
+        </content></div>
+    </sections></div><h1 class="heading">Parámetros que no son Unicode</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para un rendimiento óptimo con el tipo de parámetros <b>CHAR</b>, <b>VARCHAR</b> o <b>LONGVARCHAR</b> que no son Unicode, configure la propiedad de cadena de conexión <b>sendStringParametersAsUnicode</b> en "false" y use métodos de caracteres que no sean nacionales.</p>
+    </content></div><h1 class="heading">Problemas de formato</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para fecha, hora y divisas, el formato con datos localizados se aplica en el nivel de lenguaje Java empleando el objeto <b>Locale</b> y los diversos métodos de formato para los tipos de datos <b>Date</b>, <b>Calendar</b> y <b>Number</b>. En el caso excepcional en el que el controlador JDBC debe pasar datos para los que el idioma sea importante en un formato localizado, se utiliza el formateador correspondiente con la configuración regional predeterminada de la JVM.</p>
+    </content></div><h1 class="heading">Compatibilidad con intercalación</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC 3.0 admite todas las intercalaciones compatibles con SQL Server 2000 y SQL Server 2005, y las nuevas intercalaciones o nuevas versiones de los nombres de intercalación de Windows que se incluyeron en SQL Server 2008.</p>
+      <p xmlns="">Para obtener más información acerca de las intercalaciones, vea los temas relativos a <a href="http://go.microsoft.com/fwlink/?LinkId=131366" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">intercalación y compatibilidad con Unicode</linkText></a> y <a href="http://go.microsoft.com/fwlink/?LinkId=131367" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">nombre de intercalación de Windows (Transact-SQL)</linkText></a> en los libros en pantalla de SQL Server.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

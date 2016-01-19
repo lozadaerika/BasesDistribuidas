@@ -1,0 +1,148 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Descripción de las conversiones de tipos de datos</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Descripción de las conversiones de tipos de datos</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para facilitar la conversión de tipo de datos del lenguaje de programación Java a tipos de datos de SQL Server, el controlador JDBC de Microsoft SQL Server proporciona las conversiones de tipos de datos que requiere la especificación JDBC. Para mejorar la flexibilidad, todos los tipos son convertibles entre los tipos de datos <b>Object</b>, <b>String</b> y <b>byte[]</b>. </p>
+  </div><h1 class="heading">Conversiones de métodos de captador</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Según los tipos de datos SQL Server, el siguiente cuadro contiene el mapa de conversión del controlador JDBC para los métodos <b>get&lt;Type&gt;()</b> de la clase <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>, así como las conversiones no admitidas para los métodos <b>get&lt;Type&gt;</b> de la clase <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>.</p>
+      <div xmlns=""><img src="../local/a01384f7-3912-4a57-beca-eb876955c6f6.gif" target="_blank" alt="JDBCGetterConversions" /></div>
+      <p xmlns="">Los métodos de captador del controlador JDBC admiten tres categorías de conversiones:</p>
+      <ul xmlns=""><li>
+          
+            <b>Sin pérdidas (x)</b>: conversiones para los casos en los que el tipo de captador es igual o menor que el tipo de servidor subyacente. Por ejemplo, al llamar a <b>getBigDecimal</b> en una columna decimal del servidor subyacente, no es necesario realizar ninguna conversión.<br />
+        </li><li>
+          
+            <b>Convertido (y)</b>: conversiones desde tipos de servidores numéricos a tipos del lenguaje Java en las que la conversión es normal y sigue las reglas de conversión del lenguaje Java. Para estas conversiones, la precisión siempre se trunca, nunca se redondea, y el desbordamiento se trata como un módulo del tipo de destino, que es más pequeño. Por ejemplo, al llamar a <b>getInt</b> en una columna <b>decimal</b> subyacente que contiene "1.9999", por ejemplo, se devolverá "1", o si el valor <b>decimal</b> subyacente es "3000000000", el valor <b>int</b> se desborda a "-1294967296".<br />
+        </li><li>
+          
+            <b>Dependiente de datos (z)</b>: las conversiones de tipos de caracteres subyacentes a tipos numéricos requieren que los tipos de caracteres contengan valores que se puedan convertir a ese tipo. No se realiza ninguna otra conversión. Si el valor es demasiado grande para el tipo de captador, el valor no es válido. Por ejemplo, si se llama a <b>getInt</b> en una columna varchar(50) que contiene "53", el valor se devuelve como un <b>int</b>, pero si el valor subyacente es "xyz" o "3000000000", se genera un error.<br />
+        </li></ul>
+      <p xmlns="">Si se llama a <b>getString</b> en un tipo de datos de columna <b>binary</b>, <b>varbinary</b>, <b>varbinary(max)</b> o <b>image</b>, el valor se devuelve como un valor de cadena hexadecimal.</p>
+    </content></div><h1 class="heading">Conversiones de métodos de actualización</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para los tipos de datos de Java pasados a los métodos <b>update&lt;Type&gt;()</b> de la clase <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>, se aplican las conversiones siguientes.</p>
+      <div xmlns=""><img src="../local/104cb32d-a90c-4bcb-97de-e6907a0efe99.gif" target="_blank" alt="JDBCUpdaterConversions" /></div>
+      <p xmlns="">Los métodos de actualización del controlador JDBC admiten tres categorías de conversiones:</p>
+      <ul xmlns=""><li>
+          
+            <b>Sin pérdidas (x)</b>: conversiones para los casos en los que el tipo de actualización es igual o menor que el tipo de servidor subyacente. Por ejemplo, al llamar a <b>updateBigDecimal</b> en una columna decimal del servidor subyacente, no es necesario realizar ninguna conversión.<br />
+        </li><li>
+          
+            <b>Convertido (y)</b>: conversiones desde tipos de servidores numéricos a tipos del lenguaje Java en las que la conversión es normal y sigue las reglas de conversión del lenguaje Java. Para estas conversiones, la precisión siempre se trunca (nunca se redondea) y el desbordamiento se trata como un módulo del tipo de destino (el más pequeño). Por ejemplo, al llamar a <b>updateDecimal</b> en una columna <b>int</b> subyacente que contiene "1.9999", por ejemplo, se devolverá "1" o si el valor <b>decimal</b> subyacente es "3000000000", el valor <b>int</b> se desborda a "-1294967296".<br />
+        </li><li>
+          
+            <b>Dependiente de datos (z)</b>: las conversiones de tipos de datos de origen subyacentes a tipos de datos de destino requieren que los valores contenidos se puedan convertir a los tipos de destino. No se realiza ninguna otra conversión. Si el valor es demasiado grande para el tipo de captador, el valor no es válido. Por ejemplo, si se llama a <b>updateString</b> en una columna que contiene "53", la actualización se realiza correctamente, pero si el valor String subyacente es "foo" o "3000000000", se genera un error.<br />
+        </li></ul>
+      <p xmlns="">Cuado se llama a <b>updateString</b> en un tipo de datos de columna <b>binary</b>, <b>varbinary</b>, <b>varbinary(max)</b> o <b>image</b>, controla el valor como un valor de cadena hexadecimal.</p>
+      <p xmlns="">Cuando el tipo de datos de columna de SQL Server es <b>XML</b>, el valor de los datos debe ser un <b>XML</b> válido. Cuando se llama a los métodos <b>updateBytes</b>, <b>updateBinaryStream</b> o <b>updateBlob</b>, el valor de los datos debe ser la representación de la cadena decimal de los caracteres XML. Por ejemplo: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>&lt;hello&gt;world&lt;/hello&gt; = 0x3C68656C6C6F3E776F726C643C2F68656C6C6F3E </pre></span></div>
+      <p xmlns="">Tenga en cuenta que se necesita una marca de orden de bytes (BOM) si los caracteres XML están en codificaciones de caracteres específicos.</p>
+    </content></div><h1 class="heading">Conversiones del método establecedor</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para los tipos de datos de Java pasados a los métodos <b>set&lt;Type&gt;()</b> de la clase <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y de la clase <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, se aplican las siguientes conversiones.</p>
+      <div xmlns=""><img src="../local/fe289363-9e70-4c8d-88bc-51e959ed9755.gif" target="_blank" alt="JDBCSetterConversions" /></div>
+      <p xmlns="">El servidor intenta realizar las conversiones y devuelve errores si no lo consigue.</p>
+      <p xmlns="">En el caso del tipo de datos <b>String</b>, si el valor supera la longitud de <b>VARCHAR</b>, se asigna a <b>LONGVARCHAR</b>. Similarmente <b>NVARCHAR</b> se asigna a <b>LONGNVARCHAR</b>, si el valor supera la longitud admitida de <b>NVARCHAR</b>. Lo mismo sucede para <b>byte[]</b>. Los valores mayores que <b>VARBINARY</b> se vuelven <b>LONGVARBINARY</b>.</p>
+      <p xmlns="">Los métodos de establecimiento del controlador JDBC admiten dos categorías de conversiones:</p>
+      <ul xmlns=""><li>
+          
+            <b>Sin pérdidas (x)</b>: conversiones para los casos numéricos en los que el tipo de establecedor es igual o menor que el tipo de servidor subyacente. Por ejemplo, al llamar a <b>setBigDecimal</b> en una columna <b>decimal</b> del servidor subyacente, no es necesario realizar ninguna conversión. En los casos de conversión de tipo numérico a carácter, el tipo de datos <b>numeric</b> de Java se convierte en <b>String</b>. Por ejemplo, si se llama a <b>setDouble</b> con el valor "53" en una columna varchar(50), se producirá un valor de carácter "53" en esa columna de destino.<br />
+        </li><li>
+          
+            <b>Convertido (y)</b>: conversiones de un tipo <b>numeric</b> de Java a un tipo <b>numeric</b> del servidor subyacente que es menor. Esta conversión es normal y sigue las convenciones de conversión de SQL Server. La precisión siempre se trunca, nunca se redondea, y el desbordamiento lanza un error de conversión no admitida. Por ejemplo, si se utiliza <b>updateDecimal</b> con un valor de "1,9999" en una columna subyacente de enteros, el resultado es "1" en la columna destino; pero si se pasa de "3000000000", el controlador lanzará un error.<br />
+        </li><li>
+          
+            <b>Dependiente de datos (z)</b>: las conversiones de un tipo <b>String</b> de Java al tipo de datos de SQL Server subyacente dependen de las siguientes condiciones: el controlador envía el valor <b>String</b> a SQL Server y, si fuera necesario, SQL Server realizará las conversiones. Si <b>sendStringParametersAsUnicode</b> se configura en TRUE y el tipo de datos SQL Server subyacente es <b>image</b>, SQL Server no permite la conversión de <b>nvarchar</b> en <b>image</b> y genera una excepción <b>SQLServerException</b>. Si sendStringParametersAsUnicode se configura en false y el tipo de datos SQL Server subyacente es <b>image</b>, SQL Server permite la conversión de <b>varchar</b> en <b>image</b> y no genera una excepción.<br />
+        </li></ul>
+      <p xmlns="">
+        SQL Server realiza las conversiones y devuelve los errores al controlador JDBC cuando hay problemas.</p>
+      <p xmlns="">Cuando el tipo de datos de columna de SQL Server es <b>XML</b>, el valor de los datos debe ser un <b>XML</b> válido. Cuando se llama a los métodos <b>updateBytes</b>, <b>updateBinaryStream</b> o <b>updateBlob</b>, el valor de los datos debe ser la representación de la cadena decimal de los caracteres XML. Por ejemplo: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>&lt;hello&gt;world&lt;/hello&gt; = 0x3C68656C6C6F3E776F726C643C2F68656C6C6F3E </pre></span></div>
+      <p xmlns="">Tenga en cuenta que se necesita una marca de orden de bytes (BOM) si los caracteres XML están en codificaciones de caracteres específicos.</p>
+    </content></div><h1 class="heading">Conversiones en setObject</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Para los datos de tipo Java pasados a los métodos <b>setObject(&lt;Type&gt;)</b> de la clase <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>, se aplican las conversiones siguientes. </p>
+      <div xmlns=""><img src="../local/92cdf5f9-afdf-4a92-b1ea-204a7d93b8a5.gif" target="_blank" alt="JDBCSetObjectConversions" /></div>
+      <p xmlns="">El método <b>setObject</b> sin un tipo de destino especificado usará la asignación predeterminada. En el caso del tipo de datos <b>String</b>, si el valor supera la longitud de <b>VARCHAR</b>, se asigna a <b>LONGVARCHAR</b>. Similarmente <b>NVARCHAR</b> se asigna a <b>LONGNVARCHAR</b>, si el valor supera la longitud admitida de <b>NVARCHAR</b>. Lo mismo sucede para <b>byte[]</b>. Los valores mayores que <b>VARBINARY</b> se vuelven <b>LONGVARBINARY</b>.</p>
+      <p xmlns="">Los métodos setObject del controlador JDBC admiten tres categorías de conversiones:</p>
+      <ul xmlns=""><li>
+          
+            <b>Sin pérdidas (x)</b>: conversiones para los casos numéricos en los que el tipo de establecedor es igual o menor que el tipo de servidor subyacente. Por ejemplo, al llamar a <b>setBigDecimal</b> en una columna <b>decimal</b> del servidor subyacente, no es necesario realizar ninguna conversión. En los casos de conversión de tipo numérico a carácter, el tipo de datos <b>numeric</b> de Java se convierte en <b>String</b>. Por ejemplo, si se llama a <b>setDouble</b> con el valor "53" en una columna varchar(50), se producirá un valor de carácter "53" en esa columna de destino.<br />
+        </li><li>
+          
+            <b>Convertido (y)</b>: conversiones de un tipo <b>numeric</b> de Java a un tipo <b>numeric</b> del servidor subyacente que es menor. esta conversión es normal y sigue las convenciones de conversión de SQL Server. La precisión siempre se trunca, nunca se redondea, y el desbordamiento lanza un error de conversión no admitida. Por ejemplo, si se utiliza <b>updateDecimal</b> con un valor de "1,9999" en una columna subyacente de enteros, el resultado es "1" en la columna destino; pero si se pasa de "3000000000", el controlador lanzará un error.<br />
+        </li><li>
+          
+            <b>Dependiente de datos (z)</b>: las conversiones de un tipo <b>String</b> de Java al tipo de datos de SQL Server subyacente dependen de las siguientes condiciones: el controlador envía el valor <b>String</b> a SQL Server y, si fuera necesario, SQL Server realizará las conversiones. Si <b>sendStringParametersAsUnicode</b> se configura en TRUE y el tipo de datos SQL Server subyacente es <b>image</b>, SQL Server no permite la conversión de <b>nvarchar</b> en <b>image</b> y genera una excepción SQLServerException. Si <b>sendStringParametersAsUnicode</b> se configura en FALSE y el tipo de datos SQL Server subyacente es <b>image</b>, SQL Server permite la conversión de <b>varchar</b> en <b>image</b> y no genera una excepción.<br />
+        </li></ul>
+      <p xmlns="">
+        SQL Server realiza el grueso de las conversiones de establecimiento y devuelve errores al controlador JDBC cuando encuentra problemas. Las conversiones del lado cliente son la excepción y solamente se realizan en el caso de los valores <b>date</b>, <b>time</b>, <b>timestamp</b>, <b>Boolean</b> y <b>String</b>.</p>
+      <p xmlns="">Cuando el tipo de datos de columna de SQL Server es <b>XML</b>, el valor de los datos debe ser un <b>XML</b> válido. Cuando se llama a los métodos setObject(byte[], SQLXML), setObject(inputStream, SQLXML) o setObject(Blob, SQLXML), el valor de los datos debería ser una representación de cadena hexadecimal de los caracteres XML. Por ejemplo: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>&lt;hello&gt;world&lt;/hello&gt; = 0x3C68656C6C6F3E776F726C643C2F68656C6C6F3E </pre></span></div>
+      <p xmlns="">Tenga en cuenta que se necesita una marca de orden de bytes (BOM) si los caracteres XML están en codificaciones de caracteres específicos.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7802328d-4d23-4775-9573-4169b127d258.htm">Describir los tipos de datos del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

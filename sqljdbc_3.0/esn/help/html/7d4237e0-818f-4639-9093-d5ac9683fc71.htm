@@ -1,0 +1,227 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Columnas dispersas</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Columnas dispersas</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Las columnas dispersas son columnas normales que disponen de un almacenamiento optimizado para los valores NULL. Este tipo de columnas reducen los requisitos de espacio de los valores NULL a costa de una mayor sobrecarga a la hora de recuperar valores no NULL. Considere la posibilidad de utilizar columnas dispersas si el ahorro de espacio se sitúa entre el 20 y el 40 por ciento.</p>
+    <p>El controlador JDBC 3.0 de SQL Server admite columnas dispersas al conectar a un servidor SQL Server 2008 (o versiones posteriores). Puede utilizar <a href="f173fa5d-e114-4a37-a5c4-2baad9ff3af1.htm">SQLServerDatabaseMetaData.getColumns</a>, <a href="e2b0e0f7-717c-48e6-bcd2-a325d938a833.htm">SQLServerDatabaseMetaData.getFunctionColumns</a> o <a href="4f0df8fe-3cd6-46e4-ae3c-dc23c35676b2.htm">SQLServerDatabaseMetaData.getProcedureColumns</a> para determinar qué columnas son dispersas y cuál es la columna del conjunto.</p>
+    <p>Los conjuntos de columnas son columnas calculadas que devuelven todas las columnas dispersas en forma de XML sin tipo. Considere la posibilidad de usar los conjuntos de columnas cuando una tabla contenga un gran número de columnas o que sea superior a 1024 o bien, cuando sea complicado realizar cualquier operación con columnas dispersas independientes. Un conjunto de columnas puede contener hasta 30.000 columnas.</p>
+  </div><h1 class="heading">Ejemplo</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Descripción</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Este ejemplo muestra cómo detectar conjuntos de columnas. También muestra cómo analizar los resultados XML del conjunto de columnas para obtener los datos de las columnas dispersas.</p>
+          <p xmlns="">El primer listado de códigos es el código Transact-SQL que debería ejecutar en el servidor.</p>
+          <p xmlns="">El segundo listado de códigos es el código fuente de Java. Antes de compilar la aplicación, cambie el nombre del servidor en la cadena de conexión.</p>
+        </content></div>
+      <h1 class="heading" xmlns="">Code</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>use AdventureWorks
+CREATE TABLE ColdCalling
+(
+ID int IDENTITY(1,1) PRIMARY KEY,
+[Date] date,
+[Time] time,
+PositiveFirstName nvarchar(50) SPARSE,
+PositiveLastName nvarchar(50) SPARSE,
+SpecialPurposeColumns XML COLUMN_SET FOR ALL_SPARSE_COLUMNS
+);
+GO
+
+INSERT ColdCalling ([Date], [Time])
+VALUES ('10-13-09','07:05:24')
+GO
+      
+INSERT ColdCalling ([Date], [Time], PositiveFirstName, PositiveLastName)
+VALUES ('07-20-09','05:00:24', 'AA', 'B')
+GO
+      
+INSERT ColdCalling ([Date], [Time], PositiveFirstName, PositiveLastName)
+VALUES ('07-20-09','05:15:00', 'CC', 'DD')
+GO</pre></span></div>
+        </content></div>
+      <h1 class="heading" xmlns="">Code</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>import java.sql.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.xml.sax.InputSource;
+
+import java.io.StringReader;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class SparseColumns {
+
+   public static void main(String args[]) {
+      final String connectionUrl = "jdbc:sqlserver://my_server;databaseName=AdventureWorks;integratedSecurity=true;";
+      
+      Connection conn = null;
+      Statement stmt = null;
+      ResultSet rs = null;
+      
+      try {
+         conn = DriverManager.getConnection(connectionUrl);
+         
+         stmt = conn.createStatement();
+         // Determine the column set column
+         String columnSetColName = null;
+         String strCmd = "SELECT name FROM sys.columns WHERE object_id=(SELECT OBJECT_ID('ColdCalling')) AND is_column_set = 1";
+         rs = stmt.executeQuery(strCmd);
+         
+         if (rs.next()) {
+            columnSetColName = rs.getString(1);
+            System.out.println(columnSetColName + " is the column set column!");
+         }
+         rs.close();
+
+         rs = null; 
+             
+         strCmd = "SELECT * FROM ColdCalling";
+         rs = stmt.executeQuery(strCmd);
+            
+         // Iterate through the result set
+         ResultSetMetaData rsmd = rs.getMetaData();
+         
+         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+         DocumentBuilder db = dbf.newDocumentBuilder();
+         InputSource is = new InputSource();
+         while (rs.next()) {
+            // Iterate through the columns
+            for (int i = 1; i &lt;= rsmd.getColumnCount(); ++i) {
+               String name = rsmd.getColumnName(i);
+               String value = rs.getString(i);
+   
+               // If this is the column set column
+               if (name.equalsIgnoreCase(columnSetColName)) {
+                  System.out.println(name);
+                  
+                  // Instead of printing the raw XML, parse it
+                  if (value != null) {
+                     // Add artificial root node "sparse" to ensure XML is well formed
+                     String xml = "&lt;sparse&gt;" + value + "&lt;/sparse&gt;";
+   
+                     is.setCharacterStream(new StringReader(xml));
+                     Document doc = db.parse(is);
+   
+                     // Extract the NodeList from the artificial root node that was added
+                     NodeList list = doc.getChildNodes();
+                     // This is the &lt;sparse&gt; node
+                     Node root = list.item(0); 
+                     // These are the xml column nodes
+                     NodeList sparseColumnList = root.getChildNodes(); 
+   
+                     // Iterate through the XML document
+                     for (int n = 0; n &lt; sparseColumnList.getLength(); ++n) {
+                        Node sparseColumnNode = sparseColumnList.item(n);
+                        String columnName = sparseColumnNode.getNodeName();
+                        // Note that the column value is not in the sparseColumNode, it is the value of the first child of it
+                        Node sparseColumnValueNode = sparseColumnNode.getFirstChild();
+                        String columnValue = sparseColumnValueNode.getNodeValue();
+                        
+                        System.out.println("\t" + columnName + "\t: " + columnValue);
+                     }
+                  }
+               } else {   // Just print the name + value of non-sparse columns
+                  System.out.println(name + "\t: " + value);
+               }
+            }
+            System.out.println();//New line between rows
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         if (rs != null) {
+            try {
+               rs.close();
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+         if (stmt != null) {
+            try {
+               stmt.close();
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+         if (conn != null) {
+            try {
+               conn.close();
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+      }
+   }      
+}</pre></span></div>
+        </content></div>
+    </sections></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="e1592499-b87b-45ee-bab8-beaba8fde841.htm">Mejorar el rendimiento y la confiabilidad con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

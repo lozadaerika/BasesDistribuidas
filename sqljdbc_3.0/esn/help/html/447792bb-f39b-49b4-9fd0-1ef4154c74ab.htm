@@ -1,0 +1,127 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Requisitos del sistema para el controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Requisitos del sistema para el controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para tener acceso a los datos desde una base de datos de SQL Server mediante el controlador JDBC de Microsoft SQL Server, debe tener los siguientes componentes instalados en el equipo: </p>
+    <ul><li>
+        
+          Controlador de JDBC de Microsoft SQL Server<br />
+      </li><li>
+        Java Runtime Environment<br />
+      </li></ul>
+  </div><h1 class="heading">Requisitos de Java Runtime Environment</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Desde el controlador JDBC de Microsoft SQL Server, el controlador JDBC proporciona compatibilidad con la API de Java Database Connectivity (JDBC) Spec que se ha ampliado para incluir la API de JDBC 4.0. El controlador JDBC 4.0 se incluyó como parte de Sun Java SE Development Kit (JDK) 6.0 y Java Runtime Environment (JRE) 6.0. JDBC 4.0 es un superconjunto de JDBC 3.0.  </p>
+      <p xmlns="">El controlador JDBC de Microsoft SQL Server es compatible con JDBC 3.0 y JDBC 4.0. </p>
+      <p xmlns="">Cuando implementa el controlador JDBC de Microsoft SQL Server en los sistemas operativos Windows y UNIX, debe usar respectivamente los paquetes de instalación <i>sqljdbc_&lt;versión&gt;_enu.exe</i> y <i>sqljdbc_&lt;versión&gt;_enu.tar.gz</i>. Para obtener más información acerca de cómo implementar el controlador JDBC, vea el tema <a href="3ad3508d-d9b1-47fb-a63b-21cdc3ed44e0.htm">Implementar el controlador JDBC</a>.</p>
+      <p xmlns="">Para la compatibilidad con versiones anteriores y los posibles escenarios de actualización, el controlador JDBC incluye las dos bibliotecas de clases JAR de cada paquete de instalación: <b>sqljdbc.jar</b> y <b>sqljdbc4.jar</b>.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              JAR
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>sqljdbc.jar</p>
+          </td>
+          <td colspan="">
+            <p>
+              La biblioteca de clases <b>sqljdbc.jar</b> proporciona compatibilidad con JDBC 3.0.</p>
+            <p>
+              La biblioteca de clases <b>sqljdbc.jar</b> necesita la versión 5.0 de Java Runtime Environment (JRE). Usar <b>sqljdbc.jar</b> en JRE 6.0 generará una excepción al conectar con una base de datos.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              El controlador JDBC no es compatible con JRE 1.4. Debe actualizar JRE 1.4 a JRE 5.0 o una versión posterior al usar el controlador JDBC. En algunos casos puede necesitar volver a compilar la aplicación, por no ser compatible con JDK 5.0 o una versión posterior. Para obtener más información, visite el sitio web de Sun Microsystems.<p />
+            </div>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>sqljdbc4.jar</p>
+          </td>
+          <td colspan="">
+            <p>
+              La biblioteca de clases <b>sqljdbc4.jar</b> proporciona compatibilidad con JDBC 4.0. Incluye todas las características de <b>sqljdbc.jar</b> y los métodos nuevos de JDBC 4.0.</p>
+            <p>
+              La biblioteca de clases <b>sqljdbc4.jar</b> necesita la versión 6.0 de Java Runtime Environment (JRE) o una posterior. Usar <b>sqljdbc4.jar</b> en JRE 1.4 o 5.0 generará una excepción.</p>
+            <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+              Use <b>sqljdbc4.jar</b> cuando la aplicación deba ejecutarse en JRE 6.0, incluso aunque no use las características de JDBC 4.0. <p />
+            </div>
+          </td>
+        </tr></table>
+      <p xmlns="">Tenga en cuenta que el controlador JDBC se ha diseñado para la compatibilidad y colaboración con todas las máquinas virtuales Java importantes de Sun, pero se comprobó en Sun JRE 5.0 o posterior.</p>
+    </content></div><h1 class="heading">Requisitos de SQL Server</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC se ha diseñado especialmente para usar las características incluidas en SQL Server 2005, aunque es compatible con versiones anteriores a SQL Server 2000, incluyendo la versión de 64 bits. El controlador JDBC 3.0 admite los tipos nuevos de fecha y hora, los tipos definidos por el usuario de gran tamaño y las columnas dispersas en SQL Server 2008.</p>
+    </content></div><h1 class="heading">Requisitos del sistema operativo</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC se ha diseñado para funcionar en cualquier sistema operativo que admita el uso de una máquina virtual Java (JVM). No obstante, solo se han probado oficialmente los sistemas operativos Sun Solaris, SUSE Linux y Windows XP o sistemas operativos posteriores.</p>
+    </content></div><h1 class="heading">Lenguajes compatibles</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El controlador JDBC es compatible con todas las intercalaciones de columnas de SQL Server. Para obtener más información acerca de las intercalaciones compatibles con el controlador JDBC, consulte <a href="bbb74a1d-9278-401f-9530-7b5f45aa79de.htm">Características internacionales del controlador JDBC</a>.</p>
+      <p xmlns="">Para obtener más información acerca de las intercalaciones, consulte "Trabajar con intercalaciones" en los Libros en pantalla de SQL Server.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

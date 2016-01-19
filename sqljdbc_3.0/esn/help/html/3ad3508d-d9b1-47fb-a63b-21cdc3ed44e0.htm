@@ -1,0 +1,102 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Implementar el controlador JDBC</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Implementar el controlador JDBC</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Al implementar una aplicación que depende del controlador JDBC de Microsoft SQL Server, debe redistribuir el controlador JDBC junto con la aplicación. A diferencia de Windows Data Access Components (Windows DAC), que es un componente del sistema operativo Windows, el controlador JDBC se considera un componente de SQL Server.  </p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Aunque puede distribuir el controlador JDBC libremente si la aplicación lo requiere, es necesario que se registre primero. Si desea registrarse para redistribuir el controlador JDBC, visite la página acerca de cómo <a href="http://go.microsoft.com/fwlink/?LinkId=111571" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">registrarse para obtener los derechos de redistribución del controlador JDBC de Microsoft SQL</linkText></a>.<p />
+    </div>
+    <p>Existen dos métodos para implementar el controlador JDBC con la aplicación. Uno de estos métodos consiste en incluir los archivos del controlador JDBC como parte de su propio paquete de instalación personalizado. El segundo método implica el uso del paquete de instalación de JDBC suministrado por Microsoft, que puede descargar de la página del <a href="http://go.microsoft.com/fwlink/?LinkId=70166" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">centro para desarrolladores de software del controlador JDBC de Microsoft SQL Server 2005</linkText></a>.</p>
+    <p>En las siguientes secciones se describe cómo usar el paquete de instalación de JDBC en los sistemas operativos Windows y UNIX.</p>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      Para obtener información sobre la implementación de aplicaciones de Java en general, consulte la página en que se incluye la <a href="http://go.microsoft.com/fwlink/?LinkId=70165" target="_blank" alt=""><linkText xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">introducción a la implementación de Java</linkText></a> en el sitio web de Sun Microsystems.<p />
+    </div>
+  </div><h1 class="heading">Implementar el controlador JDBC en los sistemas de Windows</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Al implementar el controlador JDBC en los sistemas operativos Windows, debe usar la versión del archivo zip ejecutable del paquete de instalación, que se suele llamar <code>sqljdbc_&lt;version&gt;_&lt;language&gt;.exe</code>.</p>
+      <p xmlns="">Para ejecutar el archivo zip ejecutable de forma silenciosa, debe usar la opción de línea de comandos <code> /auto </code> en la línea de comandos o en un archivo por lotes del modo siguiente:</p>
+      <p xmlns="">
+        <code>sqljdbc_&lt;version&gt;_&lt;language&gt;.exe /auto</code>
+      </p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        Si usa la opción <code> /auto </code>, no será una instalación silenciosa en sentido estricto debido a que el cuadro de diálogo WinZip sigue apareciendo en la pantalla del usuario. No obstante, no necesita interactuar con dicho cuadro, que se cierra una vez que la operación de descompresión se ha completado.<p />
+      </div>
+    </content></div><h1 class="heading">Implementar el controlador en sistemas UNIX</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Al implementar el controlador JDBC en los sistemas operativos UNIX, debe usar la versión del archivo gzip del paquete de instalación, que se suele llamar <code>sqljdbc_&lt;version&gt;_&lt;language&gt;.tar.gz</code>.</p>
+      <p xmlns="">Para poder instalar el controlador JDBC, asegúrese de que las utilidades gzip y tar están instaladas en el sistema del usuario y de que las carpetas que contienen los ejecutables para ambas utilidades se han agregado a la variable de entorno PATH.</p>
+      <p xmlns="">Para desempaquetar el archivo tar comprimido, navegue hasta el directorio donde desea ubicar el controlador desempaquetado y escriba el siguiente comando:</p>
+      <p xmlns="">
+        <code>gzip -d sqljdbc_&lt;version&gt;_&lt;language&gt;.tar.gz</code>
+      </p>
+      <p xmlns="">Para desempaquetar el archivo tar, muévalo hasta el directorio donde desea ubicar el controlador instalado y escriba el siguiente comando:</p>
+      <p xmlns="">
+        <code>tar –xf sqljdbc_&lt;version&gt;_&lt;language&gt;.tar</code>
+      </p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Introducción al controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

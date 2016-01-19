@@ -1,0 +1,230 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Descripción de las diferencias entre los tipos de datos</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Descripción de las diferencias entre los tipos de datos</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Hay varias diferencias entre los tipos de datos del lenguaje de programación Java y los tipos de datos de SQL Server. El controlador JDBC de Microsoft SQL Server ayuda a facilitar esas diferencias mediante varios tipos de conversiones. </p>
+  </div><h1 class="heading">Tipos de caracteres</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los tipos de datos de cadenas de caracteres de JDBC son <b>CHAR</b>, <b>VARCHAR</b> y <b>LONGVARCHAR</b>. Desde la versión 2.0 del controlador JDBC de Microsoft SQL Server, el controlador JDBC proporciona compatibilidad con la API de JDBC 4.0. En JDBC 4.0, los tipos de datos de cadenas de caracteres de JDBC también pueden ser <b>NCHAR</b>, <b>NVARCHAR</b> y <b>LONGNVARCHAR</b>. Estos nuevos tipos de cadena de caracteres mantienen los tipos de caracteres nativos de Java en formato Unicode y quitan la necesidad de realizar cualquier conversión ANSI a Unicode o Unicode a ANSI.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Tipo
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>Longitud fija</p>
+          </td>
+          <td colspan="">
+            <p>Los tipos de datos <b>char</b> y <b>nchar</b> de SQL Server se asignan directamente a los tipos <b>CHAR</b> y <b>NCHAR</b> de JDBC. Estos son tipos de longitud fija con relleno que proporciona el servidor en el caso de que la columna tenga habilitado SET ANSI_PADDING ON. El relleno siempre está habilitado para <b>nchar</b>, pero en el caso de <b>char</b>, si las columnas char del servidor no tienen relleno, el servidor lo agrega el controlador JDBC.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>Longitud variable</p>
+          </td>
+          <td colspan="">
+            <p>Los tipos de datos <b>varchar</b> y <b>nvarchar</b> de SQL Server se asignan directa y respectivamente <b>VARCHAR</b> y <b>NVARCHAR</b> de JDBC.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>Long</p>
+          </td>
+          <td colspan="">
+            <p>Los tipos <b>text</b> y <b>ntext</b> de SQL Server se asignan respectivamente a los tipos <b>LONGVARCHAR</b> y <b>LONGNVARCHAR</b> de JDBC. Estos son tipos que ya no se utilizan desde SQL Server 2005, por lo que en su lugar debería usar tipos de valores mayores, <b>varchar(max)</b> o <b>nvarchar(max)</b>.</p>
+            <p>No se pueden usar los métodos <b>update&lt;Numeric Type&gt;</b> y <a href="4993dfe1-2232-4b3c-b931-dfdb35dd225a.htm">updateObject (int, java.lang.Object)</a> con las columnas de servidor <b>text</b> y <b>ntext</b>. No obstante, se admite el uso del método <a href="93a2b22c-82b4-48c7-a428-369ebe98a372.htm">setObject</a> con un tipo específico de conversión de caracteres en columnas <b>text</b> y <b>ntext</b> del servidor.</p>
+          </td>
+        </tr></table>
+    </content></div><h1 class="heading">Tipos de cadenas binarias</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los tipos de datos de cadenas binarias de JDBC son <b>BINARY</b>, <b>VARBINARY</b> y <b>LONGVARBINARY</b>. </p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Tipo
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>Longitud fija</p>
+          </td>
+          <td colspan="">
+            <p>El tipo SQL Server<b>binary</b> se asigna directamente al tipo de JDBC <b>BINARY</b>. Es un tipo de longitud fija con relleno que proporciona el servidor en el caso de que la columna tenga habilitado SET ANSI_PADDING. Cuando las columnas char del servidor no tienen relleno, éste lo agrega el controlador JDBC.</p>
+            <p>El tipo SQL Server<b>timestamp</b> es un tipo de JDBC <b>BINARY</b> con la longitud fija de 8 bytes.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>Longitud variable</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>varbinary</b> de SQL Server se asigna al tipo de JDBC <b>VARBINARY</b>.</p>
+            <p>El tipo <b>udt</b> de SQL Server se asigna a JDBC como un tipo <b>VARBINARY</b>.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>Long</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>image</b> de SQL Server se asigna al tipo <b>LONGVARBINARY</b> de JDBC. Este tipo se ha dejado de utilizar desde SQL Server 2005, por lo que en su lugar debería usar un tipo de valor grande, <b>varbinary(max)</b>.</p>
+          </td>
+        </tr></table>
+    </content></div><h1 class="heading">Tipos numéricos exactos</h1><div id="sectionSection2" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los tipos numéricos exactos de JDBC se asignan directamente a los tipos de SQL Server correspondientes.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Tipo
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>BIT</p>
+          </td>
+          <td colspan="">
+            <p>El tipo de JDBC <b>BIT</b> representa un bit único que puede ser 0 ó 1. Esto se asigna a un tipo <b>bit</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>TINYINT</p>
+          </td>
+          <td colspan="">
+            <p>El tipo de JDBC <b>TINYINT</b> representa un byte único. Esto se asigna a un tipo <b>tinyint</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>SMALLINT</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>SMALLINT</b> de JDBC representa un entero con signo de 16 bits. Esto se asigna a un tipo <b>smallint</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>INTEGER</p>
+          </td>
+          <td colspan="">
+            <p>El tipo de JDBC <b>INTEGER</b> representa un entero de 32 bits con signo. Esto se asigna a un tipo <b>int</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>BIGINT</p>
+          </td>
+          <td colspan="">
+            <p>El tipo de JDBC <b>BIGINT</b> representa un entero con signo de 64 bits. Esto se asigna a un tipo <b>bigint</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>NUMERIC</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>NUMERIC</b> de JDBC representa un valor decimal de precisión fija que contiene valores de precisión idéntica. El tipo <b>NUMERIC</b> se asigna al tipo  <b>numeric</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>DECIMAL</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>DECIMAL</b> de JDBC representa un valor decimal de precisión fija que contiene valores de, al menos, la precisión especificada. El tipo <b>DECIMAL</b> se asigna al tipo SQL Server <b>decimal</b>.</p>
+            <p>El tipo <b>DECIMAL</b> de JDBC  también se asigna a los tipos <b>money</b> y <b>smallmoney</b> de SQL Server, que son tipos decimales de precisión fija almacenados en 8 y 4 bytes, respectivamente.</p>
+          </td>
+        </tr></table>
+    </content></div><h1 class="heading">Tipos numéricos aproximados</h1><div id="sectionSection3" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Los tipos numéricos aproximados de JDBC son <b>REAL</b>, <b>DOUBLE</b> y <b>FLOAT</b>.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;" xmlns=""><tr>
+            <th colspan="">
+              Tipo
+            </th>
+            <th colspan="">
+              Descripción
+            </th>
+          </tr><tr>
+          <td colspan="">
+            <p>REAL</p>
+          </td>
+          <td colspan="">
+            <p>El tipo de JDBC <b>REAL</b> tiene siete dígitos de precisión (precisión simple) y se asigna directamente al tipo <b>real</b> de SQL Server.</p>
+          </td>
+        </tr><tr>
+          <td colspan="">
+            <p>DOUBLE</p>
+          </td>
+          <td colspan="">
+            <p>El tipo <b>DOUBLE</b> de JDBC tiene 15 dígitos de precisión (precisión doble) y se asigna directamente al tipo <b>float</b> de SQL Server. El tipo de JDBC <b>FLOAT</b> es un sinónimo de <b>DOUBLE</b>. Dado que puede haber confusión entre <b>FLOAT</b> y <b>DOUBLE</b>, se prefiere <b>DOUBLE</b>.</p>
+          </td>
+        </tr></table>
+    </content></div><h1 class="heading">Tipos de fecha y hora</h1><div id="sectionSection4" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">El tipo de JDBC <b>TIMESTAMP</b> se asigna a los tipos <b>datetime</b> y <b>smalldatetime</b> de SQL Server. El tipo <b>datetime</b> se almacena en dos enteros de 4 bytes. El tipo <b>smalldatetime</b> contiene la misma información (fecha y hora), pero con menos precisión, en dos enteros pequeños de 2 bytes.</p>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        El tipo <b>timestamp</b> de SQL Server es un tipo de cadena binaria de longitud fija. No se asigna a ninguno de los tipos de tiempo de JDBC: <b>DATE</b>, <b>TIME</b> o <b>TIMESTAMP</b>.<p />
+      </div>
+    </content></div><h1 class="heading">Asignación de tipos personalizados</h1><div id="sectionSection5" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">En el controlador JDBC no está incluida la característica de asignación de tipos personalizados de JDBC que emplean las interfaces <b>SQLData</b> para los tipos avanzados de JDBC (UDT, Struct, etc.).</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="7802328d-4d23-4775-9573-4169b127d258.htm">Describir los tipos de datos del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Seguridad de la aplicación</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Seguridad de la aplicación</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Cuando use el controlador JDBC de Microsoft SQL Server, es importante tomar precauciones para garantizar la seguridad de su aplicación. Las siguientes secciones proporcionan información sobre los pasos que puede realizar para contribuir a la seguridad de su aplicación. </p>
+  </div><h1 class="heading">Usar los permisos de la directiva de Java</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Cuando use el controlador JDBC de Microsoft SQL Server, es importante especificar los permisos de la directiva de Java necesarios que requiere el controlador JDBC. Java Runtime Environment (JRE) proporciona un amplio modelo de seguridad que puede usar en el tiempo de ejecución para determinar si un subproceso tiene acceso a un recurso. Los archivos de directiva de seguridad pueden controlar este acceso. Los archivos de directivas del contenedor están administrados por el encargado de la implementación y el administrador del sistema, pero los permisos que se enumeran en este tema son aquellos que afectan al funcionamiento del controlador JDBC.</p>
+      <p xmlns="">Un permiso típico de los archivos de directivas tiene este aspecto:</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>// Example policy file entry.
+grant [signedBy &lt;signer&gt;,] [codeBase &lt;code source&gt;] {
+   permission  &lt;class&gt;  [&lt;name&gt; [, &lt;action list&gt;]];
+};</pre></span></div>
+      <p xmlns="">La siguiente base de códigos debería estar limitada a la base de códigos del controlador JDBC para asegurarse de que se concede la cantidad mínima de privilegios.</p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>grant codeBase "file:/install_dir/lib/-" {
+
+// Grant access to data source.
+permission java.util.PropertyPermission "java.naming.*", "read,write";
+
+// Specify which hosts can be connected to.
+permission java.net.socketPermission "host:port", "connect";
+
+// Logger permission to take advantage of logging.
+permission java.util.logging.LoggingPermission;
+
+// Grant listen/connect/accept permissions to the driver if 
+// connecting to a named instance as the client driver. 
+// This connects to a udp service and listens for a response.
+permission java.net.SocketPermission "*", "listen, connect, accept"; 
+}; </pre></span></div>
+      <div style="margin: .5em 1.5em .5em 1.5em" xmlns=""><b>Nota: </b>
+        El código "file:/install_dir/lib/-" hace referencia al directorio de instalación del controlador JDBC.<p />
+      </div>
+    </content></div><h1 class="heading">Protección de las comunicaciones con el servidor</h1><div id="sectionSection1" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">Cuando use el controlador JDBC para comunicar con una base de datos de SQL Server, puede proteger el canal de comunicaciones con el protocolo de seguridad de Internet (IPSEC, Internet Protocol Security), con la Capa de sockets seguros (SSL, Secure Sockets Layer) o con ambos. </p>
+      <p xmlns="">La compatibilidad con SSL se puede utilizar para proporcionar un nivel adicional de protección además de IPSEC. Para obtener más información acerca de cómo usar SSL, vea <a href="8e566243-2f93-4b21-8065-3c8336649309.htm">Usar el cifrado SSL</a>.</p>
+    </content></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Proteger las aplicaciones del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

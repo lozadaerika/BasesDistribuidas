@@ -1,0 +1,110 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Controlar errores</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Controlar errores</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Cuando se usa el controlador JDBC de Microsoft SQL Server, todas las condiciones de error de la base de datos se devuelven a la aplicación Java como excepciones que usan la clase <a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>. Los siguientes métodos de la clase <b>SQLServerException</b> están heredados de java.sql.SQLException y java.lang.Throwable y se pueden emplear para devolver información específica sobre el error de SQL Server que se ha producido. </p>
+    <ul><li>
+        
+          <b>getSQLState</b> devuelve el código de estado X/Open o SQL99 de la excepción.<br />
+      </li><li>
+        
+          <b>getErrorCode</b> devuelve el número específico del error de la base de datos.<br />
+      </li><li>
+        
+          <b>getMessage</b> devuelve el texto completo de la excepción. El texto del mensaje de error describe el problema y, con frecuencia, incluye marcadores de posición de información tales como nombres de objetos, que se incluyen en el mensaje de error cuando se muestra.<br />
+      </li><li>
+        
+          <b>getNextException</b> devuelve el siguiente objeto <b>SQLServerException</b> o nulo si no hay más objetos de excepción que devolver.<br />
+      </li></ul>
+    <p>En el siguiente ejemplo, se pasa a la función una conexión abierta a la base de datos de ejemplo SQL Server AdventureWorks y se construye una instrucción SQL incorrecta que no incluye una cláusula FROM. A continuación, se ejecuta la instrucción de SQL y se procesa una excepción de SQL.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeSQLException(Connection con) {
+   try {
+      String SQL = "SELECT TOP 10 * Person.Contact";
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(SQL);
+
+      while (rs.next()) {
+         System.out.println(rs.getString(4) + " " + rs.getString(6));
+      }
+      stmt.close();
+   }
+   catch (SQLException se) {
+      do {
+         System.out.println("SQL STATE: " + se.getSQLState());
+         System.out.println("ERROR CODE: " + se.getErrorCode());
+         System.out.println("MESSAGE: " + se.getMessage());
+         System.out.println();
+         se = se.getNextException();
+      } while (se != null);
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="723e2680-a0c5-4a7d-a319-1e49e41078cf.htm">Diagnosticar problemas del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

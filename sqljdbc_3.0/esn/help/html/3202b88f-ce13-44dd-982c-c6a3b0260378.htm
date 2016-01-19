@@ -1,0 +1,95 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Usar una instrucción SQL con parámetros</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Usar una instrucción SQL con parámetros</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Para trabajar con los datos de una base de datos de SQL Server con una instrucción SQL que contiene parámetros IN, puede usar el método <a href="dfff3358-f391-4af6-84c1-b94c029f506d.htm">executeQuery</a> de la clase <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> para devolver <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>, que contiene los datos solicitados. Para ello, debe crear primero un objeto <b>SQLServerPreparedStatement</b> mediante el método <a href="bd4e4085-f704-4a73-b6a7-7d443d564728.htm">prepareStatement</a> de la clase <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>. </p>
+    <p>Al generar la instrucción SQL, los parámetros IN se especifican mediante el carácter ? (signo de interrogación), que actúa como un marcador de posición para los valores de parámetros que se van a pasar a la instrucción SQL. Para especificar un valor de un parámetro, puede usar uno de los métodos de establecimiento de la clase <b>SQLServerPreparedStatement</b>. El método de establecedor usado se determina mediante el tipo de datos del valor que desea pasar a la instrucción SQL. </p>
+    <p>Al pasar un valor al método de establecedor, debe especificar no sólo el valor real que se va a usar en la instrucción SQL, sino también la posición ordinal del parámetro en la instrucción SQL. Por ejemplo, si la instrucción SQL contiene un solo parámetro, su valor ordinal es 1 y, si la instrucción contiene dos parámetros, el primer valor ordinal es 1 y el segundo es 2. </p>
+    <p>En el siguiente ejemplo, se pasa una conexión abierta a la base de datos modelo AdventureWorks de SQL Server 2005 a la función, se genera una instrucción SQL preparada y se ejecuta con un solo valor de parámetro de cadena y, a continuación, se leen los resultados desde el conjunto de resultados.</p>
+    <div class="sampleCode"><span codeLanguage="other"><pre>public static void executeStatement(Connection con) {
+   try {
+      String SQL = "SELECT LastName, FirstName FROM Person.Contact WHERE LastName = ?";
+      PreparedStatement pstmt = con.prepareStatement(SQL);
+      pstmt.setString(1, "Smith");
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+         System.out.println(rs.getString("LastName") + ", " + rs.getString("FirstName"));
+      }
+      rs.close();
+      pstmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+</pre></span></div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="fe28f48a-e1bc-48ff-a5e7-c24cd6e5ecc7.htm">Usar instrucciones con SQL</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

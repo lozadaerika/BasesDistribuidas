@@ -1,0 +1,517 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Establecer las propiedades de conexión</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Establecer las propiedades de conexión</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>Las propiedades de las cadenas de conexión se pueden especificar de diversas formas:</p>
+    <ul><li>
+        Como propiedades nombre=valor en la dirección URL de conexión cuando la conexión se establece con la clase <b>DriverManager</b>. <br />
+      </li><li>
+        Como propiedades nombre=valor en el parámetro <i>Properties</i> del método <b>Connect</b> de la clase <b>DriverManager</b>. <br />
+      </li><li>
+        Como valores en el método establecedor adecuado del origen de datos del controlador. Por ejemplo: <br />
+        <div class="sampleCode"><span codeLanguage="other"><pre>
+          <b>datasource.setServerName(value)</b>
+<b>datasource.setDatabaseName(value)</b></pre></span></div>
+      </li></ul>
+    <p>En los nombres de las propiedades no se distinguen entre mayúsculas y minúsculas, y los duplicados se resuelven de la siguiente forma:</p>
+    <ol><li>
+        Argumentos de API (como usuario y contraseña)<br />
+      </li><li>
+        Colección de propiedades<br />
+      </li><li>
+        Última aparición de la cadena de conexión<br />
+      </li></ol>
+    <p>Además, se permiten valores desconocidos para los nombres de propiedades, el controlador JDBC no valida sus valores en relación a la distinción entre mayúsculas y minúsculas.</p>
+    <p>Se permite el uso de sinónimos que se resuelven en el mismo orden que los nombres de propiedades duplicados.</p>
+    <p>La siguiente tabla muestra todas las propiedades de cadena de conexión disponibles actualmente para el controlador JDBC.</p>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" style="background-color: #CCCCCC;"><tr>
+          <th>
+            Propiedad
+          </th>
+          <th>
+            Tipo
+          </th>
+          <th>
+            Valor predeterminado
+          </th>
+          <th>
+            Descripción
+          </th>
+        </tr><tr>
+        <td>
+          <p>applicationName</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Nombre de la aplicación o "controlador JDBC de Microsoft SQL Server" si no se le asigna un nombre. Se usa para identificar la aplicación específica en diversas herramientas de creación de perfiles y registros de SQL Server.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>databaseName, base de datos</p>
+        </td>
+        <td>
+          <p>String</p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Nombre de la base de datos a la que se conectará. Si no se especifica, se establece una conexión a la base de datos predeterminada.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>disableStatementPooling</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>true</p>
+        </td>
+        <td>
+          <p>Actualmente solo se admite el valor "true". Si se estableciera en "false", se produciría una excepción.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>encrypt</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>false</p>
+        </td>
+        <td>
+          <p>Se establece en "true" para especificar que SQL Server utiliza el cifrado de Capa de sockets seguros (SSL) para todos los datos enviados entre el cliente y el servidor, si el servidor tiene un certificado instalado. El valor predeterminado es false.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>failoverPartner</p>
+        </td>
+        <td>
+          <p>String</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Nombre del servidor de conmutación por error que se usa en la configuración de la creación de reflejo de la base de datos. Esta propiedad se usa para un error de conexión inicial con el servidor principal; una vez establecida la conexión inicial, se omite esta propiedad. Se debe usar junto con la propiedad databaseName.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            El controlador no permite especificar el número de puerto de la instancia de servidor para la instancia de asociado de conmutación por error como parte de la propiedad failoverPartner en la cadena de conexión. Sin embargo, admite especificar las propiedades serverName, instanceName y portNumber de la instancia del servidor principal failoverPartner y la instancia del asociado de conmutación por error en la misma cadena de conexión.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>hostNameInCertificate</p>
+        </td>
+        <td>
+          <p>String </p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Nombre de host que se va a utilizar para validar el certificado SSL de SQL Server.</p>
+          <p>Si la propiedad hostNameInCertificate no se ha especificado o se ha establecido en null, el controlador JDBC de Microsoft SQL Server 2005 utilizará el valor de la propiedad <b>serverName</b> en la dirección URL de conexión como el nombre de host para validar el certificado SSL de SQL Server. </p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            Esta propiedad se usa junto con las propiedades <b>encrypt</b> y <b>trustServerCertificate</b>. Esta propiedad afecta a la validación del certificado, únicamente en caso de que la propiedad <b>encrypt</b> se establezca en "true" y <b>trustServerCertificate</b> se establezca en "false".<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>instanceName</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Nombre de la instancia de SQL Server a la que conectarse. Si no se especifica, se establece una conexión a la instancia predeterminada. En el caso de que se especifique el puerto e instanceName, consulte las notas referentes al puerto.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>integratedSecurity</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>false</p>
+        </td>
+        <td>
+          <p>Se establece en "true" para indicar que SQL Server va a usar credenciales de Windows para autenticar al usuario de la aplicación. Si el valor es "true", el controlador JDBC busca en la memoria caché de credenciales del equipo local suministradas en el equipo o en el inicio de sesión de red. Si el valor es "false", se deben suministrar el nombre de usuario y la contraseña.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            Esta propiedad de conexión solo se admite en los sistemas operativos de Microsoft Windows.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>lastUpdateCount</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>true</p>
+        </td>
+        <td>
+          <p>El valor "true" solamente devuelve el último recuento de actualizaciones de una instrucción SQL pasada al servidor y se puede usar en instrucciones SELECT, INSERT o DELETE individuales para omitir los recuentos de actualizaciones adicionales generados por los desencadenadores del servidor. Si se establece esta propiedad en "false", se devuelven todos los recuentos de actualizaciones, incluidos los devueltos por los desencadenadores del servidor.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            Esta propiedad solamente se aplica cuando se utiliza con los métodos <a href="10ae662a-ce3c-4b24-875c-5c2df319d93b.htm">executeUpdate</a>. Todos los demás métodos <b>execute</b> devuelven todos los resultados y recuentos de actualizaciones. <p />
+            Esta propiedad solamente afecta a los recuentos de actualizaciones devueltos por los desencadenadores del servidor. No afecta a los conjuntos de resultados o errores que resultan como parte de la ejecución del desencadenador.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>lockTimeout</p>
+        </td>
+        <td>
+          <p>int</p>
+        </td>
+        <td>
+          <p>-1</p>
+        </td>
+        <td>
+          <p>El número de milisegundos que hay que esperar antes de que la base de datos informe del tiempo de espera para la exclusión. El comportamiento predeterminado es esperar indefinidamente. Si se especifica, este valor será el predeterminado para todas las instrucciones de la conexión. Observe que se puede usar<code> Statement.setQueryTimeout() </code>para establecer el tiempo de espera para instrucciones específicas. El valor puede ser 0, lo que significa que no hay espera.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>loginTimeout</p>
+        </td>
+        <td>
+          <p>int [0..65535]</p>
+        </td>
+        <td>
+          <p>15</p>
+        </td>
+        <td>
+          <p>Número de segundos que debería esperar el controlador antes de agotar el tiempo de espera de una conexión errónea. Un valor cero indica que el tiempo de espera es el predeterminado del sistema, que está especificado en 15 segundos de manera predeterminada. Un valor diferente a cero es el número de segundos que debería esperar el controlador antes de agotar el tiempo de espera de una conexión errónea.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>packetSize</p>
+        </td>
+        <td>
+          <p>int [-1| 0 | 512..32767]</p>
+        </td>
+        <td>
+          <p>8000</p>
+        </td>
+        <td>
+          <p>El tamaño del paquete de red se usa para establecer la comunicación con SQL Server y se especifica en bytes. El valor -1 indica que se usa el tamaño de paquete de servidor predeterminado. El valor 0 indica que se usa el valor máximo, que es 32767. Si esta propiedad se establece en un valor fuera del intervalo aceptable, se produce una excepción.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Importante: </b>
+            No recomendamos utilizar la propiedad packetSize cuando el cifrado esté habilitado (encrypt=true). De lo contrario, el controlador podría generar un error de conexión. Para obtener más información, vea el método <a href="5d490edc-a223-4870-a838-784952497e5f.htm">setPacketSize</a> de la clase <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>password</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Contraseña de la base de datos.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>portNumber, puerto</p>
+        </td>
+        <td>
+          <p>int [0..65535]</p>
+        </td>
+        <td>
+          <p>1433</p>
+        </td>
+        <td>
+          <p>Puerto en el que está escuchando SQL Server. Si se especifica el número del puerto en la cadena de conexión, no se realiza ninguna solicitud a sqlbrowser. Si se especifican el puerto e instanceName, se establece la conexión con el puerto especificado. No obstante, instanceName se valida y se devuelve un error si no coincide con el puerto.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Importante: </b>
+            Se recomienda especificar siempre el número de puerto, ya que es más seguro que usar sqlbrowser.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>responseBuffering</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>["full"|"adaptive"]</p>
+        </td>
+        <td>
+          <p>adaptive</p>
+        </td>
+        <td>
+          <p>Si esta propiedad se establece en "adaptive", los datos mínimos posibles se almacenan en búfer cuando es necesario. El modo predeterminado es "adaptative".</p>
+          <p>Cuando esta propiedad se establece en "full", el conjunto de resultados completo se lee del servidor cuando se ejecuta una instrucción. </p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            <p />
+            Tras actualizar el controlador JDBC desde la versión 1.2, el comportamiento del almacenamiento en búfer predeterminado será "adaptive". Si su aplicación no ha configurado nunca la propiedad "responseBuffering" y quiere mantener en su aplicación el comportamiento predeterminado de la versión 1.2, debe configurar la propiedad responseBufferring en "full" bien en las propiedades de conexión o usando el método <a href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a> del objeto <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>selectMethod</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>["direct"|"cursor"]</p>
+        </td>
+        <td>
+          <p>direct</p>
+        </td>
+        <td>
+          <p>Si esta propiedad se establece en "cursor", se crea un cursor de base de datos para cada consulta que se cree en la conexión para los cursores TYPE_FORWARD_ONLY y CONCUR_READ_ONLY. Esta propiedad normalmente solo es necesaria si la aplicación genera conjuntos de resultados muy grandes que no se pueden contener completamente en la memoria del cliente. Cuando se establece esta propiedad en "cursor", solo se retienen en la memoria del cliente un número limitado de filas de los conjuntos de resultados. El comportamiento predeterminado es retener en la memoria del cliente todas las filas de los conjuntos de resultados. Este comportamiento proporciona el rendimiento más rápido cuando la aplicación va a procesar todas las filas.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>sendStringParametersAsUnicode</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>true</p>
+        </td>
+        <td>
+          <p>Si la propiedad sendStringParametersAsUnicode está configurada en "true", los parámetros String se envían al servidor en formato Unicode. </p>
+          <p>Si la propiedad sendStringParametersAsUnicode está configurada en “false", los parámetros String se envían al servidor en formato que no es Unicode, como ASCII/MBCS. </p>
+          <p>El valor predeterminado de la propiedad sendStringParametersAsUnicode es "true".</p>
+          <p> </p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            La propiedad sendStringParametersAsUnicode solamente se comprueba cuando se envía un valor de parámetro con los tipos <b>CHAR</b>, <b>VARCHAR</b> o <b>LONGVARCHAR</b> de JDBC. Los nuevos métodos de caracteres nacionales de JDBC 4.0, como los métodos <b>setNString</b>, <b>setNCharacterStream</b> y <b>setNClob</b> de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>, envían siempre sus valores de parámetro al servidor de Unicode con independencia de la configuración de esta propiedad. <p />
+            Para obtener un rendimiento óptimo con los tipos de datos <b>CHAR</b>, <b>VARCHAR</b> y <b>LONGVARCHAR</b> de JDBC, una aplicación debería configurar la propiedad sendStringParametersAsUnicode en "false" y usar los métodos de caracteres no nacionales <b>setString</b>, <b>setCharacterStream</b> y <b>setClob</b> de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>. <p />
+            Cuando la aplicación configura la propiedad <b>sendStringParametersAsUnicode</b> en "false" y usa un método de caracteres no nacionales para obtener acceso a los tipos de datos Unicode en el lado del servidor (como <b>nchar</b>, <b>nvarchar</b> y <b>ntext</b>), se pueden perder algunos datos si la intercalación de base de datos no es compatible con los caracteres de los parámetros String pasados por el método de caracteres no nacional.<p />
+            Tenga en cuenta que la aplicación debería usar los métodos de caracteres no nacionales <b>setNString</b>, <b>setNCharacterStream</b> y <b>setNClob</b> de las clases <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a> y <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a> para los tipos de datos <b>NCHAR</b>, <b>NVARCHAR</b> y <b>LONGNVARCHAR</b> de JDBC.<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>sendTimeAsDatetime</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>true</p>
+        </td>
+        <td>
+          <p>Esta propiedad se agregó en el controlador JDBC 3.0 de SQL Server .</p>
+          <p>Cuando sea TRUE, los valores java.sql.Time se enviarán al servidor como valores <b>datetime</b> de SQL Server.</p>
+          <p>Cuando sea FALSE, los valores java.sql.Time se enviarán al servidor como valores <b>time</b> de SQL Server.</p>
+          <p>
+            <b>sendTimeAsDatetime</b> también se pueden modificar mediante programación con <a href="705a0494-b5e2-43db-940a-1b8cec550cdb.htm">SQLServerDataSource.setSendTimeAsDatetime</a>.</p>
+          <p>El valor predeterminado de esta propiedad podría verse modificado en una versión futura.</p>
+          <p>Para obtener más información sobre cómo configurar los valores java.sql.Time del controlador JDBC de SQL Server antes de enviarlos al servidor, vea <a href="07eb00dd-621a-46f9-a5a5-8cab4d6058b5.htm">Configurar el modo en que los valores java.sql.Time se envían al servidor</a>.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>serverName, servidor</p>
+        </td>
+        <td>
+          <p>String</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Equipo que ejecuta SQL Server.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>userName, usuario</p>
+        </td>
+        <td>
+          <p>String </p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Usuario de la base de datos.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>trustServerCertificate</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>false</p>
+        </td>
+        <td>
+          <p>Establézcalo en "true" para especificar que el controlador JDBC de Microsoft SQL Server no validará el certificado SSL de SQL Server.</p>
+          <p>Si es "true", se confía automáticamente en el certificado SSL de SQL Server cuando el nivel de comunicación se cifra utilizando SSL.</p>
+          <p>Si es "false", el controlador JDBC de Microsoft SQL Server validará el certificado SSL del servidor. Si la validación del certificado de servidor da error, el controlador generará un error y terminará la conexión. El valor predeterminado es "false".</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            Esta propiedad se usa junto con la propiedad <b>encrypt</b>. Esta propiedad solo afecta a la validación de certificado SSL de servidor si y solo si la propiedad <b>encrypt</b> se establece en "true".<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>trustStore</p>
+        </td>
+        <td>
+          <p>String </p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>La ruta de acceso (incluido el nombre de archivo) del archivo trustStore del certificado. El archivo trustStore contiene la lista de certificados en los que el cliente confía. </p>
+          <p>Cuando esta propiedad no se especifica o se establece en null, el controlador se basará en las reglas de búsqueda del generador del administrador de confianza para determinar qué almacén de certificados se usará. </p>
+          <p>El generador TrustManagerFactory SunX509 predeterminado intenta buscar material de confianza en el orden de búsqueda siguiente:</p>
+          <ul><li>
+              Un archivo especificado por la propiedad del sistema "javax.net.ssl.trustStore" de la máquina virtual Java (JVM). <br />
+            </li><li>
+              El archivo "&lt;java-home&gt;/lib/security/jssecacerts". <br />
+            </li><li>
+              El archive "&lt;java-home&gt;/lib/security/cacerts".<br />
+            </li></ul>
+          <p>Para obtener más información, consulte la documentación de la interfaz de SUNX509 TrustManager en el sitio web de Sun Microsystems.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            Esta propiedad solo afecta a la búsqueda trustStore de certificado, si y solo si la propiedad <b>encrypt</b> se establece en "true" y la propiedad <b>trustServerCertificate</b> se establece en "false".<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>trustStorePassword</p>
+        </td>
+        <td>
+          <p>String </p>
+        </td>
+        <td>
+          <p>null</p>
+        </td>
+        <td>
+          <p>Contraseña que se usa para comprobar la integridad de los datos trustStore. </p>
+          <p>Si se establece la propiedad trustStore pero no se establece la propiedad trustStorePassword, la integridad de trustStore no se comprueba.</p>
+          <p>Cuando las propiedades trustStore y trustStorePassword no se especifican, el controlador utilizará las propiedades del sistema de JVM, "javax.net.ssl.trustStore" y "javax.net.ssl.trustStorePassword". Si no se especifica la propiedad del sistema "javax.net.ssl.trustStorePassword", no se comprueba la integridad del trustStore. </p>
+          <p>Si no se establece la propiedad trustStore pero se establece la propiedad trustStorePassword, el controlador JDBC utilizará el archivo especificado por "javax.net.ssl.trustStore" como almacén de confianza y la integridad de éste se comprueba con la trustStorePassword especificada. Esto podría ser necesario cuando la aplicación cliente no desea almacenar la contraseña en la propiedad del sistema de JVM.</p>
+          <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+            La propiedad trustStorePassword solo afecta a la búsqueda de trustStore de certificado, si y solo si la propiedad <b>encrypt</b> se establece en "true" y la propiedad <b>trustServerCertificate</b> se establece en "false".<p />
+          </div>
+        </td>
+      </tr><tr>
+        <td>
+          <p>workstationID</p>
+        </td>
+        <td>
+          <p>String  </p>
+          <p>[&lt;=128 char]</p>
+        </td>
+        <td>
+          <p>&lt;cadena vacía&gt;</p>
+        </td>
+        <td>
+          <p>El identificador de la estación de trabajo. Se usa para identificar la estación de trabajo concreta en diversas herramientas de creación de perfiles y registros de SQL Server. Si no se especifica ninguno, se utiliza la &lt;cadena vacía&gt;.</p>
+        </td>
+      </tr><tr>
+        <td>
+          <p>xopenStates</p>
+        </td>
+        <td>
+          <p>boolean</p>
+          <p>["true"|"false"]</p>
+        </td>
+        <td>
+          <p>false</p>
+        </td>
+        <td>
+          <p>Establézcalo en "true" para especificar que el controlador devuelve en las excepciones códigos de estado compatibles con XOPEN. De forma predeterminada se devuelven códigos de estado SQL 99.</p>
+        </td>
+      </tr></table>
+    <div style="margin: .5em 1.5em .5em 1.5em"><b>Nota: </b>
+      El controlador JDBC de SQL Server toma los valores predeterminados del servidor para las propiedades de conexión salvo ANSI_DEFAULTS e IMPLICIT_TRANSACTIONS. El controlador JDBC de SQL Server activa ANSI_DEFAULTS y desactiva IMPLICIT_TRANSACTIONS automáticamente.<p />
+    </div>
+  </div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Conectar SQL Server con el controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

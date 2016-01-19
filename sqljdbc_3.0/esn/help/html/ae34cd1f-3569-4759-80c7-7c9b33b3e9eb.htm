@@ -1,0 +1,120 @@
+﻿<html DIR="LTR" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8" />
+    <META NAME="save" CONTENT="history" />
+    <title>Configurar el cliente para el cifrado SSL</title>
+    
+    <link rel="stylesheet" type="text/css" href="../local/Classic.css">
+      
+    </link>
+    
+    <script src="../local/script.js">
+      
+    </script><script src="../local/script_main.js">&amp;nbsp;</script>
+  </head>
+  <body>
+    <!--Topic built:03/31/2010 01:26:27-->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="header">
+      <table width="100%" id="topTable"><tr>
+          <td align="left">
+            <span id="headerBold">Configurar el cliente para el cifrado SSL</span>
+          </td>
+          <td align="right">
+            
+          </td>
+        </tr></table>
+      
+      
+      
+    </div>
+    <div id="mainSection">
+      
+        
+        
+    <font color="DarkGray">
+      
+    </font>
+    <p />
+    
+    <p />
+  
+        <div id="introductionSection" class="section">
+    <p>El controlador JDBC de Microsoft SQL Server o el cliente tienen que validar que el servidor es el correcto y que una entidad de certificación en la que el cliente confía ha emitido su certificado. Para validar el certificado de servidor, se debe proporcionar material de confianza en el momento de la conexión. Además, el emisor del certificado de servidor debe ser una entidad de certificación en la que el cliente confíe. </p>
+    <p>En este tema se describe primero cómo proporcionar el material de confianza en el equipo cliente. A continuación se describe cómo importar un certificado de servidor al almacén de confianza del equipo cliente cuando una entidad de certificación privada emita la instancia del certificado de Capa de sockets seguros (SSL) de SQL Server.</p>
+    <p>Para obtener más información sobre cómo validar el certificado de servidor, vea la sección que trata de la validación de certificados SSL de servidor en <a href="073f3b9e-8edd-4815-88ea-de0655d0325e.htm">Descripción de la compatibilidad con SSL</a>.</p>
+  </div><h1 class="heading">Configurar el almacén de confianza de cliente</h1><div id="sectionSection0" class="section"><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <p xmlns="">La validación del certificado de servidor requiere que se suministre material de confianza en el momento de la conexión utilizando explícitamente las propiedades de conexión <b>trustStore</b> y <b>trustStorePassword</b>, o el almacén de confianza predeterminado de la máquina virtual Java (JVM) subyacente de forma implícita. Para obtener más información sobre cómo establecer las propiedades <b>trustStore</b> y <b>trustStorePassword</b> en una cadena de conexión, vea <a href="ec91fa8a-ab7e-4c1e-a05a-d7951ddf33b1.htm">Conectar con el cifrado SSL</a>.</p>
+      <p xmlns="">Si la propiedad <b>trustStore</b> no se ha especificado o se ha establecido en null, el controlador JDBC de Microsoft SQL Server se basará en el proveedor de seguridad subyacente de JVM, la Extensión de sockets seguros de Java (SunJSSE, Java Secure Socket Extension). El proveedor de SunJSSE proporciona un <b>TrustManager</b> predeterminado, que se utiliza para validar los certificados X.509 que devuelve SQL Server con el material de confianza que se proporciona en un almacén de confianza.</p>
+      <p xmlns=""><b>TrustManager</b> intenta encontrar el trustStore predeterminado con el orden de búsqueda siguiente:</p>
+      <ul xmlns=""><li>
+          Si la propiedad del sistema "javax.net.ssl.trustStore" está definida, <b>TrustManager</b> intenta buscar el archivo trustStore predeterminado con el nombre de archivo que especifica dicha propiedad del sistema.<br />
+        </li><li>
+          Si la propiedad del sistema "javax.net.ssl.trustStore" no se especificó, y si el archivo "&lt;java-home&gt;/lib/security/jssecacerts" existe, se utiliza ese archivo. <br />
+        </li><li>
+          Si el archivo "&lt;java-home&gt;/lib/security/cacerts" existe, se utiliza ese archivo.<br />
+        </li></ul>
+      <p xmlns="">Para obtener más información, consulte la documentación de la interfaz de SUNX509 TrustManager en el sitio web de Sun Microsystems.</p>
+      <p xmlns="">El entorno de tiempo de ejecución de Java le permite establecer las propiedades del sistema trustStore y trustStorePassword como sigue: </p>
+      <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>java -Djavax.net.ssl.trustStore=C:\MyCertificates\storeName
+java -Djavax.net.ssl.trustStorePassword=storePassword</pre></span></div>
+      <p xmlns="">En este caso, cualquier aplicación que se ejecute en esta JVM utilizará estos valores como predeterminados. Para invalidar la configuración predeterminada de la aplicación, debería establecer las propiedades de conexión <b>trustStore</b> y <b>trustStorePassword</b> en la cadena de conexión o en el método de establecimiento adecuado de la clase <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>.</p>
+      <p xmlns="">Además, puede configurar y administrar los archivos de almacenes de confianza como "&lt;java-home&gt;/lib/security/jssecacerts" y "&lt;java-home&gt;/lib/security/cacerts". Para ello, utilice la utilidad JAVA "keytool" que se instala con el Entorno de tiempo de ejecución de Java (JRE, Java Runtime Environment). Para obtener más información sobre la utilidad "keytool", consulte la documentación de keytool en el sitio web de Sun Microsystems.</p>
+    </content><sections xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+      <h1 class="heading" xmlns="">Importar el certificado de servidor al almacén de confianza</h1><div id="sectionSection" class="section" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+          <p xmlns="">Durante el protocolo de enlace SSL, el servidor envía su certificado de clave pública al cliente. El emisor de un certificado de clave pública se conoce como entidad de certificación (CA, Certificate Authority). El cliente tiene que asegurarse de que la entidad de certificación es una de aquellas en las que el cliente confía. Para ello, hay que saber de antemano la clave pública de las CA de confianza. Normalmente, la JVM incluye un conjunto predefinido de entidades de certificación de confianza. </p>
+          <p xmlns="">Si una entidad de certificación privada emite la instancia del certificado SSL de SQL Server, debe agregar el certificado de la entidad de certificación a la lista de certificados de confianza en el almacén de confianza del equipo cliente.</p>
+          <p xmlns="">Para ello, use la utilidad JAVA "keytool" que se instala con JRE. El símbolo del sistema siguiente muestra cómo utilizar la utilidad "keytool" para importar un certificado de un archivo:</p>
+          <div class="sampleCode" xmlns=""><span codeLanguage="other"><pre>keytool -import -v -trustcacerts -alias myServer -file caCert.cer -keystore truststore.ks</pre></span></div>
+          <p xmlns="">El ejemplo utiliza un archivo denominado "caCert.cer" como archivo de certificado. Debe obtener este archivo de certificado del servidor. Los pasos siguientes explican cómo exportar el certificado de servidor a un archivo:</p>
+          <ol xmlns=""><li>
+              Haga clic en Inicio y, a continuación, en Ejecutar, y escriba MMC. (MMC es un acrónimo de Microsoft Management Console).<br />
+            </li><li>
+              En MMC, abra Certificados. <br />
+            </li><li>
+              Expanda Personal y Certificados. <br />
+            </li><li>
+              Haga clic con el botón secundario del mouse en el certificado de servidor y, a continuación, seleccione Todas las tareas\Exportar. <br />
+            </li><li>
+              Haga clic en Siguiente para pasar del cuadro de diálogo de bienvenida del Asistente para exportación de certificados. <br />
+            </li><li>
+              Confirme que está seleccionada la opción "No, no exporte la clave privada" y, a continuación, haga clic en Siguiente. <br />
+            </li><li>
+              Asegurarse de que están seleccionadas las opciones DER binario codificado X.509 (.CER) o X.509 codificado base-64 (.CER), y a continuación haga clic en Siguiente. <br />
+            </li><li>
+              Escriba un nombre para el archivo de exportación.<br />
+            </li><li>
+              Haga clic en Siguiente y, a continuación, haga clic en Finalizar para exportar el certificado.<br />
+            </li></ol>
+        </content></div>
+    </sections></div><span id="seeAlsoSpan"><h1 class="heading">Vea también</h1></span><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="8e566243-2f93-4b21-8065-3c8336649309.htm">Usar el cifrado SSL</a><br /><a href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Proteger las aplicaciones del controlador JDBC</a><br /><br /></div><!--[if gte IE 5]>
+			<tool:tip element="seeAlsoToolTip" avoidmouse="false"/><tool:tip element="languageFilterToolTip" avoidmouse="false"/><tool:tip element="roleInfoSpan" avoidmouse="false"/>
+		<![endif]-->
+      <div id="footer" class="section">
+        
+		<hr />
+		
+		<span id="fb" class="feedbackcss">
+			
+			
+		</span>
+		
+		<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">
+			
+			© 2010 Microsoft Corporation. Reservados todos los derechos.
+		</a>
+ 	
+	
+      </div>
+    </div>
+  </body>
+</html>

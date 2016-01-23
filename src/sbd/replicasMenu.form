@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -101,6 +101,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -166,9 +167,9 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnModificar" pref="225" max="32767" attributes="1"/>
-                              <Component id="btnSincronizar" alignment="0" pref="225" max="32767" attributes="1"/>
-                              <Component id="btnActualizar" alignment="0" pref="225" max="32767" attributes="1"/>
+                              <Component id="btnModificar" max="32767" attributes="1"/>
+                              <Component id="btnSincronizar" alignment="0" max="32767" attributes="1"/>
+                              <Component id="btnActualizar" alignment="0" max="32767" attributes="1"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel2" min="-2" pref="119" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -177,8 +178,8 @@
                                       <Component id="jrbDesconectar" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="btnEliminar" alignment="0" pref="225" max="32767" attributes="1"/>
-                              <Component id="btnInsertar" alignment="1" pref="225" max="32767" attributes="1"/>
+                              <Component id="btnEliminar" alignment="0" max="32767" attributes="1"/>
+                              <Component id="btnInsertar" alignment="1" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                   </Group>
@@ -468,7 +469,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtFiltros" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="177" max="32767" attributes="0"/>
+                      <EmptySpace pref="180" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">

@@ -290,11 +290,11 @@ public class replicasMenu extends javax.swing.JFrame {
             }
         ));
         tblTabla.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblTablaKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tblTablaKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblTablaKeyReleased(evt);
             }
         });
         jScrollPane3.setViewportView(tblTabla);
@@ -475,7 +475,7 @@ public class replicasMenu extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(180, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addGap(18, 18, 18)
@@ -524,17 +524,17 @@ public class replicasMenu extends javax.swing.JFrame {
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                            .addComponent(btnSincronizar, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSincronizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jrbConectar)
                                     .addComponent(jrbDesconectar)))
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                            .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -690,7 +690,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         try {
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText()));
         } catch (SQLException ex) {
-            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOOR");
         }
     else
         if (jrbTranEstandar.isSelected())
@@ -702,29 +702,38 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     else if (jrbMezcla.isSelected())    
         JOptionPane.showMessageDialog(null, "Mezcla");
     
+         try {
+                ejecutar(crearTablaSuscripcion(),servidor);
+            } catch (SQLException ex) {
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+            }
+    
     //////suscripcion
     if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(a);
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOA"),servidor);
             } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
 }
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(b);
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOB"),servidor);
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    if (!"".equals(c))
+    if (!"".equals(c)){
+           JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(c);
+            ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor));
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "AQUI");
         }
+    }
     JOptionPane.showMessageDialog(null, "Completado");
 }//GEN-LAST:event_btnSincronizarActionPerformed
 
@@ -738,21 +747,21 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
     if(jchA.isSelected())
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), "ANDRES\\SITIO_A");
+        a=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOA");
     else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected())
-        b=sqlSuscripcionSnap(txtNombrePub.getText(), "ANDRES\\SITIO_B");    
+        b=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOB");    
     else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected())
-        c=sqlSuscripcionSnap(txtNombrePub.getText(), "ANDRES\\ANDRES");
+        c=sqlSuscripcionSnap(txtNombrePub.getText(), servidor);
     else
         c="";
 }//GEN-LAST:event_jchCItemStateChanged
@@ -767,37 +776,85 @@ int k=1;
 
 public String sqlPublicacionSnap(String nombre){
     aux="";atributos="";tipo="";
-    aux=""
-            + "use master\n"
-            + "exec sp_replicationdboption @dbname = N'proyecto', @optname = N'publish', @value = N'true' \n"
-            + "\n"
-            + "use [proyecto]\n";
-    tipo="exec sp_addpublication @publication = N'"+nombre+"', @description = N'Snapshot publication of database ''proyecto'' from Publisher ''"+servidor+"''.', @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1\n"
-                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n";
-    
-    atributos="use [proyecto]\n"
-            + "exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'manual', @destination_table = N'clientes', @destination_owner = N'dbo', @vertical_partition = N'";
+    aux=""+
+            "use [proyecto] exec sp_replicationdboption @dbname = N'proyecto', @optname = N'publish', @value = N'true'";
+    tipo=""+
+"use [proyecto] exec sp_replicationdboption @dbname = N'proyecto', @optname = N'publish', @value = N'true'\n"+
+"use [proyecto] exec sp_addpublication @publication = N'"+nombre+"', @description = N'Snapshot publication of database ''proyecto'' from Publisher ''"+servidor+"''.',"
++ " @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false',"
++ " @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', "
++ "@add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true',"
++ " @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1"
+                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
+            + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
+            + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
+            + " @publisher_security_mode = 1";    
+atributos="use [proyecto] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
++ " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'manual',"
++ " @destination_table = N'clientes', @destination_owner = N'dbo', @vertical_partition = ";
     
     if (listaDer.isEmpty())
-        atributos=atributos+"false'"+filtros(nombre)+"\n";
+        atributos=atributos+"N'false'";
     else{
-        atributos=atributos+"true'"+filtros(nombre)+"\n";
+        atributos=atributos+"N'true'";
         for (int i=0;i<listaDer.getSize();i++){
             atributos=atributos+""
-                    + "-- Adding the article's partition column(s)\nexec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1\n";
+                    + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
-        atributos=atributos+"-- Adding the article synchronization object\n"
-                + "exec sp_articleview @publication = N'"+nombre+"', @article = N'clientes', @view_name = N'SYNC_clientes_"+k+"__65', @filter_clause = null, @force_invalidate_snapshot = 1, @force_reinit_subscription = 1\n";
+        atributos=atributos
+                + " exec sp_articleview @publication = N'"+nombre+"', @article = N'clientes', @view_name = N'SYNC_clientes_"+k+"__65', @filter_clause = null, @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         k++;
     }
     return aux+tipo+atributos;
 }
 
 public String sqlSuscripcionSnap(String nombre,String nodo){
-    return "use [proyecto]\n"
-            + "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'clientes_practica', @subscription_type = N'Push', @sync_type = N'automatic', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n"
-            + "exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_practica', @job_login = null, @job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 20160117, @active_end_date = 99991231, @enabled_for_syncmgr = N'false', @dts_package_location = N'Distributor'\n";
+String suscripcion="";
+suscripcion=""+ "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'clientes_practica',"
++ "@subscription_type = N'Push', @sync_type = N'automatic', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
+"exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_practica', "
++ "@job_login = null, @job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0,"
++ " @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959,"
++ " @active_start_date = 20160122, @active_end_date = 99991231, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";
+return suscripcion;
 }
+
+public String crearTablaSuscripcion()
+{ 
+   String sentencia=""+"USE [clientes_practica] SET ANSI_NULLS ON SET QUOTED_IDENTIFIER ON "
+            + "CREATE TABLE [dbo].[clientes](";
+    if(listaDer.isEmpty())
+    {
+    sentencia= sentencia
+            + "[CI] [nchar](10) NOT NULL,"
+            + "[Nombre] [nchar](20) NULL,"
+            + "[Apellido] [nchar](20) NULL,"
+            + "[Telefono] [nchar](10) NULL,"
+            + "[Direccion] [nchar](30) NULL,"
+            + "[Ciudad] [nchar](20) NULL,"
+            + "[Edad] [int] NULL,"
+            + "CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
+    } else
+    {
+        if(listaDer.contains("CI"))
+        sentencia+="[CI] [nchar](10) NOT NULL,";
+        if(listaDer.contains("Nombre"))
+        sentencia+="[Nombre] [nchar](20) NULL,";
+        if(listaDer.contains("Apellido"))
+        sentencia+="[Apellido] [nchar](20) NULL,";
+        if(listaDer.contains("Telefono"))
+         sentencia+="[Telefono] [nchar](10) NULL,";
+        if(listaDer.contains("Direccion"))
+          sentencia+="[Direccion] [nchar](30) NULL,";
+        if(listaDer.contains("Ciudad"))
+          sentencia+="[Ciudad] [nchar](20) NULL,";
+        if(listaDer.contains("Edad"))
+            sentencia+="[Edad] [int] NULL,";
+        sentencia= sentencia+"CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
+    }
+return sentencia;
+}
+
 
 public String filtros(String nombre) {
     String text="";
@@ -819,7 +876,18 @@ public void ejecutar(String sql) throws SQLException{
             psd.execute();
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e);
+            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage());
+        }
+}
+public void ejecutar(String sql,String server) throws SQLException{
+        cn.close();
+        cn=(Connection) cc.conectar(server);
+        try{ 
+            PreparedStatement psd=cn.prepareStatement(sql);
+            psd.execute();
+        }
+        catch(SQLServerException e){
+            JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga"+e.getMessage());
         }
 }
     /**

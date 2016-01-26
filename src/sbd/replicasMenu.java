@@ -64,7 +64,9 @@ public class replicasMenu extends javax.swing.JFrame {
         Connection cn=(Connection) cc.conectarBase(servidor,String.valueOf(jcBase.getSelectedItem()));
         String titulos[] = null,Registros[] = null;
         String sql;
-        sql="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'";
+        sql="USE ["+String.valueOf(jcBase.getSelectedItem())+"] "
+                + "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES "
+                + "WHERE TABLE_TYPE='BASE TABLE'";
         try{
             PreparedStatement psd=cn.prepareStatement(sql);
             ResultSet rs=psd.executeQuery();
@@ -161,20 +163,20 @@ public class replicasMenu extends javax.swing.JFrame {
                             + "Apellido='"+String.valueOf(tblTabla.getValueAt(fila, 2)).toUpperCase() +"', "
                             + "Telefono='"+String.valueOf(tblTabla.getValueAt(fila, 3)) +"', "
                             + "Direccion='"+String.valueOf(tblTabla.getValueAt(fila, 4)).toUpperCase() +"', "
-                            + "Ciudad='"+String.valueOf(tblTabla.getValueAt(fila, 5)) +"'"
-                            + "Edad="+String.valueOf(tblTabla.getValueAt(fila, 6)) +""
+                            + "Ciudad='"+String.valueOf(tblTabla.getValueAt(fila, 5)) +"',"
+                            + "Edad='"+Integer.valueOf((String) tblTabla.getValueAt(fila, 6)) +"'"
                 +"WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";    
             try {
                 PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);     
                 int n=psd.executeUpdate();
             if(n>0){
-                System.out.println("Se actualizo correctamente");
-                cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
+                System.out.println("Se ingreso correctamente");
             }
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, ex); 
             }
         }
+        cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
     }
     
     public void insertar(String base){
@@ -189,7 +191,7 @@ public class replicasMenu extends javax.swing.JFrame {
             psd.setString(4,JOptionPane.showInputDialog(null, "Telefono"));
             psd.setString(5,JOptionPane.showInputDialog(null, "Direccion"));
             psd.setString(6,JOptionPane.showInputDialog(null, "Ciudad"));
-             psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
+            psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 
@@ -1737,7 +1739,6 @@ public String crearTablaSuscripcion(String base)
             + "CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
     } else
     {
-        if(listaDer.contains("CI"))
         sentencia+="[CI] [nchar](10) NOT NULL,";
         if(listaDer.contains("Nombre"))
         sentencia+="[Nombre] [nchar](20) NULL,";

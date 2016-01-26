@@ -1634,8 +1634,8 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
 public String sqlPublicacionPeer(String nombre,String base)
 {
 String publicacion= "use master exec sp_replicationdboption @dbname = N'"+jcBase.getSelectedItem().toString()+"', @optname = N'publish', @value = N'true'\n"+
- "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addlogreader_agent @job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
-  "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addqreader_agent @job_login = null, @job_password = null, @frompublisher = 1 \n"+
+// "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addlogreader_agent @job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
+//  "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addqreader_agent @job_login = null, @job_password = null, @frompublisher = 1 \n"+
   "use ["+jcBase.getSelectedItem().toString()+"]\n" +  "exec sp_addpublication @publication = N'"+nombre+"',"
    + " @description = N'Transactional publication of database ''"+jcBase.getSelectedItem().toString()+"'' from Publisher ''"+servidor+"''.', @sync_method = N'native', @retention " +
 "= 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'false', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', "

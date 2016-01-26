@@ -186,7 +186,7 @@ public class replicasMenu extends javax.swing.JFrame {
             psd.setString(1,JOptionPane.showInputDialog(null, "CI"));
             psd.setString(2,JOptionPane.showInputDialog(null, "Nombre"));
             psd.setString(3,JOptionPane.showInputDialog(null, "Apellido"));
-            psd.setInt(4,Integer.valueOf(JOptionPane.showInputDialog(null, "Telefono")));
+            psd.setString(4,JOptionPane.showInputDialog(null, "Telefono"));
             psd.setString(5,JOptionPane.showInputDialog(null, "Direccion"));
             psd.setString(6,JOptionPane.showInputDialog(null, "Ciudad"));
              psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
@@ -1155,8 +1155,19 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
-           // Copiar todos los datos en latabla
-           
+          if(jchA.isSelected())
+          {
+                llenarDatosPeer("clientes_peer",servidor+"\\SITIOA");
+          }
+          if(jchB.isSelected())
+          {
+                llenarDatosPeer("clientes_peer",servidor+"\\SITIOB");
+          }
+          if(jchC.isSelected())
+          {
+                llenarDatosPeer("clientes_peer",servidor);
+          }
+        
         
         try {
             ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
@@ -1207,6 +1218,33 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     
 }//GEN-LAST:event_btnSincronizarActionPerformed
 
+public void llenarDatosPeer(String base,String nodo)
+{  int n=0;
+     cn=(Connection) cc.conectarBase(nodo, base);
+        String sql="";
+        sql="use ["+base+"]\nINSERT INTO clientes VALUES(?,?,?,?,?,?,?)";
+        try {
+            System.out.println("Filas: "+tblTabla.getRowCount());
+            for(int i=0; i<tblTabla.getRowCount();i++){
+            PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);
+            psd.setString(1,String.valueOf(tblTabla.getValueAt(i, 0)));
+            psd.setString(2,String.valueOf(tblTabla.getValueAt(i, 1)));
+            psd.setString(3,String.valueOf(tblTabla.getValueAt(i, 2)));
+            psd.setString(4,String.valueOf(tblTabla.getValueAt(i, 3)));
+            psd.setString(5,String.valueOf(tblTabla.getValueAt(i, 4)));
+            psd.setString(6,String.valueOf(tblTabla.getValueAt(i, 5)));
+             psd.setInt(7,Integer.valueOf(String.valueOf(tblTabla.getValueAt(i, 6))));
+           n=psd.executeUpdate();  
+            }
+             if(n>0){    
+               JOptionPane.showMessageDialog(null, "Se inserto correctamente ");
+            }      
+        } 
+       catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex);
+        }      
+}
+
 private void tblTablaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblTablaKeyReleased
     
 }//GEN-LAST:event_tblTablaKeyReleased
@@ -1241,6 +1279,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     
     if(!jcBase.getSelectedItem().toString().equals("")){
       cargarTabla(servidor,jcBase.getSelectedItem().toString());
+      
        cargarCampos(jcBase.getSelectedItem().toString());
        }
 }//GEN-LAST:event_jButton1ActionPerformed
@@ -1594,7 +1633,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
 
 public String sqlPublicacionPeer(String nombre,String base)
 {
-String publicacion= "use master exec sp_replicationdboption @dbname = N'"+nombre+"', @optname = N'publish', @value = N'true'\n"+
+String publicacion= "use master exec sp_replicationdboption @dbname = N'"+jcBase.getSelectedItem().toString()+"', @optname = N'publish', @value = N'true'\n"+
  "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addlogreader_agent @job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
   "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addqreader_agent @job_login = null, @job_password = null, @frompublisher = 1 \n"+
   "use ["+jcBase.getSelectedItem().toString()+"]\n" +  "exec sp_addpublication @publication = N'"+nombre+"',"

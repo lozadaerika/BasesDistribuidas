@@ -31,6 +31,9 @@ public class replicasMenu extends javax.swing.JFrame {
     
     int nodos=0;
     String servidor,base,a="",b="",c="";
+    String servidorUno="ERIKA-LAP\\SITIOA";
+    String servidorDos="ERIKA-LAP\\SITIOB";
+    String ServidorLocal="ERIKA-LAP";
     
     DefaultListModel<String>listaIzq=new DefaultListModel<String>();
     DefaultListModel<String>listaDer=new DefaultListModel<String>();
@@ -51,6 +54,24 @@ public class replicasMenu extends javax.swing.JFrame {
             ResultSet rs=psd.executeQuery();
             while(rs.next()){
                 jcBase.addItem(rs.getString("name"));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        }
+    }
+    public void cargarBasesDestino(String server){
+        jcBase.removeAllItems();
+        jcBase.addItem("");
+        String sql;
+        sql="SELECT name FROM sys.databases";
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sql);
+            ResultSet rs=psd.executeQuery();
+            while(rs.next()){
+                jcBaseDestino.addItem(rs.getString("name"));
             }
         }
         catch(Exception e){
@@ -85,7 +106,7 @@ public class replicasMenu extends javax.swing.JFrame {
         if(!jcBase.getSelectedItem().toString().equals("")){
         int i=0;
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(servidor,base);
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
         String titulos[] = null,Registros[] = null;
         String sql_campos,sql_cantidad,sql;
         sql_cantidad="USE "+base+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
@@ -116,7 +137,7 @@ public class replicasMenu extends javax.swing.JFrame {
     public void cargarTabla(String server, String base){
         int i=0;
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(servidor,base);
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
         String titulos[] = null,Registros[] = null;
         String sql_campos,sql_cantidad,sql;
         sql_cantidad="USE "+base+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
@@ -156,7 +177,7 @@ public class replicasMenu extends javax.swing.JFrame {
     Connection cn;
 
     public void modificarTabla(){
-        cn=(Connection) cc.conectarBase(servidor, jcBase.getSelectedItem().toString());
+        cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";
         for(int fila=0;fila<tblTabla.getRowCount();fila++){
             sql="use ["+jcBase.getSelectedItem()+"]\nUPDATE clientes SET Nombre='"+String.valueOf(tblTabla.getValueAt(fila, 1)).toUpperCase() +"', "
@@ -176,11 +197,11 @@ public class replicasMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, ex); 
             }
         }
-        cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
+        cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
     }
     
     public void insertar(String base){
-        cn=(Connection) cc.conectarBase(servidor, jcBase.getSelectedItem().toString());
+        cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";
         sql="use ["+jcBase.getSelectedItem().toString()+"]\nINSERT INTO clientes VALUES(?,?,?,?,?,?,?)";
         try {
@@ -195,7 +216,7 @@ public class replicasMenu extends javax.swing.JFrame {
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 
-                cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
+                cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
             }           
         } 
        catch (Exception ex) {
@@ -204,7 +225,7 @@ public class replicasMenu extends javax.swing.JFrame {
        }
     
     public void eliminar(int fila){
-        cn=(Connection) cc.conectarBase(servidor, jcBase.getSelectedItem().toString());
+        cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";
         sql="use ["+jcBase.getSelectedItem().toString()+"]\nDELETE FROM clientes WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";
         try {
@@ -212,7 +233,7 @@ public class replicasMenu extends javax.swing.JFrame {
             int n=psd.executeUpdate();
             if (n>0){
                 JOptionPane.showMessageDialog(null, "Registro borrado correctamente");
-                cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
+                cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
             }
         }
         catch (Exception ex) {
@@ -291,6 +312,8 @@ public class replicasMenu extends javax.swing.JFrame {
         jlsFiltros = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
         btnEjecutar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jcBaseDestino = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jrbSnapshot = new javax.swing.JRadioButtonMenuItem();
@@ -408,7 +431,7 @@ public class replicasMenu extends javax.swing.JFrame {
                     .addComponent(jchA))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jchB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jchC))
         );
 
@@ -599,7 +622,7 @@ public class replicasMenu extends javax.swing.JFrame {
                     .addComponent(btnEsteEn)
                     .addComponent(btnEmpiece)
                     .addComponent(btnTermine))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -741,7 +764,7 @@ public class replicasMenu extends javax.swing.JFrame {
                             .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAñadir))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -769,17 +792,24 @@ public class replicasMenu extends javax.swing.JFrame {
         btnEjecutar.setText("! Ejecutar");
         btnEjecutar.setName("btnEjecutar"); // NOI18N
 
+        jLabel8.setText("Base Destino");
+
+        jcBaseDestino.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcBaseDestinoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -788,31 +818,41 @@ public class replicasMenu extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEjecutar)
-                        .addGap(87, 87, 87)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnSincronizar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnEjecutar)
+                                    .addComponent(jrbDesconectar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jrbConectar)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSincronizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrbConectar)
-                            .addComponent(jrbDesconectar))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
@@ -821,36 +861,37 @@ public class replicasMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jrbConectar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jrbDesconectar)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnInsertar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnEjecutar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSincronizar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jrbConectar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jrbDesconectar)
+                        .addGap(146, 146, 146))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel6)
                             .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel8)
+                            .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEjecutar)
-                        .addGap(20, 20, 20)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -903,15 +944,14 @@ public class replicasMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1092, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 7, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1115, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(8, 8, 8))
         );
 
         pack();
@@ -927,7 +967,7 @@ private void jchAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 }//GEN-LAST:event_jchAActionPerformed
 
 private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-    cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
+    cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
 }//GEN-LAST:event_btnActualizarActionPerformed
 
 private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -951,31 +991,31 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         try {
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
-            if (jchA.isSelected()){ 
-             try {
-                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor+"\\SITIOA","clientes_practica");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-        }
-          if (jchB.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor+"\\SITIOB","clientes_practica");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
-           if (jchC.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor,"clientes_practica");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         } 
+                if (jchA.isSelected()){ 
+                        try {
+                            ejecutar(crearTablaSuscripcion("clientes_practica"),servidorUno); // ERIKA-LAP\SITIOA
+                         } catch (SQLException ex) {
+                            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+                            }
+                }
+                  if (jchB.isSelected()){ 
+                  try {
+                        ejecutar(crearTablaSuscripcion("clientes_practica"),servidorDos); // ERIKA-LAP\\SITIOB
+                    } catch (SQLException ex) {
+                        Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+                    }
+                 }
+               if (jchC.isSelected()){ 
+              try {
+                    ejecutar(crearTablaSuscripcion("clientes_practica"),ServidorLocal); // ERIKA-LAP
+                } catch (SQLException ex) {
+                    Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+                }
+             } 
            if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOA"));
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -984,7 +1024,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOB"));
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -993,7 +1033,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
                 if (!"".equals(c)){
                        JOptionPane.showMessageDialog(null, "C: "+c);
                     try {
-                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor));
+                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal));// ERIKA-LAP
                          JOptionPane.showMessageDialog(null, "Suscripcion creada");
                     } catch (SQLException ex) {
                         Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1013,21 +1053,21 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor+"\\SITIOA","clientes_transaccional");
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidorUno); // ERIKA-LAP\\SITIOA
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
         }
           if (jchB.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor+"\\SITIOB","clientes_traansaccional");
+          try { 
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidorDos+"\\SITIOB"); // ERIKA-LAP\\SITIOB
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor, "clientes_transaccional");
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),ServidorLocal); // ERIKA-LAP
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
@@ -1037,7 +1077,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor+"\\SITIOA"));
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1046,7 +1086,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor+"\\SITIOB"));
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1055,7 +1095,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor));
+            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal)); // ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1077,21 +1117,21 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor+"\\SITIOA","clientes_cola");
+                ejecutar(crearTablaSuscripcion("clientes_cola"),servidorUno); // ERIKA-LAP\\SITIOA
             } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI"); 
+            } 
         }
           if (jchB.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor+"\\SITIOB","clientes_cola");
+                ejecutar(crearTablaSuscripcion("clientes_cola"),servidorDos);//ERIKA-LAP\\SITIOB
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor, "clientes_cola");
+                ejecutar(crearTablaSuscripcion("clientes_cola"),ServidorLocal); // ERIKA-LAP
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
@@ -1101,7 +1141,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor+"\\SITIOA"));
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\SITIOA
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1110,7 +1150,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor+"\\SITIOB"));
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\SITIOB
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1119,7 +1159,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor));
+            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1137,56 +1177,57 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         
         if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor+"\\SITIOA","clientes_peer");
+                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),servidorUno); //ERIKA-LAP\\SITIOA
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
         }
           if (jchB.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor+"\\SITIOB","clientes_peer");
+                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),servidorDos); // ERIKA-LAP\\SITIOB
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor, "clientes_peer");
+                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),ServidorLocal); //ERIKA-LAP
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
           if(jchA.isSelected())
-          {
-                llenarDatosPeer("clientes_peer",servidor+"\\SITIOA");
-          }
+                llenarDatosPeer(jcBase.getSelectedItem().toString(),servidorUno); //ERIKA-LAP\\SITIOA
           if(jchB.isSelected())
-          {
-                llenarDatosPeer("clientes_peer",servidor+"\\SITIOB");
-          }
+                llenarDatosPeer(jcBase.getSelectedItem().toString(),servidorDos); //ERIKA-LAP\\SITTIOB
           if(jchC.isSelected())
-          {
-                llenarDatosPeer("clientes_peer",servidor);
-          }
-        
-        
+                llenarDatosPeer(jcBase.getSelectedItem().toString(),ServidorLocal);// ERIKA-LAP            
         try {
-            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),ServidorLocal)); //ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Publicacion creada");    
-            if (!"".equals(a)){
-        JOptionPane.showMessageDialog(null, "A: "+a);
+            if(!"".equals(a)){
+                 ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),servidor),servidor+"\\SITIOA");
+                  ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),ServidorLocal),servidorUno);//ERIKA-LAP   ERIKA-LAP\\SITIOA
+            }
+            if(!"".equals(b))
+            {
+                  ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),servidor),servidor+"\\SITIOB");
+                   ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),ServidorLocal),servidorDos); //ERIKA-LAP   ERIKA-LAP\\SITIOB
+            }
+         if(!"".equals(a)){
+              JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOA"));
+                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOA"),servidor); // ERIKA-LA[      ------AQUI
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
-}
+         }
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOB"));
+                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOB"),servidor);
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1195,7 +1236,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor));
+            ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor),servidor);
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1203,11 +1244,9 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }
     JOptionPane.showMessageDialog(null, "Completado");
-    
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
-        }    
-        
+        }          
     }
         
     else if (jrbMezcla.isSelected())    
@@ -1217,7 +1256,6 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
            
     
     //////suscripcion
-    
 }//GEN-LAST:event_btnSincronizarActionPerformed
 
 public void llenarDatosPeer(String base,String nodo)
@@ -1256,22 +1294,26 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 }//GEN-LAST:event_tblTablaKeyTyped
 
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
-    if(jchA.isSelected())
+    if(jchA.isSelected()){
         a=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOA");
-    else
+    cargarBasesDestino(servidor+"\\SITIOA");
+    }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
-    if(jchB.isSelected())
+    if(jchB.isSelected()){
         b=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOB");    
-    else
+    cargarBasesDestino(servidor+"\\SITIOB");
+    }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
-    if(jchC.isSelected())
+    if(jchC.isSelected()){
         c=sqlSuscripcionSnap(txtNombrePub.getText(), servidor);
+    cargarBases(servidor);
+    }
     else
         c="";
 }//GEN-LAST:event_jchCItemStateChanged
@@ -1402,6 +1444,10 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void jcBaseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseItemStateChanged
        
     }//GEN-LAST:event_jcBaseItemStateChanged
+
+    private void jcBaseDestinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcBaseDestinoItemStateChanged
 
 public static String aux,atributos,tipo,sincro,filtro;
 int k=1;
@@ -1633,13 +1679,13 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
     return aux+tipo+atributos+filtro+sincro;
 }
 
-public String sqlPublicacionPeer(String nombre,String base)
+public String sqlPublicacionPeer(String nombre,String base, String server)
 {
 String publicacion= "use master exec sp_replicationdboption @dbname = N'"+jcBase.getSelectedItem().toString()+"', @optname = N'publish', @value = N'true'\n"+
 // "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addlogreader_agent @job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
 //  "exec ["+jcBase.getSelectedItem().toString()+"].sys.sp_addqreader_agent @job_login = null, @job_password = null, @frompublisher = 1 \n"+
   "use ["+jcBase.getSelectedItem().toString()+"]\n" +  "exec sp_addpublication @publication = N'"+nombre+"',"
-   + " @description = N'Transactional publication of database ''"+jcBase.getSelectedItem().toString()+"'' from Publisher ''"+servidor+"''.', @sync_method = N'native', @retention " +
+   + " @description = N'Transactional publication of database ''"+jcBase.getSelectedItem().toString()+"'' from Publisher ''"+server+"''.', @sync_method = N'native', @retention " +
 "= 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'false', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', "
  + "@compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false',"
 + " @repl_freq = N'continuous', @status = N'active', " +
@@ -1650,12 +1696,12 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+jcBase
     "exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0,"+ 
 "@frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = "+
 "null, @job_password = null, @publisher_security_mode = 1 \n"+
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa' \n"+
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM' \n"+
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'"+servidor+"\\Erika' \n"+ // VER SERVIDOR
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT' \n"+
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER' \n"+
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin' \n"+
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa' \n"+
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM' \n"+
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'"+servidor+"\\Erika' \n"+ // VER SERVIDOR
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT' \n"+
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER' \n"+
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin' \n"+
 " use ["+jcBase.getSelectedItem().toString()+"]\n" +
 "exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo',@source_object = N'clientes', @type = N'logbased', "
 + "@description = N'', @creation_script = N'', @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F,@identityrangemanagementoption = N'manual', "
@@ -1685,9 +1731,9 @@ public String sqlSuscripcionPeer(String nombre, String nodo)
 {
 String suscripcion=""+
  "use ["+jcBase.getSelectedItem().toString()+"]\n" +
-"exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'clientes_peer', @subscription_type = N'Push', "
+"exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+jcBase.getSelectedItem().toString()+"', @subscription_type = N'Push', "
 + "@sync_type = N'replication support only', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
-"exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_peer', @job_login = null,"
+"exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+jcBase.getSelectedItem().toString()+"', @job_login = null,"
 + "@job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 1, @frequency_relative_interval = 1,"
 + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = " +
 "235959, @active_start_date = 0, @active_end_date = 0, @dts_package_location = N'Distributor'";
@@ -1772,6 +1818,16 @@ public String filtros(String nombre) {
 
 public void ejecutar(String sql) throws SQLException{
         cn=(Connection) cc.conectarBase(servidor,base);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sql);
+            psd.execute();
+        }
+        catch(SQLServerException e){
+            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage());
+        }
+}
+public void ejecutar(String sql,String server) throws SQLException{
+        cn=(Connection) cc.conectar(server);
         try{
             PreparedStatement psd=cn.prepareStatement(sql);
             psd.execute();
@@ -1873,6 +1929,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
@@ -1892,6 +1949,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JComboBox jcBase;
+    private javax.swing.JComboBox jcBaseDestino;
     private javax.swing.JCheckBox jchA;
     private javax.swing.JCheckBox jchB;
     private javax.swing.JCheckBox jchC;
@@ -1913,3 +1971,4 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JTextField txtNombrePub;
     // End of variables declaration//GEN-END:variables
 }
+

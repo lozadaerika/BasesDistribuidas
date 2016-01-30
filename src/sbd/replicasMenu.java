@@ -66,7 +66,7 @@ public class replicasMenu extends javax.swing.JFrame {
         String sql;
         sql="SELECT name FROM sys.databases";
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarErika(server);
+        Connection cn=(Connection) cc.conectar(server);
         try{
             PreparedStatement psd=cn.prepareStatement(sql);
             ResultSet rs=psd.executeQuery();
@@ -1035,9 +1035,10 @@ private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:even
 }//GEN-LAST:event_jMenu1MouseClicked
 
 private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarActionPerformed
+   
     if (jrbSnapshot.isSelected()){
         try {
-            ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+            ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal);
             JOptionPane.showMessageDialog(null, "Publicacion creada");
                 if (jchA.isSelected()){ 
                         try {
@@ -1063,7 +1064,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
            if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno),servidorUno); // ERIKA-LAP\\SITIOA
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1072,7 +1073,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos),servidorDos); // ERIKA-LAP\\SITIOB
                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1081,7 +1082,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
                 if (!"".equals(c)){
                        JOptionPane.showMessageDialog(null, "C: "+c);
                     try {
-                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal));// ERIKA-LAP
+                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal),ServidorLocal);// ERIKA-LAP
                          JOptionPane.showMessageDialog(null, "Suscripcion creada");
                     } catch (SQLException ex) {
                         Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1097,7 +1098,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     else if (jrbTranEstandar.isSelected())
     {
     try {
-            ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+            ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal);
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
@@ -1125,7 +1126,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno),servidorUno); // ERIKA-LAP\\SITIOA
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1134,7 +1135,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos),servidorDos); // ERIKA-LAP\\SITIOB
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1143,7 +1144,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal)); // ERIKA-LAP
+            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal),ServidorLocal); // ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1161,7 +1162,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     else if (jrbTranCola.isSelected()) 
     {
     try {
-            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal);
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
@@ -1189,7 +1190,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\SITIOA
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno),servidorUno); // ERIKA-LAP\SITIOA
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1198,7 +1199,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\SITIOB
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos),servidorDos); // ERIKA-LAP\SITIOB
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1207,7 +1208,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
+            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal),ServidorLocal); //ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1252,7 +1253,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
           if(jchC.isSelected())
                 llenarDatosPeer(jcBase.getSelectedItem().toString(),ServidorLocal);// ERIKA-LAP            
         try {
-            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),ServidorLocal)); //ERIKA-LAP
+            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),ServidorLocal),ServidorLocal); //ERIKA-LAP
             JOptionPane.showMessageDialog(null, "Publicacion creada");    
             if(!"".equals(a)){
                  ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),servidor),servidor+"\\SITIOA");
@@ -1385,16 +1386,16 @@ private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
-        b=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOB");    
-    cargarBasesDestino("ANDRES\\SITIO_B");
+        b=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos);    
+    cargarBasesDestino(servidorDos);
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
-        c=sqlSuscripcionSnap(txtNombrePub.getText(), servidor);
-    cargarBases(servidor);
+        c=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal);
+    cargarBases(ServidorLocal);
     }
     else
         c="";

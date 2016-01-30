@@ -22,7 +22,17 @@ public class conexion {
         }
         return cn;
     }
-    
+        public Connection conectarServidor(String server){
+        Connection cn=null;
+        try
+        {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            cn=DriverManager.getConnection("jdbc:sqlserver://"+server+":1433;integratedSecurity=true");
+        }catch(Exception ex){
+            System.out.println("error: " +ex);
+        }
+        return cn;
+    }
     public Connection conectarBase(String server,String base){
         Connection cn=null;
         try

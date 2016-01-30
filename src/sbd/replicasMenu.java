@@ -31,9 +31,9 @@ public class replicasMenu extends javax.swing.JFrame {
     
     int nodos=0;
     String servidor,base,a="",b="",c="";
-    String servidorUno="ERIKA-LAP";
-    String servidorDos="ANDRES\\SITIO_B";
-    String ServidorLocal="ANDRES";
+    String servidorUno="EDISSON";
+    String servidorDos="ANDRES\\ANDRES";
+    String ServidorLocal="ERIKA-LAP";
     
     DefaultListModel<String>listaIzq=new DefaultListModel<String>();
     DefaultListModel<String>listaDer=new DefaultListModel<String>();

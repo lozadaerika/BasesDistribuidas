@@ -63,6 +63,7 @@ public class replicasMenu extends javax.swing.JFrame {
     public void cargarBasesDestino(String server){
         jcBaseDestino.removeAllItems();
         jcBaseDestino.addItem("");
+        jcBaseDestino.addItem("Nueva Base");
         String sql;
         sql="SELECT name FROM sys.databases";
         conexion cc= new conexion();
@@ -1323,26 +1324,59 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
     
 }//GEN-LAST:event_tblTablaKeyTyped
 
+
+ public String nuevaBase(String server){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        String sql;
+        String nombre= JOptionPane.showInputDialog(null, "Nombre de la nueva Base");
+        sql="CREATE DATABASE "+ nombre;
+        try{
+            PreparedStatement psd=cn.prepareStatement(sql);
+            psd.execute();
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se puede crear"+e);
+        }
+        return nombre;
+    }
+
+
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
     if(jchA.isSelected()){
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOA","");
-    cargarBasesDestino(servidorUno);
+        if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
+            jcBaseDestino.setSelectedItem(nuevaBase(servidorUno));
+            
+        }else{
+        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorUno,"");
+        cargarBasesDestino(servidorUno);
+    }
     }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
-        b=sqlSuscripcionSnap(txtNombrePub.getText(), "ERIKA-LAP\\SITIOB","");    
-    cargarBasesDestino(servidorDos);
+         if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
+            jcBaseDestino.setSelectedItem(nuevaBase(servidorDos));
+            
+        }else{
+        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
+        cargarBasesDestino(servidorDos);
+    }
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
-        c=sqlSuscripcionSnap(txtNombrePub.getText(), servidor,"");
-    cargarBasesDestino(ServidorLocal);
+        if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
+            jcBaseDestino.setSelectedItem(nuevaBase(ServidorLocal));
+            
+        }else{
+        a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
+        cargarBasesDestino(ServidorLocal);
+    }
     }
     else
         c="";

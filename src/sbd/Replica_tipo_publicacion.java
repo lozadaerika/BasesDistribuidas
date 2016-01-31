@@ -124,10 +124,10 @@ public class Replica_tipo_publicacion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    Finalizar f= new Finalizar(s,cambio,atrib,bas);
-    replicasMenu.jDesktopPane1.add(f);    
-    f.show();
-    this.dispose();
+//    Finalizar f= new Finalizar(s,cambio,atrib,bas);
+//    replicasMenu.jDesktopPane1.add(f);    
+//    f.show();
+//    this.dispose();
 }//GEN-LAST:event_jButton2ActionPerformed
 public String suma(){
     return s+cambio+atrib; 
@@ -137,11 +137,11 @@ private void jcTiempoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
 }//GEN-LAST:event_jcTiempoItemStateChanged
 
 private void jcTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcTipoItemStateChanged
-    if (jcTipo.isSelected())
-        cambio="exec sp_addpublication @publication = N'"+nom+"', @description = N'Snapshot publication of database ''"+tab+"'' from Publisher ''"+ingresoServer.server+"''.', @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1\n"
-                + "\nexec sp_addpublication_snapshot @publication = N'"+nom+"', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n";
-    else
-        cambio=tip;
+//    if (jcTipo.isSelected())
+//        cambio="exec sp_addpublication @publication = N'"+nom+"', @description = N'Snapshot publication of database ''"+tab+"'' from Publisher ''"+ingresoServer.server+"''.', @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1\n"
+//                + "\nexec sp_addpublication_snapshot @publication = N'"+nom+"', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n";
+//    else
+//        cambio=tip;
 }//GEN-LAST:event_jcTipoItemStateChanged
 String cambio="";
     /**

@@ -33,31 +33,31 @@ public class Replica_bases_publicacion extends javax.swing.JInternalFrame {
     String base;
     
     public void cargarTabla(String tabla,String base){
-        int i=0;
-        conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,base);
-        String titulos[] = null,Registros[] = null;
-        String sql_campos,sql_cantidad,sql;
-        sql_cantidad="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+String.valueOf(jcTablas.getSelectedItem())+"'";
-        sql_campos="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+String.valueOf(jcTablas.getSelectedItem())+"'";
-        sql="SELECT * FROM "+tabla;
-        try{
-            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
-            ResultSet rs_cantidad=psd_cantidad.executeQuery();
-            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
-            ResultSet rs_campos=psd_campos.executeQuery();
-            if(rs_cantidad.next()){
-                titulos=new String[rs_cantidad.getInt("C")];
-                Registros=new String[rs_cantidad.getInt("C")];
-                while(rs_campos.next()){
-                    listaIzq.addElement(rs_campos.getString("COLUMN_NAME"));
-                }
-            }
-            jlCamposIzq.setModel(listaIzq);
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
-        }
+//        int i=0;
+//        conexion cc= new conexion();
+//        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,base);
+//        String titulos[] = null,Registros[] = null;
+//        String sql_campos,sql_cantidad,sql;
+//        sql_cantidad="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+String.valueOf(jcTablas.getSelectedItem())+"'";
+//        sql_campos="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+String.valueOf(jcTablas.getSelectedItem())+"'";
+//        sql="SELECT * FROM "+tabla;
+//        try{
+//            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+//            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+//            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
+//            ResultSet rs_campos=psd_campos.executeQuery();
+//            if(rs_cantidad.next()){
+//                titulos=new String[rs_cantidad.getInt("C")];
+//                Registros=new String[rs_cantidad.getInt("C")];
+//                while(rs_campos.next()){
+//                    listaIzq.addElement(rs_campos.getString("COLUMN_NAME"));
+//                }
+//            }
+//            jlCamposIzq.setModel(listaIzq);
+//        }
+//        catch(Exception e){
+//            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+//        }
     }
 
     /** This method is called from within the constructor to
@@ -353,38 +353,38 @@ public class Replica_bases_publicacion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 public static String aux="",atributos="",tipo="";
 public void sql(){
-    aux="";atributos="";tipo="";
-    aux=""
-            + "use master\n"
-            + "exec sp_replicationdboption @dbname = N'"+String.valueOf(jcBase.getSelectedItem())+"', @optname = N'publish', @value = N'true' \n"
-            + "\n"
-            + "use ["+String.valueOf(jcBase.getSelectedItem())+"]\n";
-    tipo="exec sp_addpublication @publication = N'"+nombre+"', @description = N'Snapshot publication of database ''"+String.valueOf(jcBase.getSelectedItem())+"'' from Publisher ''"+ingresoServer.server+"''.', @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'false', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'false', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1 "
-            + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n";
-    
-    atributos="use ["+String.valueOf(jcBase.getSelectedItem())+"]\n"
-            + "exec sp_addarticle @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @source_owner = N'dbo', @source_object = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'manual', @destination_table = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @destination_owner = N'dbo', @vertical_partition = N'";
-    
-    if (listaDer.isEmpty())
-        atributos=atributos+"false'\n";
-    else{
-        atributos=atributos+"true'\n";
-        for (int i=0;i<jlCamposDer.getSelectionModel().getMaxSelectionIndex();i++){
-            atributos=atributos+""
-                    + "exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @column = N'"+jlCamposDer.getSelectedValue()+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1\n";
-        }
-        atributos=atributos+"-- Adding the article synchronization object\n"
-                + "exec sp_articleview @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @view_name = N'SYNC_estudiantes_1__65', @filter_clause = null, @force_invalidate_snapshot = 1, @force_reinit_subscription = 1 GO\n";
-    }
+//    aux="";atributos="";tipo="";
+//    aux=""
+//            + "use master\n"
+//            + "exec sp_replicationdboption @dbname = N'"+String.valueOf(jcBase.getSelectedItem())+"', @optname = N'publish', @value = N'true' \n"
+//            + "\n"
+//            + "use ["+String.valueOf(jcBase.getSelectedItem())+"]\n";
+//    tipo="exec sp_addpublication @publication = N'"+nombre+"', @description = N'Snapshot publication of database ''"+String.valueOf(jcBase.getSelectedItem())+"'' from Publisher ''"+ingresoServer.server+"''.', @sync_method = N'native', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'false', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'false', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1 "
+//            + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n";
+//    
+//    atributos="use ["+String.valueOf(jcBase.getSelectedItem())+"]\n"
+//            + "exec sp_addarticle @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @source_owner = N'dbo', @source_object = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'manual', @destination_table = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @destination_owner = N'dbo', @vertical_partition = N'";
+//    
+//    if (listaDer.isEmpty())
+//        atributos=atributos+"false'\n";
+//    else{
+//        atributos=atributos+"true'\n";
+//        for (int i=0;i<jlCamposDer.getSelectionModel().getMaxSelectionIndex();i++){
+//            atributos=atributos+""
+//                    + "exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @column = N'"+jlCamposDer.getSelectedValue()+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1\n";
+//        }
+//        atributos=atributos+"-- Adding the article synchronization object\n"
+//                + "exec sp_articleview @publication = N'"+nombre+"', @article = N'"+String.valueOf(jcTablas.getSelectedItem())+"', @view_name = N'SYNC_estudiantes_1__65', @filter_clause = null, @force_invalidate_snapshot = 1, @force_reinit_subscription = 1 GO\n";
+//    }
 }
     DefaultListModel<String> listaIzq=new DefaultListModel<String>();
     DefaultListModel<String> listaDer=new DefaultListModel<String>();
     
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    rf=new Replica_filtros_publicacion(String.valueOf(jcBase.getSelectedItem()),String.valueOf(jcTablas.getSelectedItem()));
-    replicasMenu.jDesktopPane1.add(rf);
-    rf.show();
-    rf.setVisible(true);
+//    rf=new Replica_filtros_publicacion(String.valueOf(jcBase.getSelectedItem()),String.valueOf(jcTablas.getSelectedItem()));
+//    replicasMenu.jDesktopPane1.add(rf);
+//    rf.show();
+//    rf.setVisible(true);
 }//GEN-LAST:event_jButton6ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -418,23 +418,23 @@ private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 Replica_filtros_publicacion rf;
 public int llave=1;
     public void tablas(){
-        jcTablas.removeAllItems();
-        conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,String.valueOf(jcBase.getSelectedItem()));
-        String titulos[] = null,Registros[] = null;
-        String sql;
-        sql="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'";
-        try{
-            PreparedStatement psd=cn.prepareStatement(sql);
-            ResultSet rs=psd.executeQuery();
-            while(rs.next()){
-                jcTablas.addItem(rs.getString("TABLE_NAME"));
-            }
-            
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
-        }
+//        jcTablas.removeAllItems();
+//        conexion cc= new conexion();
+//        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,String.valueOf(jcBase.getSelectedItem()));
+//        String titulos[] = null,Registros[] = null;
+//        String sql;
+//        sql="USE "+String.valueOf(jcBase.getSelectedItem())+" SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'";
+//        try{
+//            PreparedStatement psd=cn.prepareStatement(sql);
+//            ResultSet rs=psd.executeQuery();
+//            while(rs.next()){
+//                jcTablas.addItem(rs.getString("TABLE_NAME"));
+//            }
+//            
+//        }
+//        catch(Exception e){
+//            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+//        }
     }
     /**
      * @param args the command line arguments

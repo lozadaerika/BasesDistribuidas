@@ -76,17 +76,17 @@ public class Finalizar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    JOptionPane.showMessageDialog(null, script_tot1);
-    jTextArea1.setText(script_tot1+script_tot2+script_tot3);
-    conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,bas);
-        try{
-            PreparedStatement psd1=cn.prepareStatement(script_tot1+script_tot2+script_tot3);
-            psd1.execute();
-        }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e);
-        }
+//    JOptionPane.showMessageDialog(null, script_tot1);
+//    jTextArea1.setText(script_tot1+script_tot2+script_tot3);
+//    conexion cc= new conexion();
+//        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,bas);
+//        try{
+//            PreparedStatement psd1=cn.prepareStatement(script_tot1+script_tot2+script_tot3);
+//            psd1.execute();
+//        }
+//        catch(SQLException e){
+//            JOptionPane.showMessageDialog(null, "No se puede crear"+e);
+//        }
 }//GEN-LAST:event_jButton1ActionPerformed
 
 public void crear(){

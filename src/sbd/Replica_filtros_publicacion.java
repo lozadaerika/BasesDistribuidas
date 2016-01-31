@@ -40,31 +40,31 @@ public class Replica_filtros_publicacion extends javax.swing.JInternalFrame {
     DefaultListModel<String> listaDer=new DefaultListModel<String>();
     
     public void cargarTabla(String tabla){
-        int i=0;
-        conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,baseDatos);
-        String titulos[] = null,Registros[] = null;
-        String sql_campos,sql_cantidad,sql;
-        sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
-        sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
-        sql="SELECT * FROM "+tabla;
-        try{
-            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
-            ResultSet rs_cantidad=psd_cantidad.executeQuery();
-            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
-            ResultSet rs_campos=psd_campos.executeQuery();
-            if(rs_cantidad.next()){
-                titulos=new String[rs_cantidad.getInt("C")];
-                Registros=new String[rs_cantidad.getInt("C")];
-                while(rs_campos.next()){
-                    listaIzq.addElement(rs_campos.getString("COLUMN_NAME"));
-                }
-            }
-            jlCamposIzq.setModel(listaIzq);
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
-        }
+//        int i=0;
+//        conexion cc= new conexion();
+//        Connection cn=(Connection) cc.conectarBase(ingresoServer.server,baseDatos);
+//        String titulos[] = null,Registros[] = null;
+//        String sql_campos,sql_cantidad,sql;
+//        sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
+//        sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
+//        sql="SELECT * FROM "+tabla;
+//        try{
+//            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+//            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+//            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
+//            ResultSet rs_campos=psd_campos.executeQuery();
+//            if(rs_cantidad.next()){
+//                titulos=new String[rs_cantidad.getInt("C")];
+//                Registros=new String[rs_cantidad.getInt("C")];
+//                while(rs_campos.next()){
+//                    listaIzq.addElement(rs_campos.getString("COLUMN_NAME"));
+//                }
+//            }
+//            jlCamposIzq.setModel(listaIzq);
+//        }
+//        catch(Exception e){
+//            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+//        }
     }
 
     /** This method is called from within the constructor to

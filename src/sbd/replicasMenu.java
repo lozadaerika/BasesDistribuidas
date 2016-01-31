@@ -987,35 +987,35 @@ private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:even
 }//GEN-LAST:event_jMenu1MouseClicked
 
 private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarActionPerformed
-    if (jrbSnapshot.isSelected()){
+     if (jrbSnapshot.isSelected()){
         try {
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
-                if (jchA.isSelected()){ 
-                        try {
-                            ejecutar(crearTablaSuscripcion("clientes_practica"),servidorUno); // ERIKA-LAP\SITIOA
-                         } catch (SQLException ex) {
-                            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-                            }
-                }
-                  if (jchB.isSelected()){ 
-                  try {
-                        ejecutar(crearTablaSuscripcion("clientes_practica"),servidorDos); // ERIKA-LAP\\SITIOB
-                    } catch (SQLException ex) {
-                        Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-                    }
-                 }
-               if (jchC.isSelected()){ 
-              try {
-                    ejecutar(crearTablaSuscripcion("clientes_practica"),ServidorLocal); // ERIKA-LAP
-                } catch (SQLException ex) {
-                    Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-                }
-             } 
+            if (jchA.isSelected()){ 
+             try {
+                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor+"\\SITIOA","clientes_practica");
+            } catch (SQLException ex) {
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+            }
+        }
+          if (jchB.isSelected()){ 
+          try {
+                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor+"\\SITIOB","clientes_practica");
+            } catch (SQLException ex) {
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+            }
+         }
+           if (jchC.isSelected()){ 
+          try {
+                ejecutar(crearTablaSuscripcion("clientes_practica"),servidor,"clientes_practica");
+            } catch (SQLException ex) {
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+            }
+         } 
            if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOA"));
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1024,7 +1024,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor+"\\SITIOB"));
                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1033,7 +1033,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
                 if (!"".equals(c)){
                        JOptionPane.showMessageDialog(null, "C: "+c);
                     try {
-                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal));// ERIKA-LAP
+                        ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidor));
                          JOptionPane.showMessageDialog(null, "Suscripcion creada");
                     } catch (SQLException ex) {
                         Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1053,21 +1053,21 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidorUno); // ERIKA-LAP\\SITIOA
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor+"\\SITIOA","clientes_transaccional");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
         }
           if (jchB.isSelected()){ 
-          try { 
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidorDos+"\\SITIOB"); // ERIKA-LAP\\SITIOB
+          try {
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor+"\\SITIOB","clientes_traansaccional");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_transaccional"),ServidorLocal); // ERIKA-LAP
+                ejecutar(crearTablaSuscripcion("clientes_transaccional"),servidor, "clientes_transaccional");
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
@@ -1077,7 +1077,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor+"\\SITIOA"));
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1086,7 +1086,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
+                ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor+"\\SITIOB"));
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1095,7 +1095,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal)); // ERIKA-LAP
+            ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidor));
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1117,21 +1117,21 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),servidorUno); // ERIKA-LAP\\SITIOA
+                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor+"\\SITIOA","clientes_cola");
             } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI"); 
-            } 
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+            }
         }
           if (jchB.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),servidorDos);//ERIKA-LAP\\SITIOB
+                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor+"\\SITIOB","clientes_cola");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion("clientes_cola"),ServidorLocal); // ERIKA-LAP
+                ejecutar(crearTablaSuscripcion("clientes_cola"),servidor, "clientes_cola");
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
@@ -1141,7 +1141,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\SITIOA
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor+"\\SITIOA"));
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
@@ -1150,7 +1150,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\SITIOB
+                ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor+"\\SITIOB"));
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1159,7 +1159,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
+            ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidor));
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1173,61 +1173,59 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }    
     }
         
-    else if (jrbTranPeer.isSelected()){
+   else if (jrbTranPeer.isSelected()){
         
         if (jchA.isSelected()){ 
              try {
-                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),servidorUno); //ERIKA-LAP\\SITIOA
+                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor+"\\SITIOA","clientes_peer");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
         }
           if (jchB.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),servidorDos); // ERIKA-LAP\\SITIOB
+                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor+"\\SITIOB","clientes_peer");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
            if (jchC.isSelected()){ 
           try {
-                ejecutar(crearTablaSuscripcion(jcBase.getSelectedItem().toString()),ServidorLocal); //ERIKA-LAP
+                ejecutar(crearTablaSuscripcion("clientes_peer"),servidor, "clientes_peer");
               
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }
           if(jchA.isSelected())
-                llenarDatosPeer(jcBase.getSelectedItem().toString(),servidorUno); //ERIKA-LAP\\SITIOA
+          {
+                llenarDatosPeer("clientes_peer",servidor+"\\SITIOA");
+          }
           if(jchB.isSelected())
-                llenarDatosPeer(jcBase.getSelectedItem().toString(),servidorDos); //ERIKA-LAP\\SITTIOB
+          {
+                llenarDatosPeer("clientes_peer",servidor+"\\SITIOB");
+          }
           if(jchC.isSelected())
-                llenarDatosPeer(jcBase.getSelectedItem().toString(),ServidorLocal);// ERIKA-LAP            
+          {
+                llenarDatosPeer("clientes_peer",servidor);
+          }
+           
         try {
-            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),ServidorLocal)); //ERIKA-LAP
+            ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(), servidor));
             JOptionPane.showMessageDialog(null, "Publicacion creada");    
-            if(!"".equals(a)){
-                 ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),servidor),servidor+"\\SITIOA");
-                  ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),ServidorLocal),servidorUno);//ERIKA-LAP   ERIKA-LAP\\SITIOA
-            }
-            if(!"".equals(b))
-            {
-                  ejecutar(sqlPublicacionPeer(txtNombrePub.getText(),jcBase.getSelectedItem().toString(),servidor),servidor+"\\SITIOB");
-                   ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),ServidorLocal),servidorDos); //ERIKA-LAP   ERIKA-LAP\\SITIOB
-            }
-         if(!"".equals(a)){
-              JOptionPane.showMessageDialog(null, "A: "+a);
+            if (!"".equals(a)){
+        JOptionPane.showMessageDialog(null, "A: "+a);
             try {
-                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOA"),servidor); // ERIKA-LA[      ------AQUI
+                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOA"));
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
-         }
+}
     if (!"".equals(b)){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
-                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOB"),servidor);
+                ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor+"\\SITIOB"));
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1236,7 +1234,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     if (!"".equals(c)){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
-            ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor),servidor);
+            ejecutar(sqlSuscripcionPeer(txtNombrePub.getText(),servidor));
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1244,11 +1242,13 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }
     JOptionPane.showMessageDialog(null, "Completado");
+    
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
-        }          
-    }
+        }    
         
+    }
+                
     else if (jrbMezcla.isSelected())    
         JOptionPane.showMessageDialog(null, "Mezcla");
     
@@ -1815,19 +1815,8 @@ public String filtros(String nombre) {
     }
     return "";
 }
-
 public void ejecutar(String sql) throws SQLException{
         cn=(Connection) cc.conectarBase(servidor,base);
-        try{
-            PreparedStatement psd=cn.prepareStatement(sql);
-            psd.execute();
-        }
-        catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage());
-        }
-}
-public void ejecutar(String sql,String server) throws SQLException{
-        cn=(Connection) cc.conectar(server);
         try{
             PreparedStatement psd=cn.prepareStatement(sql);
             psd.execute();

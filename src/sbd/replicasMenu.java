@@ -29,6 +29,7 @@ public class replicasMenu extends javax.swing.JFrame {
         initComponents();
         servidor=server;this.base=base;
         cargarBases(server);
+        MostrarPublicaciones(server);
     }
     
     int nodos=0;
@@ -111,7 +112,7 @@ public class replicasMenu extends javax.swing.JFrame {
             "SET @publication = N'"+publicacion+"'; \n" +
             "\n" +
             "-- Remove a transactional publication.\n" +
-            "USE [clientes_practica]\n" +
+            "USE ["+jcBase.getSelectedItem().toString()+"]\n" +
             "EXEC sp_droppublication @publication = @publication;";
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectar(server);
@@ -1123,7 +1124,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
         
            
     
-    //////suscripcion
+   MostrarPublicaciones(ServidorLocal);
 }//GEN-LAST:event_btnSincronizarActionPerformed
 
 public void Snapshot(String baseDestino)

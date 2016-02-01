@@ -1383,7 +1383,7 @@ private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 }//GEN-LAST:event_jchCItemStateChanged
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
+
     
     if(!jcBase.getSelectedItem().toString().equals("")){
       cargarTabla(servidor,jcBase.getSelectedItem().toString());

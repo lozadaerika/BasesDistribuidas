@@ -14,7 +14,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellEditor.DefaultTextField;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -41,6 +43,87 @@ public class replicasMenu extends javax.swing.JFrame {
      DefaultListModel<String>lista=new DefaultListModel<String>();
     
     DefaultTableModel modelo;
+    
+    public void MostrarPublicaciones(String server){
+     //jcbPublicaciones.removeAllItems();
+        String sqlCargarPublicaciones="Use distribution \n" +
+            "\n" +
+            "DECLARE @ArticleName SysName\n"+
+            "\n" +
+            "SELECT\n" +
+            "     MSP.publication AS 'Publication Name'\n" +
+            "    ,MSA.publisher_db AS 'Database Name'\n" +
+//            "    ,MSA.article AS 'Article Name'\n" +
+//            "    ,MSA.source_owner AS 'Schema Name'\n" +
+//            "    ,MSA.source_object AS 'Table Name'\n" +
+            "FROM\n" +
+            "    DBO.MSarticles AS MSA\n" +
+            "INNER JOIN DBO.MSpublications AS MSP\n" +
+            "        ON MSA.publication_id = MSP.publication_id\n" ;
+        
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        //DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+        DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Publicaciones");
+        //DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
+        try{
+            PreparedStatement psd=cn.prepareStatement(sqlCargarPublicaciones);
+            //psd.execute();
+            ResultSet rs=psd.executeQuery();           
+            
+            while(rs.next()){
+//                int x=0;
+//                while(x<2){
+//                    if (x==0){
+                        DefaultMutableTreeNode nodo1= new DefaultMutableTreeNode();
+                        nodo1.setUserObject(rs.getString("Publication Name"));
+                        nodo.add(nodo1);
+                        DefaultTreeModel mdl=new DefaultTreeModel(nodo);
+                        this.jTree1.setModel(mdl);
+//                    }else{
+//                        DefaultMutableTreeNode raiz2= new DefaultMutableTreeNode(rs.getString("Publication Name"));
+//                        DefaultMutableTreeNode nodo2= new DefaultMutableTreeNode();
+//                         nodo2.setUserObject("Base "+rs.getString("Database Name"));
+//                        raiz2.add(nodo2);
+//                        DefaultTreeModel mdl1=new DefaultTreeModel(raiz2);
+//                        this.jTree1.setModel(mdl1);
+//                    }
+//                    x++;
+//                }
+            }
+
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e);
+        }
+   }
+    public void eliminarPublicacion(String server) throws SQLException{
+        DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+        String publicacion=nodo.getUserObject().toString();
+        if (nodo !=null){
+            DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
+            mdl.removeNodeFromParent(nodo);
+            
+            //JOptionPane.showMessageDialog(this,nodo.getUserObject().toString() );
+        }
+        String elimPublicacion="DECLARE @publication AS sysname;\n" +
+            "SET @publication = N'"+publicacion+"'; \n" +
+            "\n" +
+            "-- Remove a transactional publication.\n" +
+            "USE [clientes_practica]\n" +
+            "EXEC sp_droppublication @publication = @publication;";
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(elimPublicacion);
+            psd.execute();
+            JOptionPane.showMessageDialog(null, "Publicació eliminada ");
+        }
+        catch(SQLServerException e){
+            JOptionPane.showMessageDialog(null, "No se puede eliminar "+e.getMessage());
+        }
+    }
     
     public void cargarBases(String server){
         jcBase.removeAllItems();
@@ -313,6 +396,10 @@ public class replicasMenu extends javax.swing.JFrame {
         btnEjecutar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jcBaseDestino = new javax.swing.JComboBox();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jrbSnapshot = new javax.swing.JRadioButtonMenuItem();
@@ -800,30 +887,46 @@ public class replicasMenu extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane5.setViewportView(jTree1);
+
+        jScrollPane7.setViewportView(jScrollPane5);
+
+        jButton2.setText("Emilinar publicacion");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel8))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton2)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -843,11 +946,11 @@ public class replicasMenu extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jrbConectar))
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 16, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(22, 22, 22))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50))
         );
@@ -886,8 +989,13 @@ public class replicasMenu extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)))
+                        .addGap(12, 12, 12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -946,7 +1054,7 @@ public class replicasMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1115, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1513,6 +1621,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_jcBaseDestinoItemStateChanged
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+            eliminarPublicacion(servidor);
+        } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 public static String aux,atributos,tipo,sincro,filtro;
 int k=1;
 int l=50;
@@ -1967,6 +2085,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -1994,7 +2113,10 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JTree jTree1;
     private javax.swing.JComboBox jcBase;
     private javax.swing.JComboBox jcBaseDestino;
     private javax.swing.JCheckBox jchA;

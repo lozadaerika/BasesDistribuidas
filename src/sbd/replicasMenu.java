@@ -34,8 +34,8 @@ public class replicasMenu extends javax.swing.JFrame {
     
     int nodos=0;
     String servidor,base,a="",b="",c="";
-    String servidorUno="ERIKA-LAP\\SITIOA";
-    String servidorDos="ERIKA-LAP\\SITIOB";
+    String servidorUno="EDISSON";
+    String servidorDos="ANDRES";
     String ServidorLocal="ERIKA-LAP";
     
     DefaultListModel<String>listaIzq=new DefaultListModel<String>();
@@ -1124,7 +1124,7 @@ private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GE
     }
                 
     else if (jrbMezcla.isSelected())    
-        JOptionPane.showMessageDialog(null, "Mezcla");
+         JOptionPane.showMessageDialog(null, "Mezcla");
     
         
            
@@ -1138,15 +1138,15 @@ public void Snapshot(String baseDestino)
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
+             //   ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
             }
           if (jchB.isSelected()){ 
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+             //   ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
          }
            if (jchC.isSelected()){ 
-                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal,baseDestino);
+            //    ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal,baseDestino);
                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
          }    
                 JOptionPane.showMessageDialog(null, "Completado");
@@ -1613,6 +1613,7 @@ int k=1;
 int l=50;
 
 public String sqlPublicacionSnap(String nombre,String base){
+    //String sql=" = N'pub_Java', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased', @description = N'', @creation_script = N'', @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'none', @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = N'false', @ins_cmd = N'SQL', @del_cmd = N'SQL', @upd_cmd = N'SQL'\n" ;
     aux="";atributos="";tipo="";sincro="";filtro="";
     aux="";
     tipo=" "+
@@ -1625,10 +1626,16 @@ public String sqlPublicacionSnap(String nombre,String base){
                 + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
             + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
             + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
-            + " @publisher_security_mode = 1";    
+            + " @publisher_security_mode = 1 \n"+
+            "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
-+ " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'manual',"
-+ " @destination_table = N'clientes', @destination_owner = N'dbo', @vertical_partition = ";
++ " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'none',"
++ " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = ";
    String atrib=""; 
     if (listaDer.isEmpty())
         atributos=atributos+"N'false'";
@@ -1637,7 +1644,8 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
         atrib="\n";
         for (int i=0;i<listaDer.getSize();i++){
             atrib=atrib+""
-                    + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
+                    + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"',"
+                    + " @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
     String cadenaFiltro="";
@@ -1667,7 +1675,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
     }
     else
     {
-        atributos=atributos+", @filter_clause =N'"+cadenaFiltro+"' "+atrib;
+        atributos=atributos+",@ins_cmd = N'SQL', @del_cmd = N'SQL', @upd_cmd = N'SQL', @filter_clause =N'"+cadenaFiltro+"' "+atrib;
     }
     String fil="";
     if(lista.isEmpty()){
@@ -1682,10 +1690,9 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
     //System.out.println("Sincro: "+sincro);
        k++;
     l++;
-   // System.out.println("TODO: "+aux+tipo+atributos+filtro+sincro);
+    System.out.println("TODO: "+aux+tipo+atributos+filtro+sincro);
     return aux+tipo+atributos+filtro+sincro;
 }
-
 public String sqlPublicacionTransaccional(String nombre,String base){
     aux="";atributos="";tipo="";sincro="";filtro="";
     aux="";
@@ -1699,10 +1706,16 @@ public String sqlPublicacionTransaccional(String nombre,String base){
                 + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
             + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
             + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
-            + " @publisher_security_mode = 1";    
+            + " @publisher_security_mode = 1"+
+           "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'\n" ;
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
-+ " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual',"
-+ " @destination_table = N'clientes', @destination_owner = N'dbo', @vertical_partition = ";
++ " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'none',"
++ " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = ";
    String atrib=""; 
     if (listaDer.isEmpty())
         atributos=atributos+"N'false'";
@@ -1714,7 +1727,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
-    atributos=atributos+", @ins_cmd = N'CALL sp_MSins_dboclientes', @del_cmd = N'CALL sp_MSdel_dboclientes', @upd_cmd = N'SCALL sp_MSupd_dboclientes' ";
+    atributos=atributos+", @ins_cmd = N'SQL', @del_cmd = N'SQL', @upd_cmd = N'SQL' ";
     String cadenaFiltro="";
     if(!lista.isEmpty())
     {
@@ -1868,9 +1881,10 @@ public String sqlSuscripcionTransaccional(String nombre, String nodo,String base
 "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+base+"', "
 + "@subscription_type = N'Push', @sync_type = N'automatic', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
 "exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+base+"',"
- + " @job_login = null, @job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0,"
- + " @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, "
- + "@active_start_date = 20160126, @active_end_date = 99991231, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";   
+ + " @job_login = null, @job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa',  @frequency_type = 64,"
+        + " @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
+        + "@frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, "
+        + "@active_end_date = 0, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";
  
  return suscripcion;
 }
@@ -1890,13 +1904,16 @@ String suscripcion=""+
 
 public String sqlSuscripcionSnap(String nombre,String nodo,String base){
 String suscripcion="";
-suscripcion=""+ "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+base+"',"
-+ "@subscription_type = N'Push', @sync_type = N'automatic', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
+suscripcion=""+ 
+"use ["+jcBase.getSelectedItem().toString()+"]\n" +
+ "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+base+"',"
++ "@subscription_type = N'Push',@sync_type = N'automatic', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
 "exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+base+"', "
-+ "@job_login = null, @job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0,"
-+ " @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959,"
-+ " @active_start_date = 20160122, @active_end_date = 99991231, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";
-return suscripcion;
++ "@job_login = null, @job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa',  @frequency_type = 64,"
+        + " @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
+        + "@frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, "
+        + "@active_end_date = 0, @dts_package_location = N'Distributor'";
+        return suscripcion;
 }
 
 public String sqlSuscripcionCola(String nombre,String nodo,String base){
@@ -1973,7 +1990,7 @@ public void ejecutar(String sql) throws SQLException{
             psd.execute();
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage()+"\n CODIGO: "+e.getErrorCode());
         }
 }
  conexion cc2=new conexion();

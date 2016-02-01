@@ -15,10 +15,7 @@ public class Temporizacion extends javax.swing.JFrame {
      * Creates new form Temporizacion
      */
     public Temporizacion() {
-        initComponents();
-        jrbOcurreCada.setSelected(true);
-        jrbNoFechaTermino.setSelected(true);
-        if(jrbNoFechaTermino.isSelected()) txtFechaTermino.setEnabled(false);
+        initComponents();     
     }
 
     /**
@@ -33,321 +30,118 @@ public class Temporizacion extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
-        jComboBox1 = new javax.swing.JComboBox();
-        panelDuracion = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtFechaInicio = new javax.swing.JTextField();
-        jrbFechaTermino = new javax.swing.JRadioButton();
-        jrbNoFechaTermino = new javax.swing.JRadioButton();
-        txtFechaTermino = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jrbOcurraUnaVez = new javax.swing.JRadioButton();
-        jrbOcurreCada = new javax.swing.JRadioButton();
         jsContadorTiempo = new javax.swing.JSpinner();
         jcbTiempo = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        txtHoraInicio = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtHoraFin = new javax.swing.JTextField();
-        jpanelSemanal = new javax.swing.JPanel();
-        jchLunes = new javax.swing.JCheckBox();
-        jchMartes = new javax.swing.JCheckBox();
-        jchMiercoles = new javax.swing.JCheckBox();
-        jchJueves = new javax.swing.JCheckBox();
-        jchViernes = new javax.swing.JCheckBox();
-        jchSabado = new javax.swing.JCheckBox();
-        jchDomingo = new javax.swing.JCheckBox();
-        jsSemanal = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
-        jpanelDiario = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        jbtnEnviar = new javax.swing.JButton();
+        jpanelDiario = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diario", "Semanal" }));
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
-            }
-        });
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        panelDuracion.setBorder(javax.swing.BorderFactory.createTitledBorder("Duración"));
-
-        jLabel1.setText("Fecha Inicio:");
-
-        buttonGroup2.add(jrbFechaTermino);
-        jrbFechaTermino.setText("Fecha Termino");
-
-        buttonGroup2.add(jrbNoFechaTermino);
-        jrbNoFechaTermino.setText("No Fecha de Termino");
-
-        javax.swing.GroupLayout panelDuracionLayout = new javax.swing.GroupLayout(panelDuracion);
-        panelDuracion.setLayout(panelDuracionLayout);
-        panelDuracionLayout.setHorizontalGroup(
-            panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelDuracionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtFechaInicio))
-                .addGap(48, 48, 48)
-                .addGroup(panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jrbNoFechaTermino)
-                    .addGroup(panelDuracionLayout.createSequentialGroup()
-                        .addComponent(jrbFechaTermino)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFechaTermino)))
-                .addContainerGap())
-        );
-        panelDuracionLayout.setVerticalGroup(
-            panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelDuracionLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jrbFechaTermino)
-                    .addComponent(txtFechaTermino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelDuracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jrbNoFechaTermino)))
-        );
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Frecuencia"));
-
-        buttonGroup1.add(jrbOcurraUnaVez);
-        jrbOcurraUnaVez.setText("Ocura a las:");
-
-        buttonGroup1.add(jrbOcurreCada);
-        jrbOcurreCada.setText("Ocurra cada:");
 
         jcbTiempo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hora(s)", "Minuto(s)", "Segundo(s)" }));
 
-        jLabel2.setText("Hora Inicio:");
+        jLabel5.setText("Dia(s)");
 
-        txtHoraInicio.setText("0:00:00");
-
-        jLabel3.setText("Hora Fin:");
-
-        txtHoraFin.setText("23:59:59");
+        jbtnEnviar.setText("Continuar");
+        jbtnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEnviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsContadorTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrbOcurraUnaVez)
-                            .addComponent(jrbOcurreCada))
-                        .addGap(31, 31, 31)
-                        .addComponent(jsContadorTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jcbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
+                    .addComponent(jcbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jrbOcurraUnaVez)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrbOcurreCada)
                     .addComponent(jsContadorTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jbtnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jchLunes.setText("Lunes");
-
-        jchMartes.setText("Martes");
-        jchMartes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jchMartesActionPerformed(evt);
-            }
-        });
-
-        jchMiercoles.setText("Miercoles");
-
-        jchJueves.setText("Jueves");
-
-        jchViernes.setText("Viernes");
-
-        jchSabado.setText("Sabado");
-
-        jchDomingo.setText("Domingo");
-
-        jLabel4.setText("Semana(s)");
-
-        javax.swing.GroupLayout jpanelSemanalLayout = new javax.swing.GroupLayout(jpanelSemanal);
-        jpanelSemanal.setLayout(jpanelSemanalLayout);
-        jpanelSemanalLayout.setHorizontalGroup(
-            jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelSemanalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpanelSemanalLayout.createSequentialGroup()
-                        .addComponent(jchLunes)
-                        .addGap(18, 18, 18)
-                        .addComponent(jchMiercoles)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jchViernes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jchDomingo))
-                    .addGroup(jpanelSemanalLayout.createSequentialGroup()
-                        .addComponent(jchMartes)
-                        .addGap(18, 18, 18)
-                        .addComponent(jchJueves)
-                        .addGap(18, 18, 18)
-                        .addComponent(jchSabado))
-                    .addGroup(jpanelSemanalLayout.createSequentialGroup()
-                        .addComponent(jsSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel4)))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        jpanelSemanalLayout.setVerticalGroup(
-            jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelSemanalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jsSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jchLunes)
-                    .addComponent(jchMiercoles)
-                    .addComponent(jchViernes)
-                    .addComponent(jchDomingo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanelSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jchMartes)
-                    .addComponent(jchJueves)
-                    .addComponent(jchSabado)))
-        );
-
-        jLabel5.setText("Dia(s)");
 
         javax.swing.GroupLayout jpanelDiarioLayout = new javax.swing.GroupLayout(jpanelDiario);
         jpanelDiario.setLayout(jpanelDiarioLayout);
         jpanelDiarioLayout.setHorizontalGroup(
             jpanelDiarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelDiarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpanelDiarioLayout.setVerticalGroup(
             jpanelDiarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelDiarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpanelDiarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+            .addGap(0, 10, Short.MAX_VALUE)
         );
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpanelDiario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpanelSemanal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelDuracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jpanelDiario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpanelDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpanelSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpanelDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jchMartesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchMartesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jchMartesActionPerformed
-
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-if(jComboBox1.getSelectedItem().equals("Diario")){
-    jpanelSemanal.setVisible(false);
-}
-if(jComboBox1.getSelectedItem().equals("Semanal")){
-    jpanelDiario.setVisible(false);
-}
-        
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       if(jcbTiempo.getSelectedItem().equals("Diario"))
-        tiempo+=" @frequency_type = 8, "
-                + "@frequency_interval = 2, "
-                + "@frequency_relative_interval = 1,"
-                + " @frequency_recurrence_factor = 2,"
-                + " @frequency_subday = 8, "
-                + "@frequency_subday_interval = 1, "
-                + "@active_start_time_of_day = 0, "
-                + "@active_end_time_of_day = 235959,"
-                + " @active_start_date = 0, "
-                + "@active_end_date = 0,";
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jbtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEnviarActionPerformed
+     String subday="";
+     tiempo="";
+        if(jcbTiempo.getSelectedItem().toString().equals("Hora(s)"))
+        subday="8";
+      if(jcbTiempo.getSelectedItem().toString().equals("Minuto(s)"))
+           subday="4";
+          if(jcbTiempo.getSelectedItem().toString().equals("Segundo(s)"))
+              subday="2";
+        tiempo+="@frequency_type = 4,"+  // diario
+"@frequency_interval = "+jSpinner1.getValue().toString()+", "+
+"@frequency_relative_interval = 1, "+
+"@frequency_recurrence_factor = 0, "+
+"@frequency_subday = "+subday+", "+//segundos
+"@frequency_subday_interval = "+jsContadorTiempo.getValue().toString()+","+ // cantidad de segundos
+"@active_start_time_of_day = 0, "+// horas de inicio
+"@active_end_time_of_day = 235959, "+
+"@active_start_date = 0, "+
+"@active_end_date = 0,";
+        System.out.println("TEMPORIZACION: "+tiempo);
+    }//GEN-LAST:event_jbtnEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,35 +181,12 @@ if(jComboBox1.getSelectedItem().equals("Semanal")){
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JButton jbtnEnviar;
     private javax.swing.JComboBox jcbTiempo;
-    private javax.swing.JCheckBox jchDomingo;
-    private javax.swing.JCheckBox jchJueves;
-    private javax.swing.JCheckBox jchLunes;
-    private javax.swing.JCheckBox jchMartes;
-    private javax.swing.JCheckBox jchMiercoles;
-    private javax.swing.JCheckBox jchSabado;
-    private javax.swing.JCheckBox jchViernes;
     private javax.swing.JPanel jpanelDiario;
-    private javax.swing.JPanel jpanelSemanal;
-    private javax.swing.JRadioButton jrbFechaTermino;
-    private javax.swing.JRadioButton jrbNoFechaTermino;
-    private javax.swing.JRadioButton jrbOcurraUnaVez;
-    private javax.swing.JRadioButton jrbOcurreCada;
     private javax.swing.JSpinner jsContadorTiempo;
-    private javax.swing.JSpinner jsSemanal;
-    private javax.swing.JPanel panelDuracion;
-    private javax.swing.JTextField txtFechaInicio;
-    private javax.swing.JTextField txtFechaTermino;
-    private javax.swing.JTextField txtHoraFin;
-    private javax.swing.JTextField txtHoraInicio;
     // End of variables declaration//GEN-END:variables
 }

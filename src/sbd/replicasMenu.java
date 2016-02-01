@@ -1452,39 +1452,31 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
     if(jchA.isSelected()){
-        if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
-            jcBaseDestino.setSelectedItem(nuevaBase(servidorUno));
-            
-        }else{
+        
         a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorUno,"");
         cargarBasesDestino(servidorUno);
-    }
+    
     }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
-         if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
-            jcBaseDestino.setSelectedItem(nuevaBase(servidorDos));
-            
-        }else{
+        
+         
         a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
         cargarBasesDestino(servidorDos);
-    }
+    
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
-        if(jcBaseDestino.getSelectedIndex()!=-1&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
-            jcBaseDestino.setSelectedItem(nuevaBase(ServidorLocal));
-            
-        }else{
+       
         a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
         cargarBasesDestino(ServidorLocal);
-    }
+    
     }
     else
         c="";
@@ -1618,7 +1610,23 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_jcBaseItemStateChanged
 
     private void jcBaseDestinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoItemStateChanged
-        // TODO add your handling code here:
+      if(jcBaseDestino.getSelectedIndex()>=0&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
+        String nombre="";
+        if(jchA.isSelected()){
+        nombre=nuevaBase(servidorUno);
+        cargarBasesDestino(servidorUno);
+        }
+           if(jchB.isSelected()){
+        nombre=nuevaBase(servidorUno);
+        cargarBasesDestino(servidorUno);
+        }
+              if(jchC.isSelected()){
+        nombre=nuevaBase(ServidorLocal);
+        cargarBasesDestino(ServidorLocal);
+        }
+     jcBaseDestino.setSelectedItem(nombre);
+            
+        }  
     }//GEN-LAST:event_jcBaseDestinoItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

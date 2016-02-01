@@ -1159,28 +1159,28 @@ public void TransaccionaEstandar(String baseDestino)
     try {
             ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
-            if (jchA.isSelected()){ 
-             try {
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-        }
-          if (jchB.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
-           if (jchC.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal, baseDestino);
-              
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
+//            if (jchA.isSelected()){ 
+//             try {
+//                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+//            }
+//        }
+//          if (jchB.isSelected()){ 
+//          try {
+//                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+//            }
+//         }
+//           if (jchC.isSelected()){ 
+//          try {
+//                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal, baseDestino);
+//              
+//            } catch (SQLException ex) {
+//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
+//            }
+//         }
     
             if (!"".equals(a)){
         JOptionPane.showMessageDialog(null, "A: "+a);

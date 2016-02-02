@@ -63,7 +63,6 @@ public class replicasMenu extends javax.swing.JFrame {
             "        ON MSA.publication_id = MSP.publication_id\n" ;
         
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectar(server);
         //DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
         DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Publicaciones");
         //DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
@@ -1142,7 +1141,7 @@ public void Snapshot(String baseDestino)
                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
             }
           if (jchB.isSelected()){ 
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+           //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
          }
            if (jchC.isSelected()){ 
@@ -1159,31 +1158,7 @@ public void TransaccionaEstandar(String baseDestino)
     try {
             ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
-//            if (jchA.isSelected()){ 
-//             try {
-//                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-//            }
-//        }
-//          if (jchB.isSelected()){ 
-//          try {
-//                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-//            }
-//         }
-//           if (jchC.isSelected()){ 
-//          try {
-//                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal, baseDestino);
-//              
-//            } catch (SQLException ex) {
-//                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-//            }
-//         }
-    
             if (jchA.isSelected()){
-        JOptionPane.showMessageDialog(null, "A: "+a);
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno,baseDestino));
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
@@ -1192,7 +1167,6 @@ public void TransaccionaEstandar(String baseDestino)
             }
 }
     if (jchB.isSelected()){
-        JOptionPane.showMessageDialog(null, "B: "+b);
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos,baseDestino));
                   JOptionPane.showMessageDialog(null, "Suscripcion creada");
@@ -1201,7 +1175,6 @@ public void TransaccionaEstandar(String baseDestino)
             }
 }
     if (jchC.isSelected()){
-           JOptionPane.showMessageDialog(null, "C: "+c);
         try {
             ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal,baseDestino));
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
@@ -1222,31 +1195,8 @@ public void TransaccionalCola(String baseDestino)
      try {
             ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
-            if (jchA.isSelected()){ 
-             try {
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-        }
-          if (jchB.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
-           if (jchC.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal, baseDestino);
-              
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
     
-            if (!"".equals(a)){
-        JOptionPane.showMessageDialog(null, "A: "+a);
+            if (jchA.isSelected()){
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
@@ -1255,8 +1205,8 @@ public void TransaccionalCola(String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
 }
-    if (!"".equals(b)){
-        JOptionPane.showMessageDialog(null, "B: "+b);
+    if (jchB.isSelected()){
+
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
@@ -1265,12 +1215,10 @@ public void TransaccionalCola(String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    if (!"".equals(c)){
-           JOptionPane.showMessageDialog(null, "C: "+c);
+    if (jchC.isSelected()){
         try {
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino));
-          
             JOptionPane.showMessageDialog(null, "Suscripcion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1289,6 +1237,7 @@ public void PeerToPeer(String baseOrigen, String baseDestino)
       if (jchA.isSelected()){ 
              try {
                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
+               llenarDatosPeer(baseDestino,servidorUno);     
              } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
@@ -1296,38 +1245,26 @@ public void PeerToPeer(String baseOrigen, String baseDestino)
           if (jchB.isSelected()){ 
           try {
                 ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+                llenarDatosPeer(baseDestino,servidorDos);
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
-         }
-           if (jchC.isSelected()){ 
-          try {
-                ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal, baseDestino);      
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
-            }
-         }
-// Llenado de los datos de la tabla en el sitio a crear la replicacion        
-          if(jchA.isSelected()) llenarDatosPeer(baseDestino,servidorUno);      
-          if(jchB.isSelected()) llenarDatosPeer(baseDestino,servidorDos);
-          if(jchC.isSelected()) llenarDatosPeer(baseDestino,ServidorLocal);
-//Crear la publicacion  
+         }         
         try {
             ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
             
-            if(!"".equals(a)){
+            if(jchA.isSelected()){
                  ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);//ERIKA-LAP   ERIKA-LAP\\SITIOA
             JOptionPane.showMessageDialog(null, "Publicacion creada"); 
             }
-            if(!"".equals(b))
+            if(jchB.isSelected())
             {
                   ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);//
                          JOptionPane.showMessageDialog(null, "Publicacion creada"); 
             }
-         if(!"".equals(a)){
-              JOptionPane.showMessageDialog(null, "A: "+a);
+         if(jchA.isSelected()){
             try {
                 ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno)); 
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
@@ -1335,7 +1272,7 @@ public void PeerToPeer(String baseOrigen, String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
          }
-    if (!"".equals(b)){
+    if (jchB.isSelected()){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
                 ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos));
@@ -1344,16 +1281,6 @@ public void PeerToPeer(String baseOrigen, String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    if (!"".equals(c)){
-           JOptionPane.showMessageDialog(null, "C: "+c);
-        try {
-            ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),ServidorLocal));
-            JOptionPane.showMessageDialog(null, "Suscripcion creada");
-        } catch (SQLException ex) {
-            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "AQUI");
-        }
-    }
     JOptionPane.showMessageDialog(null, "Completado");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
@@ -1698,6 +1625,7 @@ public String sqlPublicacionTransaccional(String nombre,String base){
     aux="";
     tipo=" "+
 "use ["+base+"] exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'publish', @value = N'true'\n"+
+"use ["+base+"] exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'merge publish', @value = N'true'\n" +
 "use ["+base+"] exec sp_addpublication @publication = N'"+nombre+"', @description = N'Transactional publication of database ''"+base+"'' from Publisher ''"+servidor+"''.',"
 + " @sync_method = N'concurrent', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false',"
 + " @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', "
@@ -1712,7 +1640,7 @@ public String sqlPublicacionTransaccional(String nombre,String base){
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'\n" ;
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'\n"  ;
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
 + " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'none',"
 + " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = ";
@@ -1727,7 +1655,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
-    atributos=atributos+", @ins_cmd = N'SQL', @del_cmd = N'SQL', @upd_cmd = N'SQL' ";
+    atributos=atributos+", @ins_cmd = N'CALL [dbo].[sp_MSins_dboclientes]', @del_cmd = N'VCALL [dbo].[sp_MSdel_dboclientes]', @upd_cmd = N'VCALL [dbo].[sp_MSupd_dboclientes]' ";
     String cadenaFiltro="";
     if(!lista.isEmpty())
     {
@@ -1866,12 +1794,20 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 " @p2p_originator_id ="+contadorPeer +" \n" +
 "exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1, "+
 "@frequency_recurrence_factor = 0, @frequency_subday = 8, @frequency_subday_interval = 1, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, "+ 
- "@active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n" +
+ "@active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 0,"
++ " @publisher_login = N'sa', @publisher_password = N''\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
+"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'\n" +
 "use ["+origen+"]\n" +
 "exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"+
 " @description = N'', @creation_script = N'', @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual',"+
-" @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = N'false', @ins_cmd = N'CALL [dbo].[sp_MSins_dboclientes01354536462]',"+
-" @del_cmd = N'CALL [dbo].[sp_MSdel_dboclientes01354536462]', @upd_cmd = N'SCALL [dbo].[sp_MSupd_dboclientes01354536462]'" ;
+" @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = N'false',"
+        + " @ins_cmd = N'CALL [dbo].[sp_MSins_dboclientes]',"+
+" @del_cmd = N'CALL [dbo].[sp_MSdel_dboclientes]', @upd_cmd = N'SCALL [dbo].[sp_MSupd_dboclientes]'" ;
 return publicacion;
 }
 
@@ -1884,7 +1820,8 @@ public String sqlSuscripcionTransaccional(String nombre, String nodo,String base
  + " @job_login = null, @job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa',  @frequency_type = 64,"
         + " @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
         + "@frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, "
-        + "@active_end_date = 0, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";
+        + "@active_end_date = 0, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'"; 
+
  System.out.println("Suscripcion: "+suscripcion);
  return suscripcion;
 }
@@ -1896,7 +1833,7 @@ String suscripcion=""+
 "exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+destino+"', @subscription_type = N'Push', "
 + "@sync_type = N'replication support only', @article = N'all', @update_mode = N'read only', @subscriber_type = 0\n" +
 "exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+destino+"', @job_login = null,"
-+ "@job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 1, @frequency_relative_interval = 1,"
++ "@job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa', @frequency_type = 64, @frequency_interval = 1, @frequency_relative_interval = 1,"
 + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = " +
 "235959, @active_start_date = 0, @active_end_date = 0, @dts_package_location = N'Distributor'";
     return suscripcion;
@@ -1920,10 +1857,13 @@ public String sqlSuscripcionCola(String nombre,String nodo,String base){
 String suscripcion="";
 System.out.println(jcBase.getSelectedItem().toString());
 suscripcion="use ["+jcBase.getSelectedItem().toString()+"]\n" +
-"exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+base+"', @subscription_type = N'Push', @sync_type = N'automatic', @article = N'all', @update_mode = N'queued failover', @subscriber_type = 0\n" +
-"exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+base+"', @job_login = null, @job_password = null, @subscriber_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, "
-        + "@frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 20160125, @active_end_date = 99991231, "
-        + "@enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'\n" ;
+"exec sp_addsubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @destination_db = N'"+base+"', @subscription_type = N'Push', "
+        + "@sync_type = N'automatic', @article = N'all', @update_mode = N'queued failover', @subscriber_type = 0\n" +
+"exec sp_addpushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+base+"',"
++ " @job_login = null, @job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa',"
++ " @frequency_type = 64, @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
++ "@frequency_subday_interval = 5, @active_start_time_of_day = 0,"
++ " @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @dts_package_location = N'Distributor'\n";
 System.out.println("COLA: "+suscripcion);
 return suscripcion;
 }
@@ -1931,7 +1871,8 @@ return suscripcion;
 public String sqlSuscripcionColaParteDos(String nombre,String base){
     String parteDos=""+
           "use ["+base+"]\n" +
-"exec sp_link_publication @publisher = N'"+ServidorLocal+"', @publisher_db = N'"+jcBase.getSelectedItem().toString()+"', @publication = N'"+nombre+"', @distributor = N'"+ServidorLocal+"', @security_mode = 2, @login = null, @password = null";  ;
+"exec sp_link_publication @publisher = N'"+ServidorLocal+"', @publisher_db = N'"+jcBase.getSelectedItem().toString()+"', @publication = N'"+nombre+"', "
+            + "@distributor = N'"+ServidorLocal+"', @security_mode = 2, @login = null, @password = null";  // REVISAR
 System.out.println("COLA2: "+parteDos);    
 return parteDos;
 }
@@ -1940,8 +1881,8 @@ public String crearTablaSuscripcion(String base)
 { 
    String sentencia=""+"USE ["+base+"] SET ANSI_NULLS ON SET QUOTED_IDENTIFIER ON "
             + "CREATE TABLE [dbo].[clientes](";
-    if(listaDer.isEmpty())
-    {
+  //  if(listaDer.isEmpty())
+ // {
     sentencia= sentencia
             + "[CI] [nchar](10) NOT NULL,"
             + "[Nombre] [nchar](20) NULL,"
@@ -1951,23 +1892,24 @@ public String crearTablaSuscripcion(String base)
             + "[Ciudad] [nchar](20) NULL,"
             + "[Edad] [int] NULL,"
             + "CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
-    } else
-    {
-        sentencia+="[CI] [nchar](10) NOT NULL,";
-        if(listaDer.contains("Nombre"))
-        sentencia+="[Nombre] [nchar](20) NULL,";
-        if(listaDer.contains("Apellido"))
-        sentencia+="[Apellido] [nchar](20) NULL,";
-        if(listaDer.contains("Telefono"))
-         sentencia+="[Telefono] [nchar](10) NULL,";
-        if(listaDer.contains("Direccion"))
-          sentencia+="[Direccion] [nchar](30) NULL,";
-        if(listaDer.contains("Ciudad"))
-          sentencia+="[Ciudad] [nchar](20) NULL,";
-        if(listaDer.contains("Edad"))
-            sentencia+="[Edad] [int] NULL,";
-        sentencia= sentencia+"CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
-    }
+  //  }
+    //else
+//    {
+//        sentencia+="[CI] [nchar](10) NOT NULL,";
+//        if(listaDer.contains("Nombre"))
+//        sentencia+="[Nombre] [nchar](20) NULL,";
+//        if(listaDer.contains("Apellido"))
+//        sentencia+="[Apellido] [nchar](20) NULL,";
+//        if(listaDer.contains("Telefono"))
+//         sentencia+="[Telefono] [nchar](10) NULL,";
+//        if(listaDer.contains("Direccion"))
+//          sentencia+="[Direccion] [nchar](30) NULL,";
+//        if(listaDer.contains("Ciudad"))
+//          sentencia+="[Ciudad] [nchar](20) NULL,";
+//        if(listaDer.contains("Edad"))
+//            sentencia+="[Edad] [int] NULL,";
+//        sentencia= sentencia+"CONSTRAINT [PK_clientes] PRIMARY KEY CLUSTERED ([CI] ASC)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]) ON [PRIMARY]";
+//    }
 return sentencia;
 }
 

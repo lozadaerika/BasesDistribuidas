@@ -1,11 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * ingresoServer.java
- *
  * Created on 09-ene-2016, 14:01:58
  */
 package sbd;
@@ -14,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -101,18 +97,26 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    conectarServidor();
-    this.dispose();
+        try {
+            conectarServidor();
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(ingresoServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }//GEN-LAST:event_jButton1ActionPerformed
     
-    public void conectarServidor(){
-        try{
+
+static int codigoError=0;
+    public void conectarServidor()throws SQLException{
+        try {
             conexion cc=new conexion();
             Connection cn=cc.conectarBase(txtServer.getText(),"proyecto");
             bd=new replicasMenu(txtServer.getText(), "proyecto");
-            bd.show();
+            bd.show();          
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Servidor no enconctrado "+e);
+            
+            JOptionPane.showMessageDialog(null, " Excepciones.GetMensajePersonalizado()");
+            System.out.println("ERROR: "+Excepciones.GetCodigoError());
         }
     }
     

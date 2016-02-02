@@ -30,6 +30,7 @@ public class replicasMenu extends javax.swing.JFrame {
         servidor=server;this.base=base;
         cargarBases(server);
         MostrarPublicaciones(server);
+        MostrarSuscripcion(server);
     }
     
     int nodos=0;
@@ -98,32 +99,156 @@ public class replicasMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e);
         }
    }
+//    public void eliminarPublicacion(String server) throws SQLException{
+//        DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+//        String publicacion=nodo.getUserObject().toString();
+//        if (nodo !=null){
+//            DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
+//            mdl.removeNodeFromParent(nodo);
+//            
+//            //JOptionPane.showMessageDialog(this,nodo.getUserObject().toString() );
+//        }
+//        String elimPublicacion="DECLARE @publication AS sysname;\n" +
+//            "SET @publication = N'"+publicacion+"'; \n" +
+//            "\n" +
+//            "-- Remove a transactional publication.\n" +
+//            "USE ["+jcBase.getSelectedItem().toString()+"]\n" +
+//            "EXEC sp_droppublication @publication = @publication;";
+//        conexion cc= new conexion();
+//        Connection cn=(Connection) cc.conectar(server);
+//        try{
+//            PreparedStatement psd=cn.prepareStatement(elimPublicacion);
+//            psd.execute();
+//            JOptionPane.showMessageDialog(null, "Publicació eliminada ");
+//        }
+//        catch(SQLServerException e){
+//            JOptionPane.showMessageDialog(null, "No se puede eliminar "+e.getMessage());
+//        }
+//    }
+    
+     public String SelectBasedePublicacion(String server, String publi){
+        String bases="";
+        String sqlBuscarBase="Use distribution \n" +
+            "\n" +
+            "DECLARE @ArticleName SysName\n"+
+            "\n" +
+            "SELECT\n" +
+            "     MSP.publication AS 'Publication Name'\n" +
+            "    ,MSA.publisher_db AS 'Database Name'\n" +
+            "FROM\n" +
+            "    DBO.MSarticles AS MSA\n" +
+            "INNER JOIN DBO.MSpublications AS MSP\n" +
+            "        ON MSA.publication_id = MSP.publication_id\n"+
+            "        AND MSP.publication='"+publi+"'";
+        
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sqlBuscarBase);
+
+            ResultSet rs=psd.executeQuery();
+            while(rs.next()){
+                 bases= rs.getString("Database Name");
+              
+            }   
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT PUBLICACIONES "+e);
+        }
+        return bases;
+    }
+     
+    public String bas; 
     public void eliminarPublicacion(String server) throws SQLException{
         DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
         String publicacion=nodo.getUserObject().toString();
-        if (nodo !=null){
-            DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
-            mdl.removeNodeFromParent(nodo);
-            
-            //JOptionPane.showMessageDialog(this,nodo.getUserObject().toString() );
-        }
+        
+        bas= SelectBasedePublicacion(server, publicacion);
+        
         String elimPublicacion="DECLARE @publication AS sysname;\n" +
             "SET @publication = N'"+publicacion+"'; \n" +
             "\n" +
             "-- Remove a transactional publication.\n" +
-            "USE ["+jcBase.getSelectedItem().toString()+"]\n" +
+            "USE ["+bas+"]\n" +
             "EXEC sp_droppublication @publication = @publication;";
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectar(server);
         try{
+            EliminarSuscripcion(server, publicacion,bas);
+            EliminarSuscripcion(servidorUno, publicacion,bas);
+            EliminarSuscripcion(servidorDos, publicacion,bas);
+            
             PreparedStatement psd=cn.prepareStatement(elimPublicacion);
             psd.execute();
-            JOptionPane.showMessageDialog(null, "Publicació eliminada ");
+            JOptionPane.showMessageDialog(null, "Publicación eliminada ");
+            if (nodo !=null){
+                DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
+                mdl.removeNodeFromParent(nodo);
+            }
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede eliminar "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se puede eliminar Publicacion: "+e.getMessage());
+        }
+        
+        MostrarPublicaciones(server);
+        MostrarSuscripcion(server);
+    }
+    
+    public void EliminarSuscripcion(String server, String publicacion, String base) throws SQLException{
+        String sqlEliminarSuscripcion="DECLARE @publication AS sysname;\n" +
+            "DECLARE @subscriber AS sysname;\n" +
+            "SET @publication = N'"+publicacion+"';\n" +
+            "SET @subscriber = N'"+server+"'; \n" +
+            "\n" +
+            "USE ["+base+"]\n" +
+            "EXEC sp_dropsubscription \n" +
+            "  @publication = @publication, \n" +
+            "  @article = N'all',\n" +
+            "  @subscriber = @subscriber;";
+        
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sqlEliminarSuscripcion);
+            psd.execute();
+           }
+        catch(SQLServerException e){
+            JOptionPane.showMessageDialog(null, "No se puede eliminar Suscripcion: "+e.getMessage());
         }
     }
+    public void MostrarSuscripcion(String server){
+        String sqlCargarSuscripciones="Use distribution \n" +
+            "SELECT\n" +
+            "*\n" +
+            "FROM\n" +
+            "                DBO.MSsubscriptions AS MSA\n" +
+            "            INNER JOIN DBO.MSpublications AS MSP\n" +
+            "                    ON MSA.publication_id = MSP.publication_id"+
+            "    AND subscriber_db <> 'virtual'";
+        
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Suscripciones");
+        try{
+            PreparedStatement psd=cn.prepareStatement(sqlCargarSuscripciones);
+             ResultSet rs=psd.executeQuery();           
+            
+            while(rs.next()){
+       
+                        DefaultMutableTreeNode nodo1= new DefaultMutableTreeNode();
+                        nodo1.setUserObject(rs.getString("subscriber_db"));
+                        nodo.add(nodo1);
+                        
+            
+            }
+
+            DefaultTreeModel mdl=new DefaultTreeModel(nodo);
+                        this.jTree2.setModel(mdl);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e);
+        }
+   }
     
     public void cargarBases(String server){
         jcBase.removeAllItems();
@@ -400,6 +525,9 @@ public class replicasMenu extends javax.swing.JFrame {
         jlCamposIzq = new javax.swing.JList();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTree2 = new javax.swing.JTree();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jrbSnapshot = new javax.swing.JRadioButtonMenuItem();
@@ -896,6 +1024,10 @@ public class replicasMenu extends javax.swing.JFrame {
                         .addGap(61, 61, 61))))
         );
 
+        jScrollPane9.setViewportView(jTree2);
+
+        jScrollPane8.setViewportView(jScrollPane9);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -921,8 +1053,9 @@ public class replicasMenu extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jButton2)))
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jButton2))
+                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -992,11 +1125,14 @@ public class replicasMenu extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(12, 12, 12)))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(12, 12, 12))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2052,7 +2188,10 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTree jTree1;
+    private javax.swing.JTree jTree2;
     private javax.swing.JComboBox jcBase;
     private javax.swing.JComboBox jcBaseDestino;
     private javax.swing.JCheckBox jchA;

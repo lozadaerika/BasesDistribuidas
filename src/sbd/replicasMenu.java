@@ -1138,11 +1138,11 @@ public void Snapshot(String baseDestino)
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
             JOptionPane.showMessageDialog(null, "Publicacion creada");
             if (jchA.isSelected()){ 
-             //   ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
+             //   ejecutar(crearTabbllaSuscripcion(baseDestino),servidorUno,baseDestino);
                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
             }
           if (jchB.isSelected()){ 
-             //   ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+                ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
          }
            if (jchC.isSelected()){ 
@@ -1182,7 +1182,7 @@ public void TransaccionaEstandar(String baseDestino)
 //            }
 //         }
     
-            if (!"".equals(a)){
+            if (jchA.isSelected()){
         JOptionPane.showMessageDialog(null, "A: "+a);
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno,baseDestino));
@@ -1191,7 +1191,7 @@ public void TransaccionaEstandar(String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
 }
-    if (!"".equals(b)){
+    if (jchB.isSelected()){
         JOptionPane.showMessageDialog(null, "B: "+b);
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos,baseDestino));
@@ -1200,7 +1200,7 @@ public void TransaccionaEstandar(String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    if (!"".equals(c)){
+    if (jchC.isSelected()){
            JOptionPane.showMessageDialog(null, "C: "+c);
         try {
             ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal,baseDestino));
@@ -1706,7 +1706,7 @@ public String sqlPublicacionTransaccional(String nombre,String base){
                 + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
             + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
             + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
-            + " @publisher_security_mode = 1"+
+            + " @publisher_security_mode = 1\n"+
            "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
@@ -1885,7 +1885,7 @@ public String sqlSuscripcionTransaccional(String nombre, String nodo,String base
         + " @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
         + "@frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, "
         + "@active_end_date = 0, @enabled_for_syncmgr = N'False', @dts_package_location = N'Distributor'";
- 
+ System.out.println("Suscripcion: "+suscripcion);
  return suscripcion;
 }
 

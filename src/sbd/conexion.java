@@ -16,7 +16,7 @@ public class conexion {
         try
         {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";integratedSecurity=true");
+            cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";user=sa;password=sa");
         }catch(Exception ex){
             System.out.println("error: " +ex);
         }
@@ -28,7 +28,7 @@ public class conexion {
         try
         {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";databaseName="+base+";integratedSecurity=true");
+            cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";databaseName="+base+";user=sa;password=sa");
         }catch(Exception ex){
             System.out.println("error: " +ex);
         }

@@ -103,5 +103,44 @@ public class Excepciones {
             //muestra el mensaje personalizado.
             mensajePersonalizado = mensaje;
     }
+//    public static void GestionarExcepcion(Exception excepcion)
+//        {
+//            ///-----------------------------------
+//            ///Capturar y personalizar los errores de base de datos
+//            ///-----------------------------------------------------
+//            String saltoLinea = "\n";
+//            //Mensaje personalizados para el usuario
+//            String problema = "EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: " + saltoLinea;
+//            String solucion = "POR FAVOR, PRUEBE LA SGUIENTE SOLUCION";
+//            String mensajeFinal = "NOTA: En caso de persistir el problema, llame a Soporte " +
+//                "Técnico" + saltoLinea + "o consulte con el Administrador del Sistema";
+//            String mensaje = null;
+//        //    switch (excepcion.getMessage().toString())
+//            {
+//                // case 2: //error personalizado
+//                //    break;
+//                //case 53: // error personalizado
+//                // break;
+//                // case 4060: // error personalizado
+//                //break;
+//             //   case "System.ArgumentsException":  // Error conocido
+//                   mensaje = "Mensaje Personalizado";
+//                    break;
+//             //   default: mensaje =  // van a caer todos los errores no personalizados de C#
+//                    "ERROR DESCONOCIDO: " +
+//                    saltoLinea +
+//                    saltoLinea +
+//                    " MENSAJE: " + excepcion.getMessage() +
+//                     saltoLinea +
+//                     "TIPO: " + excepcion.getClass() +
+//                     saltoLinea +
+//                     "LINEA: " + excepcion.getStackTrace();
+//                    break;
+//            }
+            //retornar el mensaje de error en un campo de la clase
+            //para que sea el isiario de la clase el que decida en que control 
+            //muestra el mensaje personalizado.
+        //    mensajePersonalizado = mensaje;
+     //   }
     
 }

@@ -23,22 +23,23 @@ import javax.swing.tree.DefaultTreeModel;
  * @author Andrés
  */
 public class replicasMenu extends javax.swing.JFrame {
-
+int nodos=0;  static int codigo=0;
+    String servidor,base,a="",b="",c="";
+    String servidorUno="ERIKA-LAP";
+    String servidorDos="ANDRES";
+    String ServidorLocal="EDISSON";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
         initComponents();
+      
         servidor=server;this.base=base;
         cargarBases(server);
         MostrarPublicaciones(server);
         MostrarSuscripcion(server);
     }
     
-    int nodos=0;
-    String servidor,base,a="",b="",c="";
-    String servidorUno="EDISSON";
-    String servidorDos="ANDRES";
-    String ServidorLocal="ERIKA-LAP";
     
+   
     DefaultListModel<String>listaIzq=new DefaultListModel<String>();
     DefaultListModel<String>listaDer=new DefaultListModel<String>();
     DefaultListModel<String>listaFiltros=new DefaultListModel<String>();
@@ -61,70 +62,31 @@ public class replicasMenu extends javax.swing.JFrame {
             "FROM\n" +
             "    DBO.MSarticles AS MSA\n" +
             "INNER JOIN DBO.MSpublications AS MSP\n" +
-            "        ON MSA.publication_id = MSP.publication_id\n" ;
+            "        ON MSA.publication_id = MSP.publication_id\n" ;    
         
-        conexion cc= new conexion();
-        //DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+       
+           Connection cn=(Connection) cc.conectar(ServidorLocal);
         DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Publicaciones");
-        //DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
         try{
             PreparedStatement psd=cn.prepareStatement(sqlCargarPublicaciones);
-            //psd.execute();
-            ResultSet rs=psd.executeQuery();           
+            ResultSet rs=psd.executeQuery();            
             
             while(rs.next()){
-//                int x=0;
-//                while(x<2){
-//                    if (x==0){
+
                         DefaultMutableTreeNode nodo1= new DefaultMutableTreeNode();
                         nodo1.setUserObject(rs.getString("Publication Name"));
                         nodo.add(nodo1);
                         DefaultTreeModel mdl=new DefaultTreeModel(nodo);
                         this.jTree1.setModel(mdl);
-//                    }else{
-//                        DefaultMutableTreeNode raiz2= new DefaultMutableTreeNode(rs.getString("Publication Name"));
-//                        DefaultMutableTreeNode nodo2= new DefaultMutableTreeNode();
-//                         nodo2.setUserObject("Base "+rs.getString("Database Name"));
-//                        raiz2.add(nodo2);
-//                        DefaultTreeModel mdl1=new DefaultTreeModel(raiz2);
-//                        this.jTree1.setModel(mdl1);
-//                    }
-//                    x++;
-//                }
+
             }
 
             
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e+" CODIGO: "+e.getErrorCode());
         }
    }
-//    public void eliminarPublicacion(String server) throws SQLException{
-//        DefaultMutableTreeNode nodo= (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
-//        String publicacion=nodo.getUserObject().toString();
-//        if (nodo !=null){
-//            DefaultTreeModel mdl=(DefaultTreeModel)jTree1.getModel();
-//            mdl.removeNodeFromParent(nodo);
-//            
-//            //JOptionPane.showMessageDialog(this,nodo.getUserObject().toString() );
-//        }
-//        String elimPublicacion="DECLARE @publication AS sysname;\n" +
-//            "SET @publication = N'"+publicacion+"'; \n" +
-//            "\n" +
-//            "-- Remove a transactional publication.\n" +
-//            "USE ["+jcBase.getSelectedItem().toString()+"]\n" +
-//            "EXEC sp_droppublication @publication = @publication;";
-//        conexion cc= new conexion();
-//        Connection cn=(Connection) cc.conectar(server);
-//        try{
-//            PreparedStatement psd=cn.prepareStatement(elimPublicacion);
-//            psd.execute();
-//            JOptionPane.showMessageDialog(null, "Publicació eliminada ");
-//        }
-//        catch(SQLServerException e){
-//            JOptionPane.showMessageDialog(null, "No se puede eliminar "+e.getMessage());
-//        }
-//    }
     
      public String SelectBasedePublicacion(String server, String publi){
         String bases="";
@@ -152,8 +114,8 @@ public class replicasMenu extends javax.swing.JFrame {
               
             }   
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT PUBLICACIONES "+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT PUBLICACIONES "+e+" CODIGO: "+e.getErrorCode());
         }
         return bases;
     }
@@ -187,7 +149,7 @@ public class replicasMenu extends javax.swing.JFrame {
             }
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede eliminar Publicacion: "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se puede eliminar Publicacion: "+e.getMessage()+" CODIGO: "+e.getErrorCode());
         }
         
         MostrarPublicaciones(server);
@@ -213,7 +175,7 @@ public class replicasMenu extends javax.swing.JFrame {
             psd.execute();
            }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede eliminar Suscripcion: "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se puede eliminar Suscripcion: "+e.getMessage()+" CODIGO: "+e.getErrorCode());
         }
     }
     public void MostrarSuscripcion(String server){
@@ -245,8 +207,8 @@ public class replicasMenu extends javax.swing.JFrame {
             DefaultTreeModel mdl=new DefaultTreeModel(nodo);
                         this.jTree2.setModel(mdl);
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e+" CODIGO: "+e.getErrorCode());
         }
    }
     
@@ -264,8 +226,8 @@ public class replicasMenu extends javax.swing.JFrame {
                 jcBase.addItem(rs.getString("name"));
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
         }
     }
     public void cargarBasesDestino(String server){
@@ -283,8 +245,8 @@ public class replicasMenu extends javax.swing.JFrame {
                 jcBaseDestino.addItem(rs.getString("name"));
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
         }
     }
     
@@ -305,8 +267,8 @@ public class replicasMenu extends javax.swing.JFrame {
             }
             
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
         }
         }
     }
@@ -339,8 +301,8 @@ public class replicasMenu extends javax.swing.JFrame {
             jlCamposIzq.setModel(listaIzq);
             jlCampos.setModel(listaFiltros);
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
         }
         }
     }
@@ -380,8 +342,8 @@ public class replicasMenu extends javax.swing.JFrame {
                 tblTabla.setModel(modelo);
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e);
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
         }
     }
     conexion cc=new conexion();
@@ -404,8 +366,8 @@ public class replicasMenu extends javax.swing.JFrame {
             if(n>0){
                 System.out.println("Se ingreso correctamente");
             }
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null, ex); 
+            }catch(SQLException e){
+                  JOptionPane.showMessageDialog(null, "No se ha podido realizar el update"+e+" CODIGO: "+e.getErrorCode());
             }
         }
         cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
@@ -430,8 +392,8 @@ public class replicasMenu extends javax.swing.JFrame {
                 cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
             }           
         } 
-       catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex);
+       catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
        }
     
@@ -447,8 +409,8 @@ public class replicasMenu extends javax.swing.JFrame {
                 cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
             }
         }
-        catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex);
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
         
     }
@@ -462,6 +424,7 @@ public class replicasMenu extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTabla = new javax.swing.JTable();
@@ -475,7 +438,7 @@ public class replicasMenu extends javax.swing.JFrame {
         jchA = new javax.swing.JCheckBox();
         jchB = new javax.swing.JCheckBox();
         jchC = new javax.swing.JCheckBox();
-        btnSincronizar = new javax.swing.JButton();
+        btnPublicar = new javax.swing.JButton();
         jrbConectar = new javax.swing.JRadioButton();
         jrbDesconectar = new javax.swing.JRadioButton();
         btnModificar = new javax.swing.JButton();
@@ -507,14 +470,6 @@ public class replicasMenu extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jlsFiltros = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        btnEjecutar = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jcBaseDestino = new javax.swing.JComboBox();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
-        jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -525,9 +480,18 @@ public class replicasMenu extends javax.swing.JFrame {
         jlCamposIzq = new javax.swing.JList();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        btnEjecutar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jcBaseDestino = new javax.swing.JComboBox();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        jButton2 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTree2 = new javax.swing.JTree();
+        btnSuscribir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jrbSnapshot = new javax.swing.JRadioButtonMenuItem();
@@ -544,6 +508,19 @@ public class replicasMenu extends javax.swing.JFrame {
 
         jMenu4.setText("Edit");
         jMenuBar2.add(jMenu4);
+
+        jInternalFrame1.setVisible(true);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -640,20 +617,20 @@ public class replicasMenu extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jchA))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jchB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jchC))
         );
 
-        btnSincronizar.setText("Replicar");
-        btnSincronizar.addActionListener(new java.awt.event.ActionListener() {
+        btnPublicar.setText("Publicar");
+        btnPublicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSincronizarActionPerformed(evt);
+                btnPublicarActionPerformed(evt);
             }
         });
 
@@ -837,114 +814,12 @@ public class replicasMenu extends javax.swing.JFrame {
                     .addComponent(btnEsteEn)
                     .addComponent(btnEmpiece)
                     .addComponent(btnTermine))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Campos");
 
         jScrollPane6.setViewportView(jlsFiltros);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(438, 438, 438)
-                        .addComponent(jLabel9)
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(408, 408, 408)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminarFiltro))
-                        .addGap(47, 47, 47)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(btnNuevo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(21, 21, 21)
-                                        .addComponent(lblFiltro)))
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAñadir)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel7)
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnNuevo)
-                            .addComponent(txtCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFiltro)
-                            .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAñadir))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminarFiltro))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jButton1.setText("Ver");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnEjecutar.setText("! Ejecutar");
-        btnEjecutar.setName("btnEjecutar"); // NOI18N
-
-        jLabel8.setText("Base Destino");
-
-        jcBaseDestino.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcBaseDestinoItemStateChanged(evt);
-            }
-        });
-
-        jScrollPane5.setViewportView(jTree1);
-
-        jScrollPane7.setViewportView(jScrollPane5);
-
-        jButton2.setText("Emilinar publicacion");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -999,7 +874,7 @@ public class replicasMenu extends javax.swing.JFrame {
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1021,12 +896,126 @@ public class replicasMenu extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addComponent(jButton5)
-                        .addGap(61, 61, 61))))
+                        .addGap(61, 61, 61)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel9))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarFiltro))
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(btnNuevo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(21, 21, 21)
+                                        .addComponent(lblFiltro)))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAñadir))))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNuevo)
+                            .addComponent(txtCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFiltro)
+                            .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAñadir))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminarFiltro))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jButton1.setText("Ver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnEjecutar.setText("! Ejecutar");
+        btnEjecutar.setName("btnEjecutar"); // NOI18N
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Base Destino");
+
+        jcBaseDestino.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcBaseDestinoItemStateChanged(evt);
+            }
+        });
+
+        jScrollPane5.setViewportView(jTree1);
+
+        jScrollPane7.setViewportView(jScrollPane5);
+
+        jButton2.setText("Emilinar publicacion");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jScrollPane9.setViewportView(jTree2);
 
         jScrollPane8.setViewportView(jScrollPane9);
+
+        btnSuscribir.setText("Suscripcion");
+        btnSuscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuscribirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1034,109 +1023,123 @@ public class replicasMenu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(37, 37, 37)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel8))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jButton2))
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnSincronizar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnEjecutar)
-                                    .addComponent(jrbDesconectar))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jrbConectar))
-                                .addGap(0, 2, Short.MAX_VALUE)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))))
+                                .addGap(57, 57, 57)
+                                .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(791, 791, 791)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jrbDesconectar)
+                            .addComponent(jrbConectar))
+                        .addGap(124, 124, 124))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addGap(22, 22, 22)))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(84, 84, 84)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(13, 13, 13)
+                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(55, 55, 55)
+                                        .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnEjecutar)
+                                .addGap(66, 66, 66)
+                                .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnInsertar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnEjecutar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSincronizar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jrbConectar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jrbDesconectar)
-                        .addGap(146, 146, 146))
+                        .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel6)
-                            .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel8)
-                            .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addGap(12, 12, 12))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jrbDesconectar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel8)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInsertar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEjecutar))
+                .addGap(21, 21, 21)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jMenu1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1175,7 +1178,17 @@ public class replicasMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jmAdministrarReplicaciones.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jmAdministrarReplicaciones.setText("Administrar Replicaciones");
+        jmAdministrarReplicaciones.setText("Administrar Bases");
+        jmAdministrarReplicaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmAdministrarReplicacionesMouseClicked(evt);
+            }
+        });
+        jmAdministrarReplicaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAdministrarReplicacionesActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jmAdministrarReplicaciones);
 
         jMenu5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -1193,9 +1206,7 @@ public class replicasMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1096, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1237,106 +1248,133 @@ private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:even
     
 }//GEN-LAST:event_jMenu1MouseClicked
 
-private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarActionPerformed
-    
-    String baseDestino=jcBaseDestino.getSelectedItem().toString();
+private void btnPublicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublicarActionPerformed
+    codigo=0;
+  //  String baseDestino=jcBaseDestino.getSelectedItem().toString();
     String baseOrigen=jcBase.getSelectedItem().toString();
     if (jrbSnapshot.isSelected()){
-        Snapshot(baseDestino);   
+        SnapshotPublicacion();   
     }
     else if (jrbTranEstandar.isSelected())
     {
-    TransaccionaEstandar(baseDestino);
+    TransaccionaEstandarPublicacion();
         
     }
     else if (jrbTranCola.isSelected()) 
     {
-   TransaccionalCola(baseDestino);
+   TransaccionalColaPublicacion();
     }
         
    else if (jrbTranPeer.isSelected()){
-        PeerToPeer(baseOrigen,baseDestino);  
+      PeerToPeerPublicacion(baseOrigen);  
     }
                 
     else if (jrbMezcla.isSelected())    
          JOptionPane.showMessageDialog(null, "Mezcla");
     
-        
-           
     
    MostrarPublicaciones(ServidorLocal);
-}//GEN-LAST:event_btnSincronizarActionPerformed
+}//GEN-LAST:event_btnPublicarActionPerformed
 
-public void Snapshot(String baseDestino)
+public void SnapshotPublicacion()
 {
     try {
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
-            JOptionPane.showMessageDialog(null, "Publicacion creada");
-            if (jchA.isSelected()){ 
-             //   ejecutar(crearTabbllaSuscripcion(baseDestino),servidorUno,baseDestino);
-                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
-            }
-          if (jchB.isSelected()){ 
-           //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
-                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
-         }
-           if (jchC.isSelected()){ 
-            //    ejecutar(crearTablaSuscripcion(baseDestino),ServidorLocal,baseDestino);
-                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
-         }    
-                JOptionPane.showMessageDialog(null, "Completado");
+            if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+          //if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null, "Completado");
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "ERROR SNAP : "+ex.getErrorCode());
-        }   
+             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORSNAP");
+        }   //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
 }
-public void TransaccionaEstandar(String baseDestino)
+public void TransaccionaEstandarPublicacion()
 {
     try {
             ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
-            JOptionPane.showMessageDialog(null, "Publicacion creada");
+       if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORESTANDAR");
+        }    
+      
+}
+public void TransaccionalColaPublicacion()
+{
+     try {
+            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+    if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+        } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCOLA");
+        } 
+}
+public void PeerToPeerPublicacion(String baseOrigen)
+{    // Crear la tabla en el sitio en el que se va a crear la replicacion
+      
+        try {
+            ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
+        if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+        } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORPEER");
+        }                   
+              
+}
+public void MezclaPublicacion(String baseDestino)
+{
+    
+}
+public void SnapshotSuscripcion(String baseDestino)
+{
+    try {
+            if (jchA.isSelected()){ 
+                ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
+            }
+            if (jchB.isSelected()){ 
+                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
+            }
+           if (jchC.isSelected()){ 
+                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
+           }    
+          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+        } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SNAP");
+        } 
+       //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
+}
+public void TransaccionaEstandarSuscripcion(String baseDestino)
+{     
             if (jchA.isSelected()){
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno,baseDestino));
-                JOptionPane.showMessageDialog(null, "Suscripcion creada");
+            if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ESTANDAR");
             }
 }
     if (jchB.isSelected()){
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos,baseDestino));
-                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
+             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+              } catch (SQLException ex) {
+                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ESTANDAR");
             }
 }
     if (jchC.isSelected()){
         try {
             ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal,baseDestino));
-            JOptionPane.showMessageDialog(null, "Suscripcion creada");
+            if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "AQUI");
         }
     }
-    JOptionPane.showMessageDialog(null, "Completado");
-    
-        } catch (SQLException ex) {
-            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
-        }    
-      
+       // if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
 }
-public void TransaccionalCola(String baseDestino)
+public void TransaccionalColaSuscripcion(String baseDestino)
 {
-     try {
-            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
-            JOptionPane.showMessageDialog(null, "Publicacion creada");
-    
+
             if (jchA.isSelected()){
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
-                JOptionPane.showMessageDialog(null, "Suscripcion creada");
+              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
@@ -1346,7 +1384,7 @@ public void TransaccionalCola(String baseDestino)
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
-                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
+                if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1355,19 +1393,15 @@ public void TransaccionalCola(String baseDestino)
         try {
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino));
-            JOptionPane.showMessageDialog(null, "Suscripcion creada");
+          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "AQUI");
         }
-    }
-    JOptionPane.showMessageDialog(null, "Completado");
-    
-        } catch (SQLException ex) {
-            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
-        } 
+    }    
+        
 }
-public void PeerToPeer(String baseOrigen, String baseDestino)
+
+public void PeerToPeerSuscripcion(String baseOrigen, String baseDestino)
 {    
     // Crear la tabla en el sitio en el que se va a crear la replicacion
       if (jchA.isSelected()){ 
@@ -1386,44 +1420,31 @@ public void PeerToPeer(String baseOrigen, String baseDestino)
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"eRROR AQUI");
             }
          }         
-        try {
-            ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
-            
+    
             if(jchA.isSelected()){
+                try {
                  ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);//ERIKA-LAP   ERIKA-LAP\\SITIOA
-            JOptionPane.showMessageDialog(null, "Publicacion creada"); 
+                 ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno)); 
+                 if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+             } catch (SQLException ex) {
+            Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
+        } 
             }
             if(jchB.isSelected())
             {
+                try {
                   ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);//
-                         JOptionPane.showMessageDialog(null, "Publicacion creada"); 
-            }
-         if(jchA.isSelected()){
-            try {
-                ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno)); 
-                JOptionPane.showMessageDialog(null, "Suscripcion creada");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         }
-    if (jchB.isSelected()){
-        JOptionPane.showMessageDialog(null, "B: "+b);
-            try {
-                ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos));
-                  JOptionPane.showMessageDialog(null, "Suscripcion creada");
-            } catch (SQLException ex) {
-                Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-}
-    JOptionPane.showMessageDialog(null, "Completado");
-        } catch (SQLException ex) {
+                  ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos));
+                          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+                          } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
-        }                   
-              
+        } 
+            }
+            
 }
-public void Mezcla(String baseDestino)
+public void MezclaSuscripcion(String baseDestino)
 {
     
 }
@@ -1452,7 +1473,7 @@ public void llenarDatosPeer(String base,String nodo)
             }      
         } 
        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex);
+            JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }      
 }
 
@@ -1476,7 +1497,7 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
             psd.execute();
         }
         catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e);
+            JOptionPane.showMessageDialog(null, "No se puede crear la base"+e+" CODIGO: "+e.getErrorCode());
         }
         return nombre;
     }
@@ -1671,6 +1692,44 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        cargarTabla(servidor,jcBase.getSelectedItem().toString());
+    }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void btnSuscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuscribirActionPerformed
+       codigo=0;
+        String baseDestino=jcBaseDestino.getSelectedItem().toString();
+          String baseOrigen=jcBase.getSelectedItem().toString();
+        if (jrbSnapshot.isSelected()){
+        SnapshotSuscripcion(baseDestino);   
+    }
+    else if (jrbTranEstandar.isSelected())
+    {
+    TransaccionaEstandarSuscripcion(baseDestino);
+        
+    }
+    else if (jrbTranCola.isSelected()) 
+    {
+   TransaccionalColaSuscripcion(baseDestino);
+    }
+        
+   else if (jrbTranPeer.isSelected()){
+       PeerToPeerSuscripcion(baseOrigen,baseDestino);  
+    }
+                
+    else if (jrbMezcla.isSelected())    
+         JOptionPane.showMessageDialog(null, "Mezcla");
+    }//GEN-LAST:event_btnSuscribirActionPerformed
+
+    private void jmAdministrarReplicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAdministrarReplicacionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmAdministrarReplicacionesActionPerformed
+
+    private void jmAdministrarReplicacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmAdministrarReplicacionesMouseClicked
+    BaseDeDatos bd= new BaseDeDatos(ServidorLocal);
+    bd.setVisible(true);
+    }//GEN-LAST:event_jmAdministrarReplicacionesMouseClicked
+
 public static String aux,atributos,tipo,sincro,filtro;
 int k=1;
 int l=50;
@@ -1692,7 +1751,7 @@ public String sqlPublicacionSnap(String nombre,String base){
             + " @publisher_security_mode = 1 \n"+
             "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
@@ -1773,7 +1832,7 @@ public String sqlPublicacionTransaccional(String nombre,String base){
             + " @publisher_security_mode = 1\n"+
            "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
-"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
+//"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'\n"  ;
@@ -1791,7 +1850,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
-    atributos=atributos+", @ins_cmd = N'CALL [dbo].[sp_MSins_dboclientes]', @del_cmd = N'VCALL [dbo].[sp_MSdel_dboclientes]', @upd_cmd = N'VCALL [dbo].[sp_MSupd_dboclientes]' ";
+    atributos=atributos+"";
     String cadenaFiltro="";
     if(!lista.isEmpty())
     {
@@ -1931,7 +1990,7 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 "exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1, "+
 "@frequency_recurrence_factor = 0, @frequency_subday = 8, @frequency_subday_interval = 1, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, "+ 
  "@active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 0,"
-+ " @publisher_login = N'sa', @publisher_password = N''\n" +
++ " @publisher_login = N'sa', @publisher_password = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
 //"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
@@ -1947,79 +2006,6 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 return publicacion;
 }
 
-public String sqlPublicacionMerge(String nombre,String base){
-    aux="";atributos="";tipo="";sincro="";filtro="";
-    aux="";
-    tipo="use master\n" +
-    "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'publish', @value = N'true'\n"
-   + "use master\n" +
-    "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'merge publish', @value = N'true'\n"
-   +"use [proyecto] exec sp_addmergepublication @publication = N'"+nombre+"', @description = N'Merge publication of database ''"+base+"'' from Publisher ''ANDRES\\ANDRES''.', @sync_mode = N'native', @retention = 14, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_subdirectory = N'ftp', @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @dynamic_filters = N'false', @conflict_retention = 14, @keep_partition_changes = N'false', @allow_synctoalternate = N'false', @max_concurrent_merge = 0, @max_concurrent_dynamic_snapshots = 0, @use_partition_groups = null, @publication_compatibility_level = N'100RTM', @replicate_ddl = 1, @allow_subscriber_initiated_snapshot = N'false', @allow_web_synchronization = N'false', @allow_partition_realignment = N'true', @retention_period_unit = N'days', @conflict_logging = N'both', @automatic_reinitialization_policy = 0\n"
-   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n"//@publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N''    
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andres'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
-
-   String atrib=""; 
-
-        for (int i=0;i<listaDer.getSize();i++){
-            atrib=atrib+""
-                    + "\nexec sp_mergearticlecolumn @publication = N'"+nombre+"', @article = N'clientes', "
-                    + "@column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
-        }
-    String cadenaFiltro="null";
-    if(!lista.isEmpty())
-    {
-         filtro="\n";
-         cadenaFiltro="N'";
-         //System.out.println(filtro);
-                  for (int i=0;i<lista.getSize();i++){
-                      if(i==0){
-                          filtro=filtro+lista.getElementAt(i);
-                          cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
-                      }
-                      else{
-                          filtro=filtro+"AND "+lista.getElementAt(i);
-                          cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
-                      }
-                     // System.out.println(cadenaFiltro);
-                  }
-        //  System.out.println(filtro); 
-                  cadenaFiltro=cadenaFiltro+"'";
-    }
-    String columna="";
-    if (listaDer.isEmpty())
-        columna="false";
-    else
-        columna="true";
-        
-        atributos="\n use ["+base+"] exec sp_addmergearticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'table', @description = N'', @creation_script = N'', "
-        + "@pre_creation_cmd = N'drop', @schema_option = 0x000000010C034FD1, @identityrangemanagementoption = N'none', @destination_owner = N'dbo', @force_reinit_subscription = 1, "
-        + "@column_tracking = N'false', @subset_filterclause = "+cadenaFiltro+", @vertical_partition = N'"+columna+"', @verify_resolver_signature = 1, @allow_interactive_resolver = N'false', @fast_multicol_updateproc = N'true', "
-        + "@check_permissions = 0, @subscriber_upload_options = 0, @delete_tracking = N'true', @compensate_for_errors = N'false', @stream_blob_columns = N'true' , @partition_options = 3\n"
-                + ""+atrib;
-    System.out.println("TODO: "+aux+tipo+atributos);
-    return aux+tipo+atributos;
-}
-
-public String sqlSuscripcionMerge(String nombre, String nodo){
- String suscripcion="use ["+base+"]\n"
-         + "exec sp_addmergesubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_merge', "
-         + "@subscription_type = N'Push', @sync_type = N'Automatic', @subscriber_type = N'Local', @subscription_priority = 0, "
-         + "@description = N'', @use_interactive_resolver = N'False'\n"
-         + ""
-         + "exec sp_addmergepushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clienetes_merge', "
-         + "@job_login = null, @job_password = null, @subscriber_security_mode = 0, @subscriber_login = N'sa', @subscriber_password = 'sa', "
-         + "@publisher_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0, "
-         + "@frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, "
-         + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0";
-
- 
- return suscripcion;
-}
 
 public String sqlSuscripcionTransaccional(String nombre, String nodo,String base){
  String suscripcion="use ["+jcBase.getSelectedItem().toString()+"]\n" +  // revisar si tiene que ser del origen o del destino
@@ -2081,7 +2067,7 @@ public String sqlSuscripcionColaParteDos(String nombre,String base){
     String parteDos=""+
           "use ["+base+"]\n" +
 "exec sp_link_publication @publisher = N'"+ServidorLocal+"', @publisher_db = N'"+jcBase.getSelectedItem().toString()+"', @publication = N'"+nombre+"', "
-            + "@distributor = N'"+ServidorLocal+"', @security_mode = 2, @login = null, @password = null";  // REVISAR
+            + "@distributor = N'"+ServidorLocal+"', @security_mode = 2, @login = N'sa', @password = N'sa'";  // REVISAR
 System.out.println("COLA2: "+parteDos);    
 return parteDos;
 }
@@ -2141,7 +2127,13 @@ public void ejecutar(String sql) throws SQLException{
             psd.execute();
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear"+e.getMessage()+"\n CODIGO: "+e.getErrorCode());
+            Excepciones.GestionarExcepcion(e);
+            String mensaje=Excepciones.GetMensajePersonalizado();
+           codigo=Excepciones.GetCodigoError();
+           if(codigo!=21745){
+           JOptionPane.showMessageDialog(null, "No se puede crear "+mensaje);
+           System.out.println( "CODIGO: "+codigo);
+           }
         }
 }
  conexion cc2=new conexion();
@@ -2155,7 +2147,12 @@ public void ejecutar(String sql,String server,String base) throws SQLException{
             psd2.execute();
         }
         catch(SQLServerException e){
-           JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga1 "+e.getMessage()+"\n CODIGO: "+e.getErrorCode());
+         Excepciones.GestionarExcepcion(e);
+            String mensaje=Excepciones.GetMensajePersonalizado();
+         if(codigo!=21745){
+           JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga 1"+mensaje);
+           System.out.println( "CODIGO: "+codigo);
+           }
         }
 }
 public void ejecutar2(String sql,String server,String base) throws SQLException{
@@ -2167,7 +2164,12 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
             psd3.execute();
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga2 "+e.getMessage()+"\n CODIGO: "+e.getErrorCode());
+        Excepciones.GestionarExcepcion(e);
+        String mensaje=Excepciones.GetMensajePersonalizado();
+         if(codigo!=21745){
+           JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga2 "+mensaje);
+           System.out.println( "CODIGO: "+codigo);
+           }
         }
 }
     /**
@@ -2225,7 +2227,8 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNoEsteEn;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSincronizar;
+    private javax.swing.JButton btnPublicar;
+    private javax.swing.JButton btnSuscribir;
     private javax.swing.JButton btnTermine;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -2233,6 +2236,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

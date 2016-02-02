@@ -97,26 +97,23 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
+       
             conectarServidor();
             this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(ingresoServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
 }//GEN-LAST:event_jButton1ActionPerformed
     
 
 static int codigoError=0;
-    public void conectarServidor()throws SQLException{
+    public void conectarServidor(){
         try {
             conexion cc=new conexion();
             Connection cn=cc.conectarBase(txtServer.getText(),"proyecto");
             bd=new replicasMenu(txtServer.getText(), "proyecto");
             bd.show();          
         }catch(Exception e){
-            
-            JOptionPane.showMessageDialog(null, " Excepciones.GetMensajePersonalizado()");
-            System.out.println("ERROR: "+Excepciones.GetCodigoError());
+            JOptionPane.showMessageDialog(null, " ERROR CONEXION:"+e);
+           // System.out.println("ERROR: "+Excepciones.GetCodigoError());
         }
     }
     

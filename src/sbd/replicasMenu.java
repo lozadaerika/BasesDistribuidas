@@ -1947,6 +1947,79 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 return publicacion;
 }
 
+public String sqlPublicacionMerge(String nombre,String base){
+    aux="";atributos="";tipo="";sincro="";filtro="";
+    aux="";
+    tipo="use master\n" +
+    "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'publish', @value = N'true'\n"
+   + "use master\n" +
+    "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'merge publish', @value = N'true'\n"
+   +"use [proyecto] exec sp_addmergepublication @publication = N'"+nombre+"', @description = N'Merge publication of database ''"+base+"'' from Publisher ''ANDRES\\ANDRES''.', @sync_mode = N'native', @retention = 14, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_subdirectory = N'ftp', @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @dynamic_filters = N'false', @conflict_retention = 14, @keep_partition_changes = N'false', @allow_synctoalternate = N'false', @max_concurrent_merge = 0, @max_concurrent_dynamic_snapshots = 0, @use_partition_groups = null, @publication_compatibility_level = N'100RTM', @replicate_ddl = 1, @allow_subscriber_initiated_snapshot = N'false', @allow_web_synchronization = N'false', @allow_partition_realignment = N'true', @retention_period_unit = N'days', @conflict_logging = N'both', @automatic_reinitialization_policy = 0\n"
+   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n"//@publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N''    
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'"
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'"
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andres'"
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'"
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'"
+            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
+
+   String atrib=""; 
+
+        for (int i=0;i<listaDer.getSize();i++){
+            atrib=atrib+""
+                    + "\nexec sp_mergearticlecolumn @publication = N'"+nombre+"', @article = N'clientes', "
+                    + "@column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
+        }
+    String cadenaFiltro="null";
+    if(!lista.isEmpty())
+    {
+         filtro="\n";
+         cadenaFiltro="N'";
+         //System.out.println(filtro);
+                  for (int i=0;i<lista.getSize();i++){
+                      if(i==0){
+                          filtro=filtro+lista.getElementAt(i);
+                          cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
+                      }
+                      else{
+                          filtro=filtro+"AND "+lista.getElementAt(i);
+                          cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
+                      }
+                     // System.out.println(cadenaFiltro);
+                  }
+        //  System.out.println(filtro); 
+                  cadenaFiltro=cadenaFiltro+"'";
+    }
+    String columna="";
+    if (listaDer.isEmpty())
+        columna="false";
+    else
+        columna="true";
+        
+        atributos="\n use ["+base+"] exec sp_addmergearticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'table', @description = N'', @creation_script = N'', "
+        + "@pre_creation_cmd = N'drop', @schema_option = 0x000000010C034FD1, @identityrangemanagementoption = N'none', @destination_owner = N'dbo', @force_reinit_subscription = 1, "
+        + "@column_tracking = N'false', @subset_filterclause = "+cadenaFiltro+", @vertical_partition = N'"+columna+"', @verify_resolver_signature = 1, @allow_interactive_resolver = N'false', @fast_multicol_updateproc = N'true', "
+        + "@check_permissions = 0, @subscriber_upload_options = 0, @delete_tracking = N'true', @compensate_for_errors = N'false', @stream_blob_columns = N'true' , @partition_options = 3\n"
+                + ""+atrib;
+    System.out.println("TODO: "+aux+tipo+atributos);
+    return aux+tipo+atributos;
+}
+
+public String sqlSuscripcionMerge(String nombre, String nodo){
+ String suscripcion="use ["+base+"]\n"
+         + "exec sp_addmergesubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_merge', "
+         + "@subscription_type = N'Push', @sync_type = N'Automatic', @subscriber_type = N'Local', @subscription_priority = 0, "
+         + "@description = N'', @use_interactive_resolver = N'False'\n"
+         + ""
+         + "exec sp_addmergepushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clienetes_merge', "
+         + "@job_login = null, @job_password = null, @subscriber_security_mode = 0, @subscriber_login = N'sa', @subscriber_password = 'sa', "
+         + "@publisher_security_mode = 1, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0, "
+         + "@frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, "
+         + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0";
+
+ 
+ return suscripcion;
+}
 
 public String sqlSuscripcionTransaccional(String nombre, String nodo,String base){
  String suscripcion="use ["+jcBase.getSelectedItem().toString()+"]\n" +  // revisar si tiene que ser del origen o del destino

@@ -26,7 +26,7 @@ public class replicasMenu extends javax.swing.JFrame {
 int nodos=0;  static int codigo=0;
     String servidor,base,a="",b="",c="";
     String servidorUno="ERIKA-LAP";
-    String servidorDos="EDISSON";
+    String servidorDos="ANDRES\\SITIO_A";
     String ServidorLocal="ANDRES";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
@@ -1316,10 +1316,11 @@ public void PeerToPeerPublicacion(String baseOrigen)
         }                   
               
 }
-public void MezclaPublicacion(String baseDestino)
+public void MezclaPublicacion(String baseOrigen)
 {
+    JOptionPane.showMessageDialog(null, sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen));
     try {
-            ejecutar(sqlPublicacionMerge(txtNombrePub.getText(),baseDestino));            
+            ejecutar(sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen));            
                 JOptionPane.showMessageDialog(null, "Publicacion creada");
     } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"eRROR:"+ ex);
@@ -1445,33 +1446,33 @@ public void PeerToPeerSuscripcion(String baseOrigen, String baseDestino)
                           } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
         } 
-            }
-            
+            }            
 }
 public void MezclaSuscripcion(String baseDestino)
 {
-    if (!"".equals(a)){
-            JOptionPane.showMessageDialog(null, "A: "+a);
-                try {
-                    ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno)); // ERIKA-LAP\\SITIOA
+    if (jchA.isSelected()){ 
+             try {
+                    JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino));
+                    ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino)); // ERIKA-LAP\\SITIOA
                     JOptionPane.showMessageDialog(null, "Suscripcion creada");
                 } catch (SQLException ex) {
                     Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
                 }
     }
-        if (!"".equals(b)){
-            JOptionPane.showMessageDialog(null, "B: "+b);
+        if(jchB.isSelected())
+            {
                 try {
-                    ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorDos)); // ERIKA-LAP\\SITIOB
+                    JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),servidorDos,baseDestino));
+                    ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorDos,baseDestino)); // ERIKA-LAP\\SITIOB
                       JOptionPane.showMessageDialog(null, "Suscripcion creada");
                 } catch (SQLException ex) {
                     Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
     }
-        if (!"".equals(c)){
-               JOptionPane.showMessageDialog(null, "C: "+c);
-            try {
-                ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),ServidorLocal)); // ERIKA-LAP\\SITIOA
+    if (jchC.isSelected()){
+        try {
+                JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),ServidorLocal,baseDestino));
+                ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),ServidorLocal,baseDestino)); // ERIKA-LAP\\SITIOA
                 JOptionPane.showMessageDialog(null, "Suscripcion creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1537,7 +1538,7 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
     if(jchA.isSelected()){
         
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorUno,"");
+        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
         cargarBasesDestino(servidorUno);
     
     }else
@@ -1749,7 +1750,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
                 
     else if (jrbMezcla.isSelected())    
-         JOptionPane.showMessageDialog(null, "Mezcla");
+         MezclaSuscripcion(baseDestino);
     }//GEN-LAST:event_btnSuscribirActionPerformed
 
     private void jmAdministrarReplicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAdministrarReplicacionesActionPerformed
@@ -2034,6 +2035,7 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = N'false',"
         + " @ins_cmd = N'CALL [dbo].[sp_MSins_dboclientes]',"+
 " @del_cmd = N'CALL [dbo].[sp_MSdel_dboclientes]', @upd_cmd = N'SCALL [dbo].[sp_MSupd_dboclientes]'" ;
+System.out.println("Pibicacion: \n"+publicacion);
 return publicacion;
 }
 
@@ -2045,7 +2047,7 @@ public String sqlPublicacionMerge(String nombre,String base){
    + "use master\n" +
     "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'merge publish', @value = N'true'\n"
    +"use [proyecto] exec sp_addmergepublication @publication = N'"+nombre+"', @description = N'Merge publication of database ''"+base+"'' from Publisher ''ANDRES\\ANDRES''.', @sync_mode = N'native', @retention = 14, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_subdirectory = N'ftp', @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @dynamic_filters = N'false', @conflict_retention = 14, @keep_partition_changes = N'false', @allow_synctoalternate = N'false', @max_concurrent_merge = 0, @max_concurrent_dynamic_snapshots = 0, @use_partition_groups = null, @publication_compatibility_level = N'100RTM', @replicate_ddl = 1, @allow_subscriber_initiated_snapshot = N'false', @allow_web_synchronization = N'false', @allow_partition_realignment = N'true', @retention_period_unit = N'days', @conflict_logging = N'both', @automatic_reinitialization_policy = 0\n"
-   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 1\n"//@publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N''    
+   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N'sa'"    
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andrés'"
@@ -2095,15 +2097,15 @@ public String sqlPublicacionMerge(String nombre,String base){
     return aux+tipo+atributos;
 }
 
-public String sqlSuscripcionMerge(String nombre, String nodo){
+public String sqlSuscripcionMerge(String nombre, String nodo,String baseDestino){
  String suscripcion="use ["+base+"]\n"
-         + "exec sp_addmergesubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clientes_merge', "
+         + "exec sp_addmergesubscription @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+baseDestino+"', "
          + "@subscription_type = N'Push', @sync_type = N'Automatic', @subscriber_type = N'Local', @subscription_priority = 0, "
          + "@description = null, @use_interactive_resolver = N'False'\n"
          + ""
-         + "exec sp_addmergepushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'clienetes_merge', "
+         + "exec sp_addmergepushsubscription_agent @publication = N'"+nombre+"', @subscriber = N'"+nodo+"', @subscriber_db = N'"+baseDestino+"', "
          + "@job_login = null, @job_password = null, @subscriber_security_mode = 0, @subscriber_login = N'sa', @subscriber_password = 'sa', "
-         + "@publisher_security_mode = 0, @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0, "
+         + "@publisher_security_mode = 0,@publisher_login = N'sa', @publisher_password = N'sa', @frequency_type = 64, @frequency_interval = 0, @frequency_relative_interval = 0, "
          + "@frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, "
          + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 99991231, @enabled_for_syncmgr = N'False'";
  
@@ -2134,7 +2136,8 @@ String suscripcion=""+
 + "@job_password = null, @subscriber_security_mode = 0,@subscriber_login = N'sa',@subscriber_password = N'sa', @frequency_type = 64, @frequency_interval = 1, @frequency_relative_interval = 1,"
 + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = " +
 "235959, @active_start_date = 0, @active_end_date = 0, @dts_package_location = N'Distributor'";
-    return suscripcion;
+System.out.println("Suscripcion: \n"+suscripcion);    
+return suscripcion;
 }
 
 public String sqlSuscripcionSnap(String nombre,String nodo,String base){
@@ -2277,7 +2280,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
 }
 
 public void ejecutarMerge(String sql) throws SQLException{
-        cn=(Connection) cc.conectarBase(servidor,base);
+        cn=(Connection) cc.conectar(servidor);
         try{
             PreparedStatement psd=cn.prepareStatement(sql);
             psd.executeQuery();

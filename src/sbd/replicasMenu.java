@@ -136,9 +136,20 @@ int nodos=0;  static int codigo=0;
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectar(server);
         try{
-            EliminarSuscripcion(server, publicacion,bas);
-            EliminarSuscripcion(servidorUno, publicacion,bas);
-            EliminarSuscripcion(servidorDos, publicacion,bas);
+            if (MostrarSuscripcionEliminar(server, publicacion)>0){
+                int reply=JOptionPane.showConfirmDialog(this,"Tiene suscripciones asociadas, desea eliminarlas?","Eliminar suscripciones",JOptionPane.YES_NO_CANCEL_OPTION);
+                 if (reply == JOptionPane.YES_OPTION) {
+                     //if (MostrarSuscripcionEliminar(ServidorLocal, publicacion)>0){
+                          EliminarSuscripcion(ServidorLocal, publicacion,bas,server);
+                     //}
+                     //if (MostrarSuscripcionEliminar(ServidorLocal, publicacion)>0){
+                          EliminarSuscripcion(servidorUno, publicacion,bas,server);
+                     //}
+                 
+                 
+                  //EliminarSuscripcion(servidorDos, publicacion,bas,server);  
+                 }               
+            }
             
             PreparedStatement psd=cn.prepareStatement(elimPublicacion);
             psd.execute();
@@ -149,14 +160,14 @@ int nodos=0;  static int codigo=0;
             }
         }
         catch(SQLServerException e){
-            JOptionPane.showMessageDialog(null, "No se puede eliminar Publicacion: "+e.getMessage()+" CODIGO: "+e.getErrorCode());
+            JOptionPane.showMessageDialog(null, "No se puede eliminar Publicacion: "+e.getMessage());
         }
         
         MostrarPublicaciones(server);
         MostrarSuscripcion(server);
     }
     
-    public void EliminarSuscripcion(String server, String publicacion, String base) throws SQLException{
+    public void EliminarSuscripcion(String server, String publicacion, String base, String ServerConnectar) throws SQLException{
         String sqlEliminarSuscripcion="DECLARE @publication AS sysname;\n" +
             "DECLARE @subscriber AS sysname;\n" +
             "SET @publication = N'"+publicacion+"';\n" +
@@ -169,7 +180,7 @@ int nodos=0;  static int codigo=0;
             "  @subscriber = @subscriber;";
         
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectar(server);
+        Connection cn=(Connection) cc.conectar(ServerConnectar);
         try{
             PreparedStatement psd=cn.prepareStatement(sqlEliminarSuscripcion);
             psd.execute();
@@ -210,6 +221,44 @@ int nodos=0;  static int codigo=0;
         catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e+" CODIGO: "+e.getErrorCode());
         }
+   }
+    int cantidad;
+    public int MostrarSuscripcionEliminar(String server, String publicacion){
+        cantidad=0;
+        String sqlCargarSuscripciones="Use distribution \n" +
+            "SELECT\n" +
+            "*\n" +
+            "FROM\n" +
+            "                DBO.MSsubscriptions AS MSA\n" +
+            "            INNER JOIN DBO.MSpublications AS MSP\n" +
+            "                    ON MSA.publication_id = MSP.publication_id"+
+            " AND publication= '"+publicacion+"'"+
+            "    AND subscriber_db <> 'virtual'";
+        
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+       // DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Suscripciones");
+        try{
+            PreparedStatement psd=cn.prepareStatement(sqlCargarSuscripciones);
+             ResultSet rs=psd.executeQuery();           
+            
+            while(rs.next()){
+       
+                cantidad++;
+             //           DefaultMutableTreeNode nodo1= new DefaultMutableTreeNode();
+           //             nodo1.setUserObject(rs.getString("subscriber_db"));
+         //               nodo.add(nodo1);
+                        
+            
+            }
+
+           // DefaultTreeModel mdl=new DefaultTreeModel(nodo);
+             //           this.jTree2.setModel(mdl);
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT "+e+" CODIGO: "+e.getErrorCode());
+        }
+        return cantidad;
    }
     
     public void cargarBases(String server){

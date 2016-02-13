@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sbd;
 import java.sql.SQLException;
 /**
@@ -39,7 +35,27 @@ public class Excepciones {
             String mensaje = null;
             switch (excepcion.getErrorCode())
             {
-               
+               case 102: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- Error de Sintaxis." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Revise el codigo Transact-SQL" +
+                    saltoLinea +
+                    saltoLinea +
+                    mensajeFinal;
+                    break;
+                   case 1801: mensaje = problema +saltoLinea +" " + 
+// Error conocido
+                    "1.- Ya existe la base." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Utilice una base que no exista" +
+                    saltoLinea +
+                    saltoLinea +
+                    mensajeFinal;
+                    break;
                 case 2714: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- La tabla ya existe." +
                     saltoLinea + saltoLinea +
@@ -50,7 +66,8 @@ public class Excepciones {
                     saltoLinea +
                     mensajeFinal;
                     break;
-                    case 14016: mensaje = problema +saltoLinea +" " + // Error conocido
+                    case 14016: mensaje = problema +saltoLinea +" " + 
+// Error conocido
                     "1.- La publicación ya existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -59,7 +76,8 @@ public class Excepciones {
                     saltoLinea +saltoLinea +
                     mensajeFinal;
                     break;
-                    case 14058: mensaje = problema +saltoLinea +" " + // Error conocido
+                    case 14058: mensaje = problema +saltoLinea +" " + 
+// Error conocido
                     "1.- La suscripción ya existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -68,7 +86,29 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 20026: mensaje = problema +saltoLinea +" " + // Error conocido
+                    case 20021: mensaje = problema +saltoLinea +" " + 
+// Error conocido
+                    "1.- No se puede encontrar la suscripción merge." 
++
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Utilice otra suscripcion merge." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 20025: mensaje = problema +saltoLinea +" " + 
+// Error conocido
+                    "1.- El nombre de una publicacion debe ser exclusivo aunque sea de otro tipo." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Utilice otro nombre para la pubicación." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 20026: mensaje = problema +saltoLinea +" " + 
+// Error conocido
                     "1.- La publicacion no existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -77,7 +117,18 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 21745: mensaje = problema +saltoLinea +" " + // Error conocido
+                    case 21266: mensaje = problema +saltoLinea +" " + 
+// Error conocido
+                    "1.- No se puede utilizar la misma base para publicaciones de tipos diferentes." +
+                    saltoLinea +saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Utilice otra base de datos u otro tipo de publicación." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 21745: mensaje = problema +saltoLinea +" " + 
+// Error conocido
                     "1.- Error en el filtro horizontal." +
                     saltoLinea +saltoLinea +
                     solucion +
@@ -107,7 +158,8 @@ public class Excepciones {
 //        {
 //            ///-----------------------------------
 //            ///Capturar y personalizar los errores de base de datos
-//            ///-----------------------------------------------------
+//            
+///-----------------------------------------------------
 //            String saltoLinea = "\n";
 //            //Mensaje personalizados para el usuario
 //            String problema = "EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: " + saltoLinea;

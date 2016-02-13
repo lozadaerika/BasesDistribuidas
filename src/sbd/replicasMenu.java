@@ -147,7 +147,7 @@ int nodos=0;  static int codigo=0;
                      //}
                  
                  
-                  //EliminarSuscripcion(servidorDos, publicacion,bas,server);  
+                  EliminarSuscripcion(servidorDos, publicacion,bas,server);  
                  }               
             }
             
@@ -488,8 +488,6 @@ int nodos=0;  static int codigo=0;
         jchB = new javax.swing.JCheckBox();
         jchC = new javax.swing.JCheckBox();
         btnPublicar = new javax.swing.JButton();
-        jrbConectar = new javax.swing.JRadioButton();
-        jrbDesconectar = new javax.swing.JRadioButton();
         btnModificar = new javax.swing.JButton();
         jcBase = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
@@ -683,12 +681,6 @@ int nodos=0;  static int codigo=0;
                 btnPublicarActionPerformed(evt);
             }
         });
-
-        buttonGroup1.add(jrbConectar);
-        jrbConectar.setText("Conectar");
-
-        buttonGroup1.add(jrbDesconectar);
-        jrbDesconectar.setText("Desconectar");
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -1095,16 +1087,11 @@ int nodos=0;  static int codigo=0;
                                 .addGap(37, 37, 37)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(57, 57, 57)
-                                .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31))
+                                .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGap(791, 791, 791)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrbDesconectar)
-                            .addComponent(jrbConectar))
-                        .addGap(124, 124, 124))
+                                .addComponent(jLabel8)))
+                        .addGap(240, 240, 240))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1151,9 +1138,7 @@ int nodos=0;  static int codigo=0;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jrbConectar)
-                        .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1181,13 +1166,8 @@ int nodos=0;  static int codigo=0;
                                 .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jrbDesconectar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel8)))
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1265,7 +1245,9 @@ int nodos=0;  static int codigo=0;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1096, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1039, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2483,8 +2465,6 @@ public void ejecutarMerge(String sql) throws SQLException{
     private javax.swing.JList jlCamposIzq;
     private javax.swing.JList jlsFiltros;
     private javax.swing.JMenu jmAdministrarReplicaciones;
-    private javax.swing.JRadioButton jrbConectar;
-    private javax.swing.JRadioButton jrbDesconectar;
     private javax.swing.JRadioButtonMenuItem jrbMezcla;
     private javax.swing.JRadioButtonMenuItem jrbSnapshot;
     private javax.swing.JRadioButtonMenuItem jrbTranCola;

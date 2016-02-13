@@ -84,7 +84,6 @@ public class BaseDeDatos extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNuevaTabla = new javax.swing.JTable();
@@ -123,8 +122,8 @@ public class BaseDeDatos extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcTablas, 0, 0, Short.MAX_VALUE)
-                    .addComponent(jcBase, 0, 0, Short.MAX_VALUE)))
+                    .addComponent(jcTablas, 0, 1, Short.MAX_VALUE)
+                    .addComponent(jcBase, 0, 1, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,13 +176,6 @@ public class BaseDeDatos extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setText("Replicacion");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -195,8 +187,7 @@ public class BaseDeDatos extends javax.swing.JFrame {
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -211,15 +202,13 @@ public class BaseDeDatos extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tblNuevaTabla.setFont(new java.awt.Font("Tahoma", 0, 12));
+        tblNuevaTabla.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblNuevaTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
@@ -334,8 +323,6 @@ private void jcTablasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     this.dispose();
-    ingresoServer is=new ingresoServer();
-    is.show();
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void tblNuevaTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNuevaTablaMouseClicked
@@ -356,10 +343,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
     panel(true);
 }//GEN-LAST:event_jButton8ActionPerformed
-
-private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-    
-}//GEN-LAST:event_jButton9ActionPerformed
     
 public Object nuevo[]={"","","NOT NULL"};
 
@@ -460,7 +443,6 @@ public int llave=1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

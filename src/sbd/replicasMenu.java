@@ -26,7 +26,7 @@ public class replicasMenu extends javax.swing.JFrame {
 int nodos=0;  static int codigo=0;
     String servidor,base,a="",b="",c="";
     String servidorUno="ERIKA-LAP";
-    String servidorDos="ANDRES\\SITIO_A";
+    String servidorDos="EDISSON";
     String ServidorLocal="ANDRES";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {

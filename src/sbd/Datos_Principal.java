@@ -100,7 +100,7 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
         String sql="";
-        sql="use ["+baseDatos+"]\nINSERT INTO clientes VALUES(?,?,?,?,?,?,?,?)";
+        sql="use ["+baseDatos+"]\nINSERT INTO clientes VALUES(?,?,?,?,?,?,?)";
         try {
             PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);
             psd.setString(1,JOptionPane.showInputDialog(null, "CI"));
@@ -110,7 +110,6 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
             psd.setString(5,JOptionPane.showInputDialog(null, "Direccion"));
             psd.setString(6,JOptionPane.showInputDialog(null, "Ciudad"));
             psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
-            psd.setString(8,"");
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 

@@ -24,8 +24,8 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class replicasMenu extends javax.swing.JFrame {
 int nodos=0;  static int codigo=0;
-public static String subday="4";
-public static String ntiempo="1";
+public static String subday="2";
+public static String ntiempo="10";
 public static String intervalo="1";
     String servidor,base,a="",b="",c="";
     String servidorUno="ANDRES\\SITIO_A";
@@ -586,6 +586,8 @@ public static String intervalo="1";
         jScrollPane9 = new javax.swing.JScrollPane();
         jTree2 = new javax.swing.JTree();
         btnSuscribir = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jrbSnapshot = new javax.swing.JRadioButtonMenuItem();
@@ -1147,6 +1149,16 @@ public static String intervalo="1";
             }
         });
 
+        jButton3.setText("Temporizacion");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("10 seg por defecto");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1156,18 +1168,24 @@ public static String intervalo="1";
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel10)))
+                        .addGap(28, 28, 28)
                         .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(240, 240, 240))
+                        .addGap(164, 164, 164))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEjecutar)
                         .addGap(138, 138, 138)
@@ -1201,7 +1219,7 @@ public static String intervalo="1";
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
+                                        .addGap(77, 77, 77)
                                         .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1214,19 +1232,23 @@ public static String intervalo="1";
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton3))
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel10)))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -1904,6 +1926,11 @@ if(jcBaseDestinoB.getSelectedIndex()>=0&&jcBaseDestinoB.getSelectedItem().equals
         } 
     }//GEN-LAST:event_jcBaseDestinoCItemStateChanged
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      Temporizacion temp= new Temporizacion();
+      temp.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 public static String aux,atributos,tipo,sincro,filtro;
 int k=1;
 int l=50;
@@ -1920,7 +1947,7 @@ public String sqlPublicacionSnap(String nombre,String base){
 + "@add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true',"
 + " @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1"
                 + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', "
-            + "@frequency_type = 4, @frequency_interval = "+intervalo+", @frequency_relative_interval = 1,"
+           + "@frequency_type = 4, @frequency_interval = "+intervalo+",@frequency_relative_interval = 1,"
             + " @frequency_recurrence_factor = 0, @frequency_subday = "+subday+", @frequency_subday_interval = "+ntiempo+", "
             + "@active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, "
             + "@job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
@@ -2005,8 +2032,10 @@ public String sqlPublicacionTransaccional(String nombre,String base){
 + " @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', "
 + "@add_to_active_directory = N'false', @repl_freq = N'continuous', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true',"
 + " @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1, @allow_initialize_from_backup = N'false', @enabled_for_p2p = N'false', @enabled_for_het_sub = N'false'"
-                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
-            + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
+                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"',"
+             + "@frequency_type = 4, @frequency_interval = "+intervalo+",@frequency_relative_interval = 1,"
+            + " @frequency_recurrence_factor = 0, @frequency_subday = "+subday+", @frequency_subday_interval = "+ntiempo+", "
+            + "@active_start_time_of_day = 0, "
             + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
             + " @publisher_security_mode = 1\n"+
            "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
@@ -2092,8 +2121,10 @@ public String sqlPublicacionTransacionalCola(String nombre,String base){
 + " @allow_sync_tran = N'true', @autogen_sync_procs = N'true', @allow_queued_tran = N'true', @allow_dts = N'false' , @conflict_policy = N'pub wins',"
             + " @centralized_conflicts = N'true', @conflict_retention = 14, @queue_type = N'sql' , @replicate_ddl = 1 , @allow_initialize_from_backup = N'false',"
             + " @enabled_for_p2p = N'false', @enabled_for_het_sub = N'false'"
-                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
-            + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
+                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"',"
+           + "@frequency_type = 4, @frequency_interval = "+intervalo+",@frequency_relative_interval = 1,"
+            + " @frequency_recurrence_factor = 0, @frequency_subday = "+subday+", @frequency_subday_interval = "+ntiempo+", "
+            + "@active_start_time_of_day = 0, "
             + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
             + " @publisher_security_mode = 1";    
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
@@ -2171,8 +2202,10 @@ String publicacion= "use master exec sp_replicationdboption @dbname = N'"+origen
 " @immediate_sync = N'true', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', "+
 "@replicate_ddl = 1, @allow_initialize_from_backup = N'true', @enabled_for_p2p = N'true', @enabled_for_het_sub = N'false', @p2p_conflictdetection = N'true',"+
 " @p2p_originator_id ="+contadorPeer +" \n" +
-"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1, "+
-"@frequency_recurrence_factor = 0, @frequency_subday = 8, @frequency_subday_interval = 1, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, "+ 
+"exec sp_addpublication_snapshot @publication = N'"+nombre+"', "
+       + "@frequency_type = 4, @frequency_interval = "+intervalo+",@frequency_relative_interval = 1,"
+            + " @frequency_recurrence_factor = 0, @frequency_subday = "+subday+", @frequency_subday_interval = "+ntiempo+", "
+        + " @active_start_time_of_day = 0, @active_end_time_of_day = 235959, "+ 
  "@active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 0,"
 + " @publisher_login = N'sa', @publisher_password = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
@@ -2215,7 +2248,7 @@ public String sqlPublicacionMerge(String nombre,String base){
             + "@publisher_login = N'sa', @publisher_password = N'sa'"    
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andrés'"
+            //+ "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andrés'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
@@ -2517,10 +2550,12 @@ public void ejecutarMerge(String sql) throws SQLException{
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

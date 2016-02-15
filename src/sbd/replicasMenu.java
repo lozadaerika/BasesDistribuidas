@@ -23,8 +23,9 @@ import javax.swing.tree.DefaultTreeModel;
  * @author Andrés
  */
 public class replicasMenu extends javax.swing.JFrame {
-int nodos=0;  static int codigo=0;
+int nodos=0;  
 public static String subday="2";
+public static int codigo=0;
 public static String ntiempo="10";
 public static String intervalo="1";
     String servidor,base,a="",b="",c="";
@@ -537,6 +538,8 @@ public static String intervalo="1";
     }
     
     public void insertar(String base){
+        
+        
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         int i=1;
@@ -1328,7 +1331,7 @@ public static String intervalo="1";
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -1339,15 +1342,15 @@ public static String intervalo="1";
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnModificar)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnActualizar)
-                        .addComponent(btnEjecutar)))
-                .addGap(21, 21, 21)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEjecutar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnInsertar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1444,11 +1447,24 @@ private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 }//GEN-LAST:event_btnActualizarActionPerformed
 
 private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+ 
+ conexion cc=new conexion();
+    conexion.solucion="Debe refrescar el articulo para poder ver los cambios";
+ Connection cn=cc.conectarBase(servidorUno,"proyecto");
+ conexion cc2=new conexion();
+ Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
     modificarTabla();
+    conexion.solucion="Conectese a un servidor disponible";
 }//GEN-LAST:event_btnModificarActionPerformed
 
 private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-    insertar(jcBase.getSelectedItem().toString());    
+conexion cc=new conexion();
+    conexion.solucion="Debe refrescar el articulo para poder ver los cambios";
+ Connection cn=cc.conectarBase(servidorUno,"proyecto");
+ conexion cc2=new conexion();
+ Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
+    insertar(jcBase.getSelectedItem().toString());   
+    conexion.solucion="Conectese a un servidor disponible";
 }//GEN-LAST:event_btnInsertarActionPerformed
 
 private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked

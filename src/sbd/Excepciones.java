@@ -45,6 +45,16 @@ public class Excepciones {
                     saltoLinea +
                     mensajeFinal;
                     break;
+                   case 14043: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- El nombre de una publicacion no puede ser null." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Ingrese un nombre para la publicacion" +
+                    saltoLinea +
+                    saltoLinea +
+                    mensajeFinal;
+                    break;
                    case 1801: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- Ya existe la base." +
                     saltoLinea + saltoLinea +

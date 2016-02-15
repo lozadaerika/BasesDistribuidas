@@ -125,22 +125,13 @@ public class Temporizacion extends javax.swing.JFrame {
      String subday="";
      tiempo="";
         if(jcbTiempo.getSelectedItem().toString().equals("Hora(s)"))
-        subday="8";
+        replicasMenu.subday="8";
       if(jcbTiempo.getSelectedItem().toString().equals("Minuto(s)"))
-           subday="4";
+           replicasMenu.subday="4";
           if(jcbTiempo.getSelectedItem().toString().equals("Segundo(s)"))
-              subday="2";
-        tiempo+="@frequency_type = 4,"+  // diario
-"@frequency_interval = "+jSpinner1.getValue().toString()+", "+
-"@frequency_relative_interval = 1, "+
-"@frequency_recurrence_factor = 0, "+
-"@frequency_subday = "+subday+", "+//segundos
-"@frequency_subday_interval = "+jsContadorTiempo.getValue().toString()+","+ // cantidad de segundos
-"@active_start_time_of_day = 0, "+// horas de inicio
-"@active_end_time_of_day = 235959, "+
-"@active_start_date = 0, "+
-"@active_end_date = 0,";
-        System.out.println("TEMPORIZACION: "+tiempo);
+              replicasMenu.subday="2";
+replicasMenu.intervalo=jSpinner1.getValue().toString();
+replicasMenu.ntiempo=jsContadorTiempo.getValue().toString(); 
     }//GEN-LAST:event_jbtnEnviarActionPerformed
 
     /**

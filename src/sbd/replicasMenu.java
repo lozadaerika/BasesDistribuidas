@@ -24,13 +24,17 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class replicasMenu extends javax.swing.JFrame {
 int nodos=0;  static int codigo=0;
+public static String subday="4";
+public static String ntiempo="1";
+public static String intervalo="1";
     String servidor,base,a="",b="",c="";
-    String servidorUno="ERIKA-LAP";
-    String servidorDos="EDISSON";
-    String ServidorLocal="ANDRES";
+    String servidorUno="ERIKA-LAP\\SITIOA";
+    String servidorDos="ERIKA-LAP\\SITIOB";
+    String ServidorLocal="ERIKA-LAP";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
-        initComponents();      
+        initComponents();     
+        jrbY.setSelected(true);
         servidor=server;this.base=base;
         ServidorLocal=server;
         cargarBases(server);
@@ -280,9 +284,9 @@ int nodos=0;  static int codigo=0;
         }
     }
     public void cargarBasesDestino(String server){
-        jcBaseDestino.removeAllItems();
-        jcBaseDestino.addItem("");
-        jcBaseDestino.addItem("Nueva Base");
+        jcBaseDestinoA.removeAllItems();
+        jcBaseDestinoA.addItem("");
+        jcBaseDestinoA.addItem("Nueva Base");
         String sql;
         sql="SELECT name FROM sys.databases";
         conexion cc= new conexion();
@@ -291,7 +295,45 @@ int nodos=0;  static int codigo=0;
             PreparedStatement psd=cn.prepareStatement(sql);
             ResultSet rs=psd.executeQuery();
             while(rs.next()){
-                jcBaseDestino.addItem(rs.getString("name"));
+                jcBaseDestinoA.addItem(rs.getString("name"));
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+    }
+    public void cargarBasesDestinoB(String server){
+        jcBaseDestinoB.removeAllItems();
+        jcBaseDestinoB.addItem("");
+        jcBaseDestinoB.addItem("Nueva Base");
+        String sql;
+        sql="SELECT name FROM sys.databases";
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sql);
+            ResultSet rs=psd.executeQuery();
+            while(rs.next()){
+                jcBaseDestinoB.addItem(rs.getString("name"));
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+    }
+     public void cargarBasesDestinoC(String server){
+        jcBaseDestinoC.removeAllItems();
+        jcBaseDestinoC.addItem("");
+        jcBaseDestinoC.addItem("Nueva Base");
+        String sql;
+        sql="SELECT name FROM sys.databases";
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectar(server);
+        try{
+            PreparedStatement psd=cn.prepareStatement(sql);
+            ResultSet rs=psd.executeQuery();
+            while(rs.next()){
+                jcBaseDestinoC.addItem(rs.getString("name"));
             }
         }
         catch(SQLException e){
@@ -402,10 +444,10 @@ int nodos=0;  static int codigo=0;
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";
         for(int fila=0;fila<tblTabla.getRowCount();fila++){
-            sql="use ["+jcBase.getSelectedItem()+"]\nUPDATE clientes SET Nombre='"+String.valueOf(tblTabla.getValueAt(fila, 1)).toUpperCase() +"', "
-                            + "Apellido='"+String.valueOf(tblTabla.getValueAt(fila, 2)).toUpperCase() +"', "
+            sql="use ["+jcBase.getSelectedItem()+"]\nUPDATE clientes SET Nombre='"+String.valueOf(tblTabla.getValueAt(fila, 1)) +"', "
+                            + "Apellido='"+String.valueOf(tblTabla.getValueAt(fila, 2))+"', "
                             + "Telefono='"+String.valueOf(tblTabla.getValueAt(fila, 3)) +"', "
-                            + "Direccion='"+String.valueOf(tblTabla.getValueAt(fila, 4)).toUpperCase() +"', "
+                            + "Direccion='"+String.valueOf(tblTabla.getValueAt(fila, 4))+"', "
                             + "Ciudad='"+String.valueOf(tblTabla.getValueAt(fila, 5)) +"',"
                             + "Edad='"+Integer.valueOf((String) tblTabla.getValueAt(fila, 6)) +"'"
                 +"WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";    
@@ -474,6 +516,7 @@ int nodos=0;  static int codigo=0;
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jInternalFrame1 = new javax.swing.JInternalFrame();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTabla = new javax.swing.JTable();
@@ -487,6 +530,9 @@ int nodos=0;  static int codigo=0;
         jchA = new javax.swing.JCheckBox();
         jchB = new javax.swing.JCheckBox();
         jchC = new javax.swing.JCheckBox();
+        jcBaseDestinoA = new javax.swing.JComboBox();
+        jcBaseDestinoB = new javax.swing.JComboBox();
+        jcBaseDestinoC = new javax.swing.JComboBox();
         btnPublicar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jcBase = new javax.swing.JComboBox();
@@ -527,10 +573,11 @@ int nodos=0;  static int codigo=0;
         jlCamposIzq = new javax.swing.JList();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jrbY = new javax.swing.JRadioButton();
+        jrbO = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         btnEjecutar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jcBaseDestino = new javax.swing.JComboBox();
         jScrollPane7 = new javax.swing.JScrollPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -648,31 +695,59 @@ int nodos=0;  static int codigo=0;
             }
         });
 
+        jcBaseDestinoA.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcBaseDestinoAItemStateChanged(evt);
+            }
+        });
+
+        jcBaseDestinoB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcBaseDestinoBItemStateChanged(evt);
+            }
+        });
+
+        jcBaseDestinoC.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcBaseDestinoCItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jchB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jchC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jchA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(191, 191, 191))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jchA)
+                    .addComponent(jchB, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jchC)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcBaseDestinoA, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcBaseDestinoB, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcBaseDestinoC, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jchA))
+                    .addComponent(jchA)
+                    .addComponent(jcBaseDestinoA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jchC))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jchB)
+                    .addComponent(jcBaseDestinoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jchC)
+                    .addComponent(jcBaseDestinoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         btnPublicar.setText("Publicar");
@@ -820,24 +895,26 @@ int nodos=0;  static int codigo=0;
                 .addComponent(btnIgual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMayorQue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMenorQue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMenorIgual)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMayorIgual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDiferente)
-                .addGap(18, 18, 18)
-                .addComponent(btnContega, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnContega, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(btnNoEsteEn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNoEsteEn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEsteEn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEsteEn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEmpiece)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTermine))
+                .addComponent(btnEmpiece, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTermine)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -861,6 +938,7 @@ int nodos=0;  static int codigo=0;
 
         jLabel9.setText("Campos");
 
+        jlsFiltros.setEnabled(false);
         jScrollPane6.setViewportView(jlsFiltros);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -909,14 +987,14 @@ int nodos=0;  static int codigo=0;
                 .addComponent(jLabel5)
                 .addGap(47, 47, 47))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -942,26 +1020,27 @@ int nodos=0;  static int codigo=0;
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        buttonGroup3.add(jrbY);
+        jrbY.setText("Y");
+
+        buttonGroup3.add(jrbO);
+        jrbO.setText("O");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel9)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel9))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminarFiltro))
-                        .addGap(47, 47, 47)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -978,17 +1057,22 @@ int nodos=0;  static int codigo=0;
                                 .addGap(18, 18, 18)
                                 .addComponent(txtFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAñadir))))))
+                                .addComponent(btnAñadir))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarFiltro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jrbY, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jrbO)))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7)
@@ -1009,8 +1093,20 @@ int nodos=0;  static int codigo=0;
                                 .addComponent(btnEliminarFiltro))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(160, 160, 160)
+                                .addComponent(jrbO)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jrbY)))))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1030,12 +1126,6 @@ int nodos=0;  static int codigo=0;
         });
 
         jLabel8.setText("Base Destino");
-
-        jcBaseDestino.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcBaseDestinoItemStateChanged(evt);
-            }
-        });
 
         jScrollPane5.setViewportView(jTree1);
 
@@ -1075,60 +1165,56 @@ int nodos=0;  static int codigo=0;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(791, 791, 791)
-                                .addComponent(jLabel8)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombrePub, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnPublicar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(240, 240, 240))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnEjecutar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(265, 265, 265))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton2)
-                                        .addGap(22, 22, 22)))
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnEjecutar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addGap(15, 15, 15)
-                                .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jButton2)
+                                .addGap(22, 22, 22)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(84, 84, 84)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(60, 60, 60)
+                                        .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -1145,30 +1231,24 @@ int nodos=0;  static int codigo=0;
                         .addComponent(jLabel6)
                         .addComponent(jcBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1)))
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addGap(12, 12, 12))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jcBaseDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5))))
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
                         .addComponent(jLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsertar)
@@ -1247,7 +1327,7 @@ int nodos=0;  static int codigo=0;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1039, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1368,16 +1448,21 @@ public void MezclaPublicacion(String baseOrigen)
             JOptionPane.showMessageDialog(null,"eRROR:"+ ex);
         }
 }
-public void SnapshotSuscripcion(String baseDestino)
-{
+public void SnapshotSuscripcion()
+{   String baseOrigen=jcBase.getSelectedItem().toString();
+String baseDestino="";
     try {
             if (jchA.isSelected()){ 
+                
+            baseDestino=jcBaseDestinoA.getSelectedItem().toString();
                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
             }
             if (jchB.isSelected()){ 
+                  baseDestino=jcBaseDestinoB.getSelectedItem().toString();
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
             }
            if (jchC.isSelected()){ 
+                 baseDestino=jcBaseDestinoC.getSelectedItem().toString();
                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
            }    
           if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1386,9 +1471,12 @@ public void SnapshotSuscripcion(String baseDestino)
         } 
        //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
 }
-public void TransaccionaEstandarSuscripcion(String baseDestino)
+public void TransaccionaEstandarSuscripcion()
 {     
+     String baseOrigen=jcBase.getSelectedItem().toString();
+String baseDestino="";
             if (jchA.isSelected()){
+                  baseDestino=jcBaseDestinoA.getSelectedItem().toString();
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno,baseDestino));
             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1397,6 +1485,7 @@ public void TransaccionaEstandarSuscripcion(String baseDestino)
             }
 }
     if (jchB.isSelected()){
+          baseDestino=jcBaseDestinoB.getSelectedItem().toString();
             try {
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos,baseDestino));
              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1405,6 +1494,7 @@ public void TransaccionaEstandarSuscripcion(String baseDestino)
             }
 }
     if (jchC.isSelected()){
+          baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
             ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal,baseDestino));
             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1414,10 +1504,12 @@ public void TransaccionaEstandarSuscripcion(String baseDestino)
     }
        // if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
 }
-public void TransaccionalColaSuscripcion(String baseDestino)
+public void TransaccionalColaSuscripcion()
 {
-
+ String baseOrigen=jcBase.getSelectedItem().toString();
+String baseDestino="";
             if (jchA.isSelected()){
+                  baseDestino=jcBaseDestinoA.getSelectedItem().toString();
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
@@ -1427,7 +1519,7 @@ public void TransaccionalColaSuscripcion(String baseDestino)
             }
 }
     if (jchB.isSelected()){
-
+  baseDestino=jcBaseDestinoB.getSelectedItem().toString();
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
@@ -1437,6 +1529,7 @@ public void TransaccionalColaSuscripcion(String baseDestino)
             }
 }
     if (jchC.isSelected()){
+          baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino));
@@ -1448,10 +1541,13 @@ public void TransaccionalColaSuscripcion(String baseDestino)
         
 }
 
-public void PeerToPeerSuscripcion(String baseOrigen, String baseDestino)
+public void PeerToPeerSuscripcion()
 {    
+     String baseOrigen=jcBase.getSelectedItem().toString();
+String baseDestino="";
     // Crear la tabla en el sitio en el que se va a crear la replicacion
       if (jchA.isSelected()){ 
+            baseDestino=jcBaseDestinoA.getSelectedItem().toString();
              try {
                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
                llenarDatosPeer(baseDestino,servidorUno);     
@@ -1460,6 +1556,7 @@ public void PeerToPeerSuscripcion(String baseOrigen, String baseDestino)
             }
         }             
           if (jchB.isSelected()){ 
+                baseDestino=jcBaseDestinoB.getSelectedItem().toString();
           try {
                 ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
                 llenarDatosPeer(baseDestino,servidorDos);
@@ -1490,9 +1587,12 @@ public void PeerToPeerSuscripcion(String baseOrigen, String baseDestino)
         } 
             }            
 }
-public void MezclaSuscripcion(String baseDestino)
+public void MezclaSuscripcion()
 {
+     String baseOrigen=jcBase.getSelectedItem().toString();
+String baseDestino="";
     if (jchA.isSelected()){ 
+         baseDestino=jcBaseDestinoA.getSelectedItem().toString();
              try {
                     JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino));
                     ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino)); // ERIKA-LAP\\SITIOA
@@ -1503,6 +1603,7 @@ public void MezclaSuscripcion(String baseDestino)
     }
         if(jchB.isSelected())
             {
+                 baseDestino=jcBaseDestinoB.getSelectedItem().toString();
                 try {
                     JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),servidorDos,baseDestino));
                     ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorDos,baseDestino)); // ERIKA-LAP\\SITIOB
@@ -1512,6 +1613,7 @@ public void MezclaSuscripcion(String baseDestino)
                 }
     }
     if (jchC.isSelected()){
+         baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
                 JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),ServidorLocal,baseDestino));
                 ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),ServidorLocal,baseDestino)); // ERIKA-LAP\\SITIOA
@@ -1579,22 +1681,17 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 
 
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
-    if(jchA.isSelected()){
-        
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
+    if(jchA.isSelected()){  
+       // a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
         cargarBasesDestino(servidorUno);
-    
     }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
 
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
-        
-         
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
-        cargarBasesDestino(servidorDos);
-    
+       // a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
+        cargarBasesDestinoB(servidorDos);
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
@@ -1602,8 +1699,8 @@ private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
        
-        a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
-        cargarBasesDestino(ServidorLocal);
+        //a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
+        cargarBasesDestinoC(ServidorLocal);
     
     }
     else
@@ -1669,8 +1766,15 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
          if(!txtCampos.getText().equals("Edad"))
                  filtro="["+txtCampos.getText()+"] "+aux+" ''"+valor+"''";
          else   filtro="["+txtCampos.getText()+"] "+aux+" "+valor;
-   
+ if(lista.getSize()==0)  
  lista.addElement(filtro);
+ else
+ {
+ if(jrbY.isSelected())
+     lista.addElement("AND "+filtro);
+     else
+     lista.addElement("OR "+filtro);
+ }
  jlsFiltros.setModel(lista);
  System.out.println(filtro);
   lblFiltro.setText("Filtro"); 
@@ -1737,25 +1841,17 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
        
     }//GEN-LAST:event_jcBaseItemStateChanged
 
-    private void jcBaseDestinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoItemStateChanged
-      if(jcBaseDestino.getSelectedIndex()>=0&&jcBaseDestino.getSelectedItem().equals("Nueva Base")){
+    private void jcBaseDestinoAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoAItemStateChanged
+      if(jcBaseDestinoA.getSelectedIndex()>=0&&jcBaseDestinoA.getSelectedItem().equals("Nueva Base")){
         String nombre="";
         if(jchA.isSelected()){
         nombre=nuevaBase(servidorUno);
         cargarBasesDestino(servidorUno);
-        }
-           if(jchB.isSelected()){
-        nombre=nuevaBase(servidorDos);
-        cargarBasesDestino(servidorDos);
-        }
-              if(jchC.isSelected()){
-        nombre=nuevaBase(ServidorLocal);
-        cargarBasesDestino(ServidorLocal);
-        }
-     jcBaseDestino.setSelectedItem(nombre);
+        }     
+     jcBaseDestinoA.setSelectedItem(nombre);
             
         }  
-    }//GEN-LAST:event_jcBaseDestinoItemStateChanged
+    }//GEN-LAST:event_jcBaseDestinoAItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -1773,27 +1869,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     private void btnSuscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuscribirActionPerformed
        codigo=0;
-        String baseDestino=jcBaseDestino.getSelectedItem().toString();
-          String baseOrigen=jcBase.getSelectedItem().toString();
-        if (jrbSnapshot.isSelected()){
-        SnapshotSuscripcion(baseDestino);   
-    }
-    else if (jrbTranEstandar.isSelected())
-    {
-    TransaccionaEstandarSuscripcion(baseDestino);
-        
-    }
-    else if (jrbTranCola.isSelected()) 
-    {
-   TransaccionalColaSuscripcion(baseDestino);
-    }
-        
-   else if (jrbTranPeer.isSelected()){
-       PeerToPeerSuscripcion(baseOrigen,baseDestino);  
-    }
-                
-    else if (jrbMezcla.isSelected())    
-         MezclaSuscripcion(baseDestino);
+            if (jrbSnapshot.isSelected())
+                SnapshotSuscripcion();   
+                else if (jrbTranEstandar.isSelected())
+                    TransaccionaEstandarSuscripcion();
+                else if (jrbTranCola.isSelected()) 
+                    TransaccionalColaSuscripcion();
+                else if (jrbTranPeer.isSelected())
+                    PeerToPeerSuscripcion();  
+                else if (jrbMezcla.isSelected())    
+                    MezclaSuscripcion();  
     }//GEN-LAST:event_btnSuscribirActionPerformed
 
     private void jmAdministrarReplicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAdministrarReplicacionesActionPerformed
@@ -1809,6 +1894,33 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (jrbMezcla.isSelected())    
             sincronizar(jcBase.getSelectedItem().toString());
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jcBaseDestinoBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoBItemStateChanged
+if(jcBaseDestinoB.getSelectedIndex()>=0&&jcBaseDestinoB.getSelectedItem().equals("Nueva Base")){
+        String nombre="";
+       
+           if(jchB.isSelected()){
+        nombre=nuevaBase(servidorDos);
+        cargarBasesDestinoB(servidorDos);
+        }
+             
+     jcBaseDestinoB.setSelectedItem(nombre);
+            
+        }  
+        
+    }//GEN-LAST:event_jcBaseDestinoBItemStateChanged
+
+    private void jcBaseDestinoCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcBaseDestinoCItemStateChanged
+      if(jcBaseDestinoC.getSelectedIndex()>=0&&jcBaseDestinoC.getSelectedItem().equals("Nueva Base")){
+        String nombre="";
+           if(jchC.isSelected()){
+        nombre=nuevaBase(ServidorLocal);
+        cargarBasesDestinoC(ServidorLocal);
+        }
+     jcBaseDestinoC.setSelectedItem(nombre);
+            
+        } 
+    }//GEN-LAST:event_jcBaseDestinoCItemStateChanged
 public void sincronizar(String base){
      String sql="";
         sql = "SELECT  name \n" +
@@ -1845,10 +1957,11 @@ public String sqlPublicacionSnap(String nombre,String base){
 + " @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', "
 + "@add_to_active_directory = N'false', @repl_freq = N'snapshot', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true',"
 + " @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1"
-                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 1, @frequency_relative_interval = 1,"
-            + " @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 0, "
-            + "@active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null,"
-            + " @publisher_security_mode = 1 \n"+
+                + "\nexec sp_addpublication_snapshot @publication = N'"+nombre+"', "
+            + "@frequency_type = 4, @frequency_interval = "+intervalo+", @frequency_relative_interval = 1,"
+            + " @frequency_recurrence_factor = 0, @frequency_subday = "+subday+", @frequency_subday_interval = "+ntiempo+", "
+            + "@active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, "
+            + "@job_login = null, @job_password = null, @publisher_security_mode = 1 \n"+
             "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'\n" +
 "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'\n" +
 //"exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ERIKA-LAP\\Erika'\n" +
@@ -1858,32 +1971,36 @@ public String sqlPublicacionSnap(String nombre,String base){
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
 + " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509D, @identityrangemanagementoption = N'none',"
 + " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = ";
-   String atrib=""; 
-    if (listaDer.isEmpty())
+//System.out.println("Tamano lista: "+listaDer.getSize());   
+int tamano=listaDer.getSize();
+String atrib=""; 
+    if (tamano==0)
         atributos=atributos+"N'false'";
     else{
         atributos=atributos+"N'true'";
         atrib="\n";
-        for (int i=0;i<listaDer.getSize();i++){
+        for (int i=0;i<tamano;i++){
             atrib=atrib+""
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"',"
                     + " @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
-    }
+    }//System.out.println("Tamano lista2: "+lista.getSize());  
+    tamano=lista.getSize();
     String cadenaFiltro="";
-    if(!lista.isEmpty())
+    
+    if(tamano>0)
     {
          filtro="\n"+
                  "exec sp_articlefilter @publication = N'"+nombre+"', @article = N'clientes', @filter_name = N'FLTR_clientes_"+k+"__"+l+"', "
                  + "@filter_clause = N'";
          //System.out.println(filtro);
-                  for (int i=0;i<lista.getSize();i++){
+                  for (int i=0;i<tamano;i++){
                       if(i==0){
                           filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                       else{
-                          filtro=filtro+"AND "+lista.getElementAt(i);
+                          filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                      // System.out.println(cadenaFiltro);
@@ -1891,7 +2008,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
           filtro=filtro+"', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         //  System.out.println(filtro); 
     }
-    if(lista.isEmpty())
+    if(tamano==0)
     {
         atributos=atributos+atrib;
     }
@@ -1900,7 +2017,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
         atributos=atributos+",@ins_cmd = N'SQL', @del_cmd = N'SQL', @upd_cmd = N'SQL', @filter_clause =N'"+cadenaFiltro+"' "+atrib;
     }
     String fil="";
-    if(lista.isEmpty()){
+    if(tamano==0){
         fil="null";
     }
     else
@@ -1939,32 +2056,35 @@ public String sqlPublicacionTransaccional(String nombre,String base){
 atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @article = N'clientes', @source_owner = N'dbo', @source_object = N'clientes', @type = N'logbased',"
 + " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'none',"
 + " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 24, @vertical_partition = ";
-   String atrib=""; 
-    if (listaDer.isEmpty())
+//System.out.println("Tmano vertical "+listaDer.getSize());   
+int tamano=listaDer.getSize();
+String atrib=""; 
+    if (tamano==0)
         atributos=atributos+"N'false'";
     else{
         atributos=atributos+"N'true'";
         atrib="\n";
-        for (int i=0;i<listaDer.getSize();i++){
+        for (int i=0;i<tamano;i++){
             atrib=atrib+""
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
     atributos=atributos+"";
     String cadenaFiltro="";
-    if(!lista.isEmpty())
+     tamano=lista.getSize();
+    if(tamano>0)
     {
          filtro="\n"+
                  "exec sp_articlefilter @publication = N'"+nombre+"', @article = N'clientes', @filter_name = N'FLTR_clientes_"+k+"__"+l+"', "
                  + "@filter_clause = N'";
          //System.out.println(filtro);
-                  for (int i=0;i<lista.getSize();i++){
+                  for (int i=0;i<tamano;i++){
                       if(i==0){
                           filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                       else{
-                          filtro=filtro+"AND "+lista.getElementAt(i);
+                          filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                      // System.out.println(cadenaFiltro);
@@ -1972,7 +2092,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
           filtro=filtro+"', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         //  System.out.println(filtro); 
     }
-    if(lista.isEmpty())
+    if(tamano==0)
     {
         atributos=atributos+atrib;
     }
@@ -1981,7 +2101,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
         atributos=atributos+", @filter_clause =N'"+cadenaFiltro+"' "+atrib;
     }
     String fil="";
-    if(lista.isEmpty()){
+    if(tamano==0){
         fil="null";
     }
     else
@@ -1993,7 +2113,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
     //System.out.println("Sincro: "+sincro);
        k++;
     l++;
-   // System.out.println("TODO: "+aux+tipo+atributos+filtro+sincro);
+    System.out.println("TODO: "+aux+tipo+atributos+filtro+sincro);
     return aux+tipo+atributos+filtro+sincro;
 }
 
@@ -2018,30 +2138,32 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
 + " @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x0000000008035CDF, @identityrangemanagementoption = N'manual',"
 + " @destination_table = N'clientes', @destination_owner = N'dbo', @status = 16, @vertical_partition = ";
    String atrib=""; 
-    if (listaDer.isEmpty())
+   int tamano=listaDer.getSize();
+    if (tamano==0)
         atributos=atributos+"N'false'";
     else{
         atributos=atributos+"N'true'";
         atrib="\n";
-        for (int i=0;i<listaDer.getSize();i++){
+        for (int i=0;i<tamano;i++){
             atrib=atrib+""
                     + " exec sp_articlecolumn @publication = N'"+nombre+"', @article = N'clientes', @column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     }
+    tamano=lista.getSize();
     String cadenaFiltro="";
-    if(!lista.isEmpty())
+    if(tamano>0)
     {
          filtro="\n"+
                  "exec sp_articlefilter @publication = N'"+nombre+"', @article = N'clientes', @filter_name = N'FLTR_clientes_"+k+"__"+l+"', "
                  + "@filter_clause = N'";
          //System.out.println(filtro);
-                  for (int i=0;i<lista.getSize();i++){
+                  for (int i=0;i<tamano;i++){
                       if(i==0){
                           filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                       else{
-                          filtro=filtro+"AND "+lista.getElementAt(i);
+                          filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                      // System.out.println(cadenaFiltro);
@@ -2049,7 +2171,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
           filtro=filtro+"', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         //  System.out.println(filtro); 
     }
-    if(lista.isEmpty())
+    if(tamano==0)
     {
         atributos=atributos+atrib;
     }
@@ -2058,7 +2180,7 @@ atributos="\n use ["+base+"] exec sp_addarticle @publication = N'"+nombre+"', @a
         atributos=atributos+", @filter_clause =N'"+cadenaFiltro+"' "+atrib;
     }
     String fil="";
-    if(lista.isEmpty()){
+    if(tamano==0){
         fil="null";
     }
     else
@@ -2109,49 +2231,57 @@ return publicacion;
 
 public String sqlPublicacionMerge(String nombre,String base){
     aux="";atributos="";tipo="";sincro="";filtro="";
-    aux="";
     tipo="use master\n" +
     "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'publish', @value = N'true'\n"
    + "use master\n" +
     "exec sp_replicationdboption @dbname = N'"+base+"', @optname = N'merge publish', @value = N'true'\n"
-   +"use [proyecto] exec sp_addmergepublication @publication = N'"+nombre+"', @description = N'Merge publication of database ''"+base+"'' from Publisher ''ANDRES\\ANDRES''.', @sync_mode = N'native', @retention = 14, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_subdirectory = N'ftp', @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @dynamic_filters = N'false', @conflict_retention = 14, @keep_partition_changes = N'false', @allow_synctoalternate = N'false', @max_concurrent_merge = 0, @max_concurrent_dynamic_snapshots = 0, @use_partition_groups = null, @publication_compatibility_level = N'100RTM', @replicate_ddl = 1, @allow_subscriber_initiated_snapshot = N'false', @allow_web_synchronization = N'false', @allow_partition_realignment = N'true', @retention_period_unit = N'days', @conflict_logging = N'both', @automatic_reinitialization_policy = 0\n"
-   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1, @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = null, @job_password = null, @publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N'sa'"    
+   +"use ["+base+"] exec sp_addmergepublication @publication = N'"+nombre+"', @description = N'Merge publication of" //PROYECTO
+   + " database ''"+base+"'' from Publisher ''"+ServidorLocal+"''.', @sync_mode = N'native', @retention = 14, @allow_push = N'true'," //ANDRES\A\ANDRES
+            + " @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true',"
+            + " @compress_snapshot = N'false', @ftp_port = 21, @ftp_subdirectory = N'ftp', @ftp_login = N'anonymous',"
+            + " @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @dynamic_filters = N'false', "
+            + "@conflict_retention = 14, @keep_partition_changes = N'false', @allow_synctoalternate = N'false',"
+            + " @max_concurrent_merge = 0, @max_concurrent_dynamic_snapshots = 0, @use_partition_groups = null, "
+            + "@publication_compatibility_level = N'100RTM', @replicate_ddl = 1, @allow_subscriber_initiated_snapshot = N'false', "
+            + "@allow_web_synchronization = N'false', @allow_partition_realignment = N'true', @retention_period_unit = N'days',"
+            + " @conflict_logging = N'both', @automatic_reinitialization_policy = 0\n"
+   +"exec sp_addpublication_snapshot @publication = N'"+nombre+"', @frequency_type = 4, @frequency_interval = 14,"
+            + " @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, @frequency_subday_interval = 1,"
+            + " @active_start_time_of_day = 500, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, "
+            + "@job_login = null, @job_password = null, @publisher_security_mode = 0, @publisher_login = N'sa', @publisher_password = N'sa'"    
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'sa'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT AUTHORITY\\SYSTEM'"
-            + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andrés'"
+       //     + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'ANDRES\\Andrés'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\SQLSERVERAGENT'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'NT SERVICE\\MSSQLSERVER'"
             + "exec sp_grant_publication_access @publication = N'"+nombre+"', @login = N'distributor_admin'";
-
+int tamano=listaDer.getSize();
    String atrib=""; 
-
-        for (int i=0;i<listaDer.getSize();i++){
+        for (int i=0;i<tamano;i++){
             atrib=atrib+""
                     + "\nexec sp_mergearticlecolumn @publication = N'"+nombre+"', @article = N'clientes', "
                     + "@column = N'"+listaDer.getElementAt(i)+"', @operation = N'add', @force_invalidate_snapshot = 1, @force_reinit_subscription = 1";
         }
     String cadenaFiltro="null";
-    if(!lista.isEmpty())
+    tamano=lista.getSize();
+    if(tamano>0)
     {
          filtro="\n";
-         cadenaFiltro="N'";
-         //System.out.println(filtro);
-                  for (int i=0;i<lista.getSize();i++){
+         cadenaFiltro="N'"; //System.out.println(filtro);
+                  for (int i=0;i<tamano;i++){
                       if(i==0){
                           filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
                       }
                       else{
-                          filtro=filtro+"AND "+lista.getElementAt(i);
+                          filtro=filtro+lista.getElementAt(i);
                           cadenaFiltro=cadenaFiltro+lista.getElementAt(i);
-                      }
-                     // System.out.println(cadenaFiltro);
-                  }
-        //  System.out.println(filtro); 
+                      }  // System.out.println(cadenaFiltro);
+                  } //  System.out.println(filtro); 
                   cadenaFiltro=cadenaFiltro+"'";
     }
     String columna="";
-    if (listaDer.isEmpty())
+    if (listaDer.getSize()==0)
         columna="false";
     else
         columna="true";
@@ -2219,6 +2349,7 @@ suscripcion=""+
         + " @frequency_interval = 1, @frequency_relative_interval = 1, @frequency_recurrence_factor = 0, @frequency_subday = 4, "
         + "@frequency_subday_interval = 5, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, "
         + "@active_end_date = 0, @dts_package_location = N'Distributor'";
+System.out.println("SUSCRIPCION SNAP: "+suscripcion);
         return suscripcion;
 }
 
@@ -2417,6 +2548,7 @@ public void ejecutarMerge(String sql) throws SQLException{
     private javax.swing.JButton btnTermine;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -2456,7 +2588,9 @@ public void ejecutarMerge(String sql) throws SQLException{
     private javax.swing.JTree jTree1;
     private javax.swing.JTree jTree2;
     private javax.swing.JComboBox jcBase;
-    private javax.swing.JComboBox jcBaseDestino;
+    private javax.swing.JComboBox jcBaseDestinoA;
+    private javax.swing.JComboBox jcBaseDestinoB;
+    private javax.swing.JComboBox jcBaseDestinoC;
     private javax.swing.JCheckBox jchA;
     private javax.swing.JCheckBox jchB;
     private javax.swing.JCheckBox jchC;
@@ -2466,10 +2600,12 @@ public void ejecutarMerge(String sql) throws SQLException{
     private javax.swing.JList jlsFiltros;
     private javax.swing.JMenu jmAdministrarReplicaciones;
     private javax.swing.JRadioButtonMenuItem jrbMezcla;
+    private javax.swing.JRadioButton jrbO;
     private javax.swing.JRadioButtonMenuItem jrbSnapshot;
     private javax.swing.JRadioButtonMenuItem jrbTranCola;
     private javax.swing.JRadioButtonMenuItem jrbTranEstandar;
     private javax.swing.JRadioButtonMenuItem jrbTranPeer;
+    private javax.swing.JRadioButton jrbY;
     private javax.swing.JLabel lblFiltro;
     private javax.swing.JTable tblTabla;
     private javax.swing.JTextField txtCampos;

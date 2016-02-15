@@ -96,20 +96,81 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
         cargarTabla(tablaDatos);
     }
     
+    public String sqlinsertar(){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
+        String titulos[] = null,Registros[] = null;
+        String sql_campos,sql_cantidad,sql,campos="",datos="";
+        sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        sql="SELECT * FROM clientes";
+        int i=1;
+        try{
+            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
+            ResultSet rs_campos=psd_campos.executeQuery();
+            if(rs_cantidad.next()){
+                int cant=rs_cantidad.getInt("C");
+                while(rs_campos.next()){
+                    if (i!=cant)
+                        if (i!=cant-1){
+                            campos=campos+rs_campos.getString("COLUMN_NAME")+",";
+                            datos=datos+"?,";
+                        }
+                        else{
+                            campos=campos+rs_campos.getString("COLUMN_NAME");
+                            datos=datos+"?";
+                        }
+                    i++;
+                }
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+        return "INSERT INTO clientes("+campos+") values("+datos+")";
+    }
+    
+    public int sqlinsertarCantidad(){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
+        String sql_campos,sql_cantidad;
+        sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        int i=1;
+        try{
+            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+            if(rs_cantidad.next()){
+                return rs_cantidad.getInt("C");
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+        return 0;
+    }
+    
     public void insertar(String base){
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
-        String sql="";
-        sql="use ["+baseDatos+"]\nINSERT INTO clientes (CI,Nombre,Apellido,Telefono,Direccion,Ciudad,Edad) VALUES(?,?,?,?,?,?,?)";
+        String sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        int i=1;
+        String sql=sqlinsertar();
         try {
+            PreparedStatement psd_campos=(PreparedStatement) cn.prepareStatement(sql_campos);
+            ResultSet rs_campos=psd_campos.executeQuery();
             PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);
-            psd.setString(1,JOptionPane.showInputDialog(null, "CI"));
-            psd.setString(2,JOptionPane.showInputDialog(null, "Nombre"));
-            psd.setString(3,JOptionPane.showInputDialog(null, "Apellido"));
-            psd.setString(4,JOptionPane.showInputDialog(null, "Telefono"));
-            psd.setString(5,JOptionPane.showInputDialog(null, "Direccion"));
-            psd.setString(6,JOptionPane.showInputDialog(null, "Ciudad"));
-            psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
+            rs_campos.next();
+            while(i<=sqlinsertarCantidad()){
+                if ("Edad".equals(rs_campos.getString("COLUMN_NAME")))
+                    psd.setInt(i,Integer.valueOf(JOptionPane.showInputDialog(null, rs_campos.getString("COLUMN_NAME"))));
+                else
+                    if (!"rowguid".equals(rs_campos.getString("COLUMN_NAME"))&&!"msrepl_tran_version".equals(rs_campos.getString("COLUMN_NAME")))
+                        psd.setString(i,JOptionPane.showInputDialog(null, rs_campos.getString("COLUMN_NAME")));
+                i++;
+                rs_campos.next();
+            }
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 
@@ -119,7 +180,7 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
-       }
+       }    
     
     public void eliminar(int fila){
         conexion cc= new conexion();

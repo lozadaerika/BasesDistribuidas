@@ -464,19 +464,80 @@ public static String intervalo="1";
         cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
     }
     
+    public String sqlinsertar(){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
+        String titulos[] = null,Registros[] = null;
+        String sql_campos,sql_cantidad,sql,campos="",datos="";
+        sql_cantidad="USE "+jcBase.getSelectedItem().toString()+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        sql="SELECT * FROM clientes";
+        int i=1;
+        try{
+            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
+            ResultSet rs_campos=psd_campos.executeQuery();
+            if(rs_cantidad.next()){
+                int cant=rs_cantidad.getInt("C");
+                while(rs_campos.next()){
+                    if (i!=cant)
+                        if (i!=cant-1){
+                            campos=campos+rs_campos.getString("COLUMN_NAME")+",";
+                            datos=datos+"?,";
+                        }
+                        else{
+                            campos=campos+rs_campos.getString("COLUMN_NAME");
+                            datos=datos+"?";
+                        }
+                    i++;
+                }
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+        return "INSERT INTO clientes("+campos+") values("+datos+")";
+    }
+    
+    public int sqlinsertarCantidad(){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
+        String sql_campos,sql_cantidad;
+        sql_cantidad="USE "+jcBase.getSelectedItem().toString()+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        int i=1;
+        try{
+            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
+            ResultSet rs_cantidad=psd_cantidad.executeQuery();
+            if(rs_cantidad.next()){
+                return rs_cantidad.getInt("C");
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
+        }
+        return 0;
+    }
+    
     public void insertar(String base){
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
-        String sql="";
-        sql="use ["+jcBase.getSelectedItem().toString()+"]\nINSERT INTO clientes (CI,Nombre,Apellido,Telefono,Direccion,Ciudad,Edad) VALUES(?,?,?,?,?,?,?)";
+        String sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
+        int i=1;
+        String sql=sqlinsertar();
         try {
+            PreparedStatement psd_campos=(PreparedStatement) cn.prepareStatement(sql_campos);
+            ResultSet rs_campos=psd_campos.executeQuery();
             PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);
-            psd.setString(1,JOptionPane.showInputDialog(null, "CI"));
-            psd.setString(2,JOptionPane.showInputDialog(null, "Nombre"));
-            psd.setString(3,JOptionPane.showInputDialog(null, "Apellido"));
-            psd.setString(4,JOptionPane.showInputDialog(null, "Telefono"));
-            psd.setString(5,JOptionPane.showInputDialog(null, "Direccion"));
-            psd.setString(6,JOptionPane.showInputDialog(null, "Ciudad"));
-            psd.setInt(7,Integer.valueOf(JOptionPane.showInputDialog(null, "Edad")));
+            rs_campos.next();
+            while(i<=sqlinsertarCantidad()){
+                if ("Edad".equals(rs_campos.getString("COLUMN_NAME")))
+                    psd.setInt(i,Integer.valueOf(JOptionPane.showInputDialog(null, rs_campos.getString("COLUMN_NAME"))));
+                else
+                    if (!"rowguid".equals(rs_campos.getString("COLUMN_NAME"))&&!"msrepl_tran_version".equals(rs_campos.getString("COLUMN_NAME")))
+                        psd.setString(i,JOptionPane.showInputDialog(null, rs_campos.getString("COLUMN_NAME")));
+                i++;
+                rs_campos.next();
+            }
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 
@@ -487,7 +548,7 @@ public static String intervalo="1";
             JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
        }
-    
+
     public void eliminar(int fila){
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";
@@ -719,17 +780,19 @@ public static String intervalo="1";
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jchA)
-                    .addComponent(jchB, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jchC)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcBaseDestinoA, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcBaseDestinoB, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcBaseDestinoC, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jchB, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jchA)
+                            .addComponent(jchC)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcBaseDestinoA, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcBaseDestinoB, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcBaseDestinoC, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -742,10 +805,10 @@ public static String intervalo="1";
                     .addComponent(jchA)
                     .addComponent(jcBaseDestinoA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcBaseDestinoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jchB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(3, 3, 3)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jchC)
                     .addComponent(jcBaseDestinoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))

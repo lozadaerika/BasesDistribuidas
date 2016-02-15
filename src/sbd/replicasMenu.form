@@ -402,18 +402,22 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jchA" min="-2" max="-2" attributes="1"/>
-                          <Component id="jchB" min="-2" pref="43" max="-2" attributes="1"/>
-                          <Component id="jchC" min="-2" max="-2" attributes="1"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcBaseDestinoA" min="-2" pref="167" max="-2" attributes="0"/>
-                          <Component id="jcBaseDestinoB" min="-2" pref="167" max="-2" attributes="0"/>
-                          <Component id="jcBaseDestinoC" min="-2" pref="167" max="-2" attributes="0"/>
+                          <Component id="jchB" min="-2" pref="43" max="-2" attributes="1"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jchA" min="-2" max="-2" attributes="1"/>
+                                  <Component id="jchC" min="-2" max="-2" attributes="1"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jcBaseDestinoA" min="-2" pref="167" max="-2" attributes="0"/>
+                                  <Component id="jcBaseDestinoB" min="-2" pref="167" max="-2" attributes="0"/>
+                                  <Component id="jcBaseDestinoC" min="-2" pref="167" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -430,11 +434,11 @@
                           <Component id="jcBaseDestinoA" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcBaseDestinoB" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jchB" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jcBaseDestinoB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jchB" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jchC" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jcBaseDestinoC" alignment="3" min="-2" max="-2" attributes="0"/>

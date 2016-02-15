@@ -45,8 +45,7 @@ public class Excepciones {
                     saltoLinea +
                     mensajeFinal;
                     break;
-                   case 1801: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                   case 1801: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- Ya existe la base." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -66,8 +65,7 @@ public class Excepciones {
                     saltoLinea +
                     mensajeFinal;
                     break;
-                    case 14016: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 14016: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- La publicación ya existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -76,8 +74,16 @@ public class Excepciones {
                     saltoLinea +saltoLinea +
                     mensajeFinal;
                     break;
-                    case 14058: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 14055: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- La publicación no existe no se puede eliminar." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Elimine una publicacion existente." +
+                    saltoLinea +saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 14058: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- La suscripción ya existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -86,8 +92,25 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 20021: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 15004: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- No se puede eliminar la suscripcion." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Intente nuevamente.\n Verifique conexiones de la suscripcion" +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 18483: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- Error en el acceso con sa." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Verifique los datos." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 20021: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- No se puede encontrar la suscripción merge." 
 +
                     saltoLinea + saltoLinea +
@@ -97,8 +120,7 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 20025: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 20025: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- El nombre de una publicacion debe ser exclusivo aunque sea de otro tipo." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -107,8 +129,7 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 20026: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 20026: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- La publicacion no existe." +
                     saltoLinea + saltoLinea +
                     solucion +
@@ -117,8 +138,16 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 21266: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 20804: mensaje = problema +saltoLinea +" " + // Error conocido
+                    "1.- Un articulo solo se puede utilizar en una replicacion Peer To Peer." +
+                    saltoLinea + saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Utilice otro articulo para la replicacion Peer To Peer." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+                    break;
+                    case 21266: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- No se puede utilizar la misma base para publicaciones de tipos diferentes." +
                     saltoLinea +saltoLinea +
                     solucion +
@@ -127,8 +156,7 @@ public class Excepciones {
                     saltoLinea + saltoLinea +
                     mensajeFinal;
                     break;
-                    case 21745: mensaje = problema +saltoLinea +" " + 
-// Error conocido
+                    case 21745: mensaje = problema +saltoLinea +" " + // Error conocido
                     "1.- Error en el filtro horizontal." +
                     saltoLinea +saltoLinea +
                     solucion +
@@ -154,45 +182,33 @@ public class Excepciones {
             //muestra el mensaje personalizado.
             mensajePersonalizado = mensaje;
     }
-//    public static void GestionarExcepcion(Exception excepcion)
-//        {
-//            ///-----------------------------------
-//            ///Capturar y personalizar los errores de base de datos
-//            
-///-----------------------------------------------------
-//            String saltoLinea = "\n";
-//            //Mensaje personalizados para el usuario
-//            String problema = "EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: " + saltoLinea;
-//            String solucion = "POR FAVOR, PRUEBE LA SGUIENTE SOLUCION";
-//            String mensajeFinal = "NOTA: En caso de persistir el problema, llame a Soporte " +
-//                "Técnico" + saltoLinea + "o consulte con el Administrador del Sistema";
-//            String mensaje = null;
-//        //    switch (excepcion.getMessage().toString())
-//            {
-//                // case 2: //error personalizado
-//                //    break;
-//                //case 53: // error personalizado
-//                // break;
-//                // case 4060: // error personalizado
-//                //break;
-//             //   case "System.ArgumentsException":  // Error conocido
-//                   mensaje = "Mensaje Personalizado";
-//                    break;
-//             //   default: mensaje =  // van a caer todos los errores no personalizados de C#
-//                    "ERROR DESCONOCIDO: " +
-//                    saltoLinea +
-//                    saltoLinea +
-//                    " MENSAJE: " + excepcion.getMessage() +
-//                     saltoLinea +
-//                     "TIPO: " + excepcion.getClass() +
-//                     saltoLinea +
-//                     "LINEA: " + excepcion.getStackTrace();
-//                    break;
-//            }
-            //retornar el mensaje de error en un campo de la clase
-            //para que sea el isiario de la clase el que decida en que control 
+    public static void GestionarExcepcion(Exception excepcion)
+        {
+            ///-----------------------------------
+            ///Capturar y personalizar los errores de base de datos
+            ///-----------------------------------------------------
+            String saltoLinea = "\n";
+            //Mensaje personalizados para el usuario
+            String problema = "EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: " + saltoLinea;
+            String solucion = "POR FAVOR, PRUEBE LA SGUIENTE SOLUCION";
+            String mensajeFinal = "NOTA: En caso de persistir el problema, llame a Soporte " +
+                "Técnico" + saltoLinea + "o consulte con el Administrador del Sistema";
+            String mensaje = null;
+            if(excepcion.getMessage().contains("No se pudo realizar la conexión TCI/IP"))
+            {
+                mensaje = problema +saltoLinea +" " + 
+                    "1.- El servidor no se encuentra conectado o es incorrecto." +
+                    saltoLinea +saltoLinea +
+                    solucion +
+                    saltoLinea +
+                    "1.- Realice la accion con un servidor disponible." +
+                    saltoLinea + saltoLinea +
+                    mensajeFinal;
+            }
+            ///retornar el mensaje de error en un campo de la clase
+            ///para que sea el isiario de la clase el que decida en que control 
             //muestra el mensaje personalizado.
-        //    mensajePersonalizado = mensaje;
-     //   }
+            mensajePersonalizado = mensaje;
+        }
     
 }

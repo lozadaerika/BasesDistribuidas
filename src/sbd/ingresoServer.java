@@ -107,13 +107,14 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 static int codigoError=0;
     public void conectarServidor(){
         try {
-            conexion cc=new conexion();
-            Connection cn=cc.conectarBase(txtServer.getText(),"proyecto");
+//            conexion cc=new conexion();
+//            Connection cn=cc.conectarBase(txtServer.getText(),"proyecto");
             bd=new replicasMenu(txtServer.getText(), "proyecto");
             bd.show();          
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR CONEXION:"+e);
+            //JOptionPane.showMessageDialog(null, " ERROR CONEXION:"+e.getMessage()+" "+e.getCause());
            // System.out.println("ERROR: "+Excepciones.GetCodigoError());
+            System.exit(0);
         }
     }
     

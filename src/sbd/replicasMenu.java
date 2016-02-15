@@ -1462,15 +1462,23 @@ public void SnapshotSuscripcion()
 String baseDestino="";
     try {
             if (jchA.isSelected()){ 
-                
+                conexion cc=new conexion();
+                Connection cn=cc.conectarBase(servidorUno,"proyecto");
+                conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
             baseDestino=jcBaseDestinoA.getSelectedItem().toString();
                 ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorUno,baseDestino));
             }
             if (jchB.isSelected()){ 
+                 conexion cc=new conexion();
+                Connection cn=cc.conectarBase(servidorDos,"proyecto");
+                conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                   baseDestino=jcBaseDestinoB.getSelectedItem().toString();
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
             }
            if (jchC.isSelected()){ 
+//                conexion cc=new conexion();
+//                Connection cn=cc.conectarBase(servidorUno,"proyecto");
+//                conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                  baseDestino=jcBaseDestinoC.getSelectedItem().toString();
                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
            }    
@@ -2434,7 +2442,7 @@ public void ejecutar(String sql) throws SQLException{
             Excepciones.GestionarExcepcion(e);
             String mensaje=Excepciones.GetMensajePersonalizado();
            codigo=Excepciones.GetCodigoError();
-           if(codigo!=21745){
+           if(codigo!=21745&&codigo!=18483&&codigo!=14055&&codigo!=15004){
            JOptionPane.showMessageDialog(null, "No se puede crear "+mensaje);
            System.out.println( "CODIGO: "+codigo);
            }
@@ -2453,7 +2461,7 @@ public void ejecutar(String sql,String server,String base) throws SQLException{
         catch(SQLServerException e){
          Excepciones.GestionarExcepcion(e);
             String mensaje=Excepciones.GetMensajePersonalizado();
-         if(codigo!=21745){
+          if(codigo!=21745&&codigo!=18483&&codigo!=14055&&codigo!=15004){
            JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga 1"+mensaje);
            System.out.println( "CODIGO: "+codigo);
            }
@@ -2470,7 +2478,7 @@ public void ejecutar2(String sql,String server,String base) throws SQLException{
         catch(SQLServerException e){
         Excepciones.GestionarExcepcion(e);
         String mensaje=Excepciones.GetMensajePersonalizado();
-         if(codigo!=21745){
+         if(codigo!=21745&&codigo!=18483&&codigo!=14055&&codigo!=15004){
            JOptionPane.showMessageDialog(null, "No se puede crear Sobrecarga2 "+mensaje);
            System.out.println( "CODIGO: "+codigo);
            }

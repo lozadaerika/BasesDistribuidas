@@ -100,7 +100,7 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
         String sql="";
-        sql="use ["+baseDatos+"]\nINSERT INTO clientes VALUES(?,?,?,?,?,?,?)";
+        sql="use ["+baseDatos+"]\nINSERT INTO clientes (CI,Nombre,Apellido,Telefono,Direccion,Ciudad,Edad) VALUES(?,?,?,?,?,?,?)";
         try {
             PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);
             psd.setString(1,JOptionPane.showInputDialog(null, "CI"));

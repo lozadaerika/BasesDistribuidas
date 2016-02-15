@@ -30,7 +30,7 @@ public static String intervalo="1";
     String servidor,base,a="",b="",c="";
     String servidorUno="ANDRES\\SITIO_A";
     String servidorDos="EDISSON";
-   String ServidorLocal="ANDRES"
+   String ServidorLocal="ANDRES";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
         initComponents();     

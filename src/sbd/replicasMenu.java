@@ -28,9 +28,9 @@ public static String subday="2";
 public static String ntiempo="10";
 public static String intervalo="1";
     String servidor,base,a="",b="",c="";
-    String servidorUno="ANDRES\\SITIO_A";
-    String servidorDos="EDISSON";
-    String ServidorLocal="ANDRES";
+    String servidorUno="ERIKA-LAP\\SITIOA";
+    String servidorDos="ERIKA-LAP\\SITIOB";
+    String ServidorLocal="ERIKA-LAP";
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
         initComponents();     

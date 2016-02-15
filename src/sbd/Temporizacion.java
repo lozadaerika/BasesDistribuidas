@@ -15,7 +15,11 @@ public class Temporizacion extends javax.swing.JFrame {
      * Creates new form Temporizacion
      */
     public Temporizacion() {
-        initComponents();     
+        initComponents();  
+        jcbTiempo.setSelectedItem("Minutos(s)");
+        jcbTiempo.setSelectedIndex(1);
+        jSpinner1.setValue(jSpinner1.getNextValue());
+         jsContadorTiempo.setValue(jsContadorTiempo.getNextValue());
     }
 
     /**
@@ -122,7 +126,7 @@ public class Temporizacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEnviarActionPerformed
-     String subday="";
+  String subday="";
      tiempo="";
         if(jcbTiempo.getSelectedItem().toString().equals("Hora(s)"))
         replicasMenu.subday="8";

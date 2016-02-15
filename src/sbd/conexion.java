@@ -19,7 +19,7 @@ public class conexion {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";user=sa;password=sa");
         }catch(Exception ex){
-            if(replicasMenu.codigo!=0 && replicasMenu.codigo!=18483)
+            if( replicasMenu.codigo!=18483)
            JOptionPane.showMessageDialog(null, " ERROR CONEXION:"
                    + " \n\n EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: "
                    + "\n"+ex.getMessage().substring(0,46)+
@@ -37,7 +37,7 @@ public class conexion {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";databaseName="+base+";user=sa;password=sa");
         }catch(Exception ex){
-            if(replicasMenu.codigo!=0 && replicasMenu.codigo!=18483)
+            if(replicasMenu.codigo!=18483)
          JOptionPane.showMessageDialog(null, " ERROR CONEXION:"
                    + " \n\n EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: "
                    + "\n"+ex.getMessage().substring(0,46)+

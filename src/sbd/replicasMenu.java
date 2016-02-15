@@ -44,8 +44,8 @@ public static String intervalo="1";
         if ("ERIKA-LAP".equals(server)){
             servidor=server;
             ServidorLocal=server;
-            servidorUno="ANDRES";
-            servidorDos="EDISSON";
+            servidorUno="EDISSON";
+            servidorDos="ANDRES";
         }
         if ("EDISSON".equals(server)){
             servidor=server;
@@ -58,6 +58,8 @@ public static String intervalo="1";
         cargarBases(server);
         MostrarPublicaciones(server);
         MostrarSuscripcion(server);
+        this.setTitle(server);
+       
     }
     
     
@@ -262,18 +264,13 @@ public static String intervalo="1";
        // DefaultMutableTreeNode nodo= new DefaultMutableTreeNode("Suscripciones");
         try{
             PreparedStatement psd=cn.prepareStatement(sqlCargarSuscripciones);
-             ResultSet rs=psd.executeQuery();           
-            
+             ResultSet rs=psd.executeQuery();                      
             while(rs.next()){
-       
                 cantidad++;
              //           DefaultMutableTreeNode nodo1= new DefaultMutableTreeNode();
            //             nodo1.setUserObject(rs.getString("subscriber_db"));
          //               nodo.add(nodo1);
-                        
-            
             }
-
            // DefaultTreeModel mdl=new DefaultTreeModel(nodo);
              //           this.jTree2.setModel(mdl);
         }
@@ -374,7 +371,6 @@ public static String intervalo="1";
             if(rs.next()){
                 cargarTabla(servidor,String.valueOf(jcBase.getSelectedItem()));
             }
-            
         }
         catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
@@ -537,9 +533,7 @@ public static String intervalo="1";
         return 0;
     }
     
-    public void insertar(String base){
-        
-        
+    public void insertar(String base){ 
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         int i=1;
@@ -700,6 +694,7 @@ public static String intervalo="1";
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Titulo");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -1479,35 +1474,24 @@ private void btnPublicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     codigo=0;
   //  String baseDestino=jcBaseDestino.getSelectedItem().toString();
     String baseOrigen=jcBase.getSelectedItem().toString();
-    if (jrbSnapshot.isSelected()){
+    if (jrbSnapshot.isSelected())
         SnapshotPublicacion();   
-    }
     else if (jrbTranEstandar.isSelected())
-    {
     TransaccionaEstandarPublicacion();
-        
-    }
     else if (jrbTranCola.isSelected()) 
-    {
-   TransaccionalColaPublicacion();
-    }
-        
-   else if (jrbTranPeer.isSelected()){
+   TransaccionalColaPublicacion();        
+   else if (jrbTranPeer.isSelected())
       PeerToPeerPublicacion(baseOrigen);  
-    }
-                
     else if (jrbMezcla.isSelected())    
          MezclaPublicacion(baseOrigen);
-    
-    
    MostrarPublicaciones(ServidorLocal);
 }//GEN-LAST:event_btnPublicarActionPerformed
 
 public void SnapshotPublicacion()
 {
     try {
-            ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
-            if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+            ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
+       if(codigo!=14016&&codigo!=14043)JOptionPane.showMessageDialog(null, "Publicacion creada");
           //if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null, "Completado");
         } catch (SQLException ex) {
              Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORSNAP");
@@ -1516,8 +1500,8 @@ public void SnapshotPublicacion()
 public void TransaccionaEstandarPublicacion()
 {
     try {
-            ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
-       if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+         ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
+       if(codigo!=14016&&codigo!=14043)JOptionPane.showMessageDialog(null, "Publicacion creada");
  
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORESTANDAR");
@@ -1527,7 +1511,7 @@ public void TransaccionaEstandarPublicacion()
 public void TransaccionalColaPublicacion()
 {
      try {
-            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()));
+            ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
     if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCOLA");
@@ -1537,8 +1521,8 @@ public void PeerToPeerPublicacion(String baseOrigen)
 {    // Crear la tabla en el sitio en el que se va a crear la replicacion
       
         try {
-            ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal)); //ERIKA-LAP
-        if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+            ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal),ServidorLocal,jcBase.getSelectedItem().toString()); //ERIKA-LAP
+       if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORPEER");
         }                   
@@ -1548,7 +1532,7 @@ public void MezclaPublicacion(String baseOrigen)
 {
     JOptionPane.showMessageDialog(null, sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen));
     try {
-            ejecutar(sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen));            
+            ejecutar(sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen),ServidorLocal,jcBase.getSelectedItem().toString());            
                 JOptionPane.showMessageDialog(null, "Publicacion creada");
     } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"eRROR:"+ ex);
@@ -1619,9 +1603,7 @@ String baseDestino="";
        // if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
 }
 public void TransaccionalColaSuscripcion()
-{
- String baseOrigen=jcBase.getSelectedItem().toString();
-String baseDestino="";
+{String baseOrigen=jcBase.getSelectedItem().toString();String baseDestino="";
             if (jchA.isSelected()){
                   baseDestino=jcBaseDestinoA.getSelectedItem().toString();
             try {
@@ -1646,7 +1628,7 @@ String baseDestino="";
           baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
-              ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino));
+              ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),ServidorLocal,baseDestino);
           if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -1683,7 +1665,7 @@ String baseDestino="";
                 try {
                  ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);//ERIKA-LAP   ERIKA-LAP\\SITIOA
-                 ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno)); 
+                 ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno),ServidorLocal,baseOrigen); 
                  if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
              } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
@@ -1694,7 +1676,7 @@ String baseDestino="";
                 try {
                   ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);//
-                  ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos));
+                  ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos),ServidorLocal,baseOrigen);
                           if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
                           } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");

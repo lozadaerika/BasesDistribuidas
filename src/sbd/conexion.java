@@ -12,6 +12,7 @@ import java.sql.SQLException;
  */
 public class conexion {
     public static String solucion="Conectese a un servidor disponible";
+    public static String nodo="";
     public Connection conectar(String server){
         Connection cn=null;
         try
@@ -20,7 +21,7 @@ public class conexion {
             cn=DriverManager.getConnection("jdbc:sqlserver://"+server+";user=sa;password=sa");
         }catch(Exception ex){
             if( replicasMenu.codigo!=18483)
-           JOptionPane.showMessageDialog(null, " ERROR CONEXION:"
+           JOptionPane.showMessageDialog(null, " ERROR CONEXION "+ nodo+":"
                    + " \n\n EL PROBLEMA GENERADO PUEDE DEBERSE A LOS SIGUIENTES FACTORES: "
                    + "\n"+ex.getMessage().substring(0,46)+
                    "\n\nPOR FAVOR, PRUEBE LA SGUIENTE SOLUCION"+

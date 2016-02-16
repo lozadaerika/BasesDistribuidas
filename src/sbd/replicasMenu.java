@@ -18,10 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellEditor.DefaultTextField;
 import javax.swing.tree.DefaultTreeModel;
 
-/**
- *
- * @author Andrés
- */
+
 public class replicasMenu extends javax.swing.JFrame {
 int nodos=0;  
 public static String subday="2";
@@ -62,9 +59,7 @@ public static String intervalo="1";
         this.setTitle(server);
        
     }
-    
-    
-   
+
     DefaultListModel<String>listaIzq=new DefaultListModel<String>();
     DefaultListModel<String>listaDer=new DefaultListModel<String>();
     DefaultListModel<String>listaFiltros=new DefaultListModel<String>();
@@ -1326,7 +1321,7 @@ public static String intervalo="1";
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(77, 77, 77)
+                                        .addGap(27, 27, 27)
                                         .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1365,7 +1360,7 @@ public static String intervalo="1";
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnSuscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1479,9 +1474,11 @@ private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
  
  conexion cc=new conexion();
+  conexion.nodo="A";
     conexion.solucion="Debe refrescar el articulo para poder ver los cambios";
  Connection cn=cc.conectarBase(servidorUno,"proyecto");
  conexion cc2=new conexion();
+ conexion.nodo="B"; 
  Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
     modificarTabla();
     conexion.solucion="Conectese a un servidor disponible";
@@ -1490,8 +1487,10 @@ private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
 conexion cc=new conexion();
     conexion.solucion="Debe refrescar el articulo para poder ver los cambios";
+     conexion.nodo="A";
  Connection cn=cc.conectarBase(servidorUno,"proyecto");
  conexion cc2=new conexion();
+  conexion.nodo="B";
  Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
     insertar(jcBase.getSelectedItem().toString());   
     conexion.solucion="Conectese a un servidor disponible";
@@ -1526,7 +1525,7 @@ public void SnapshotPublicacion()
 {
     try {
             ejecutar(sqlPublicacionSnap(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
-       if(codigo!=14016&&codigo!=14043)JOptionPane.showMessageDialog(null, "Publicacion creada");
+       if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null, "Publicacion creada");
           //if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null, "Completado");
         } catch (SQLException ex) {
              Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORSNAP");
@@ -1536,7 +1535,7 @@ public void TransaccionaEstandarPublicacion()
 {
     try {
          ejecutar(sqlPublicacionTransaccional(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
-       if(codigo!=14016&&codigo!=14043)JOptionPane.showMessageDialog(null, "Publicacion creada");
+       if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null, "Publicacion creada");
  
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORESTANDAR");
@@ -1547,7 +1546,7 @@ public void TransaccionalColaPublicacion()
 {
      try {
             ejecutar(sqlPublicacionTransacionalCola(txtNombrePub.getText(),jcBase.getSelectedItem().toString()),ServidorLocal,jcBase.getSelectedItem().toString());
-    if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+     if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null, "Publicacion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCOLA");
         } 
@@ -1557,7 +1556,7 @@ public void PeerToPeerPublicacion(String baseOrigen)
       
         try {
             ejecutar(sqlPublicacionPeer(baseOrigen, baseOrigen,txtNombrePub.getText(),ServidorLocal),ServidorLocal,jcBase.getSelectedItem().toString()); //ERIKA-LAP
-       if(codigo!=14016)JOptionPane.showMessageDialog(null, "Publicacion creada");
+     if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null, "Publicacion creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORPEER");
         }                   
@@ -1579,6 +1578,7 @@ String baseDestino="";
     try {
             if (jchA.isSelected()){ 
                 conexion cc=new conexion();
+                conexion.nodo="A";
                 Connection cn=cc.conectarBase(servidorUno,"proyecto");
                 conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
             baseDestino=jcBaseDestinoA.getSelectedItem().toString();
@@ -1586,15 +1586,17 @@ String baseDestino="";
             }
             if (jchB.isSelected()){ 
                  conexion cc=new conexion();
+                conexion.nodo="B"; 
                 Connection cn=cc.conectarBase(servidorDos,"proyecto");
                 conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                   baseDestino=jcBaseDestinoB.getSelectedItem().toString();
                   ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),servidorDos,baseDestino));
             }
            if (jchC.isSelected()){ 
-//                conexion cc=new conexion();
-//                Connection cn=cc.conectarBase(servidorUno,"proyecto");
-//                conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
+                conexion cc=new conexion();
+                conexion.nodo="C";
+                Connection cn=cc.conectarBase(servidorUno,"proyecto");
+                conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                  baseDestino=jcBaseDestinoC.getSelectedItem().toString();
                  ejecutar(sqlSuscripcionSnap(txtNombrePub.getText(),ServidorLocal,baseDestino));
            }    
@@ -1602,6 +1604,7 @@ String baseDestino="";
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SNAP");
         } 
+     conexion.solucion="Conectese a un servidor disponible";
        //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
 }
 public void TransaccionaEstandarSuscripcion()
@@ -1611,6 +1614,10 @@ String baseDestino="";
             if (jchA.isSelected()){
                   baseDestino=jcBaseDestinoA.getSelectedItem().toString();
             try {
+                 conexion cc=new conexion();
+                conexion.nodo="A";
+                  conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
+                Connection cn=cc.conectarBase(servidorUno,"proyecto");
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorUno,baseDestino));
             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
@@ -1620,6 +1627,10 @@ String baseDestino="";
     if (jchB.isSelected()){
           baseDestino=jcBaseDestinoB.getSelectedItem().toString();
             try {
+                  conexion cc=new conexion();
+                conexion.nodo="B"; 
+                  conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
+                Connection cn=cc.conectarBase(servidorDos,"proyecto");
                 ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),servidorDos,baseDestino));
              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
               } catch (SQLException ex) {
@@ -1629,12 +1640,17 @@ String baseDestino="";
     if (jchC.isSelected()){
           baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
+              conexion cc=new conexion();
+                conexion.nodo="C"; 
+                  conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
+                Connection cn=cc.conectarBase(servidorDos,"proyecto");
             ejecutar(sqlSuscripcionTransaccional(txtNombrePub.getText(),ServidorLocal,baseDestino));
             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      conexion.solucion="Conectese a un servidor disponible";
        // if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
 }
 public void TransaccionalColaSuscripcion()
@@ -1644,7 +1660,7 @@ public void TransaccionalColaSuscripcion()
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
-              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SITIOA");
             }
@@ -1654,7 +1670,7 @@ public void TransaccionalColaSuscripcion()
             try {
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
-                if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+             if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null," Suscripcion Creada");
             } catch (SQLException ex) {
                 Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1664,7 +1680,7 @@ public void TransaccionalColaSuscripcion()
         try {
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),ServidorLocal,baseDestino);
-          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
+         if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483) JOptionPane.showMessageDialog(null," Suscripcion Creada");
         } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1813,8 +1829,16 @@ private void tblTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb
 
 private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchAItemStateChanged
     if(jchA.isSelected()){  
-       // a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
-        cargarBasesDestino(servidorUno);
+      conexion cc=new conexion();
+      conexion.nodo="A";
+      conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
+      Connection cn=cc.conectarBase(servidorUno,"proyecto");
+      conexion cc2=new conexion();
+       conexion.nodo="B";
+      Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
+      cargarBasesDestino(servidorUno);
+      conexion.solucion="Conectese a un servidor disponible";
+        
     }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
@@ -1822,17 +1846,31 @@ private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
        // a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
+         conexion cc=new conexion();
+      conexion.nodo="A";
+      conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
+      Connection cn=cc.conectarBase(servidorUno,"proyecto");
+      conexion cc2=new conexion();
+       conexion.nodo="B";
+      Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
         cargarBasesDestinoB(servidorDos);
+         conexion.solucion="Conectese a un servidor disponible";
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
-       
+        conexion cc=new conexion();
+      conexion.nodo="A";
+      conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
+      Connection cn=cc.conectarBase(servidorUno,"proyecto");
+      conexion cc2=new conexion();
+       conexion.nodo="B";
+      Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
         //a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
         cargarBasesDestinoC(ServidorLocal);
-    
+    conexion.solucion="Conectese a un servidor disponible";
     }
     else
         c="";

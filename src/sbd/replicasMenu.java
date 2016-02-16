@@ -1664,6 +1664,9 @@ public void TransaccionalColaSuscripcion()
             if (jchA.isSelected()){
                   baseDestino=jcBaseDestinoA.getSelectedItem().toString();
             try {
+                 conexion cc=new conexion();
+                conexion.nodo="A"; 
+                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
               if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1674,6 +1677,9 @@ public void TransaccionalColaSuscripcion()
     if (jchB.isSelected()){
   baseDestino=jcBaseDestinoB.getSelectedItem().toString();
             try {
+                  conexion cc=new conexion();
+                conexion.nodo="B"; 
+                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1684,6 +1690,9 @@ public void TransaccionalColaSuscripcion()
     if (jchC.isSelected()){
           baseDestino=jcBaseDestinoC.getSelectedItem().toString();
         try {
+              conexion cc=new conexion();
+                conexion.nodo="C"; 
+                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),ServidorLocal,baseDestino);
          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483) JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1691,7 +1700,8 @@ public void TransaccionalColaSuscripcion()
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
-        
+        conexion.solucion="Conectese a un servidor disponible";
+      conexion.nodo="";
 }
 
 public void PeerToPeerSuscripcion()
@@ -1838,9 +1848,7 @@ private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
       conexion.nodo="A";
       conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
       Connection cn=cc.conectarBase(servidorUno,"proyecto");
-      conexion cc2=new conexion();
-       conexion.nodo="B";
-      Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
+    
       cargarBasesDestino(servidorUno);
       conexion.solucion="Conectese a un servidor disponible";
         conexion.nodo="";
@@ -1851,11 +1859,9 @@ private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchBItemStateChanged
     if(jchB.isSelected()){
        // a=sqlSuscripcionSnap(txtNombrePub.getText(), servidorDos,"");
-         conexion cc=new conexion();
-      conexion.nodo="A";
+       
       conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
-      Connection cn=cc.conectarBase(servidorUno,"proyecto");
-      conexion cc2=new conexion();
+
        conexion.nodo="B";
       Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
         cargarBasesDestinoB(servidorDos);
@@ -1867,13 +1873,9 @@ private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
 
 private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jchCItemStateChanged
     if(jchC.isSelected()){
-        conexion cc=new conexion();
-      conexion.nodo="A";
       conexion.solucion="Elija un servidor disponible o conecte el servidor seleccionado";
-      Connection cn=cc.conectarBase(servidorUno,"proyecto");
-      conexion cc2=new conexion();
-       conexion.nodo="B";
-      Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
+       conexion.nodo="C";
+      Connection cn2=cc2.conectarBase(ServidorLocal,"proyecto");
         //a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
         cargarBasesDestinoC(ServidorLocal);
     conexion.solucion="Conectese a un servidor disponible";
@@ -2619,10 +2621,8 @@ public void ejecutar(String sql) throws SQLException{
 }
  conexion cc2=new conexion();
   Connection  cn2;
-public void ejecutar(String sql,String server,String base) throws SQLException{
-       
+public void ejecutar(String sql,String server,String base) throws SQLException{   
          cn2=(Connection) cc2.conectarBase(server,base);
-       
         try{ 
             PreparedStatement psd2=cn2.prepareStatement(sql);
             psd2.execute();

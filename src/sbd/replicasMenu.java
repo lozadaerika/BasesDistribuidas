@@ -32,6 +32,7 @@ public static String intervalo="1";
     String servidorUno;
     String servidorDos;
    String ServidorLocal;
+   String titulos[] = null;
     /** Creates new form replicasMenu */
     public replicasMenu(String server, String base) {
         initComponents();     
@@ -416,7 +417,7 @@ public static String intervalo="1";
         int i=0;
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
-        String titulos[] = null,Registros[] = null;
+        String Registros[] = null;
         String sql_campos,sql_cantidad,sql;
         sql_cantidad="USE "+base+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         sql_campos="USE "+base+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
@@ -480,43 +481,49 @@ public static String intervalo="1";
     
     public String sqlinsertar(){
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
-        String titulos[] = null,Registros[] = null;
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,jcBase.getSelectedItem().toString());
+        String Registros[] = null;
         String sql_campos,sql_cantidad,sql,campos="",datos="";
         sql_cantidad="USE "+jcBase.getSelectedItem().toString()+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         sql="SELECT * FROM clientes";
-        int i=1;
-        try{
-            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
-            ResultSet rs_cantidad=psd_cantidad.executeQuery();
-            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
-            ResultSet rs_campos=psd_campos.executeQuery();
-            if(rs_cantidad.next()){
-                int cant=rs_cantidad.getInt("C");
-                while(rs_campos.next()){
-                    if (i!=cant)
-                        if (i!=cant-1){
-                            campos=campos+rs_campos.getString("COLUMN_NAME")+",";
+        int op=0,last=0;
+        if (("msrepl_tran_version".equals(titulos[titulos.length-1]))||("rowguid".equals(titulos[titulos.length-1]))){
+            for (int i=0;i<titulos.length;i++){
+                if (("msrepl_tran_version".equals(titulos[titulos.length-1]))&&("rowguid".equals(titulos[titulos.length-1])))
+                    op=1;
+                else if (i==titulos.length-2)
+                    last=1;
+                        if ((!"msrepl_tran_version".equals(titulos[i]))&&(!"rowguid".equals(titulos[i]))&&(op!=1)&&(last!=1)){
+                            campos=campos+titulos[i]+",";
                             datos=datos+"?,";
                         }
                         else{
-                            campos=campos+rs_campos.getString("COLUMN_NAME");
+                            if ((!"msrepl_tran_version".equals(titulos[i]))&&(!"rowguid".equals(titulos[i]))&&(op!=1)){
+                            campos=campos+titulos[i];
                             datos=datos+"?";
+                            }
                         }
-                    i++;
                 }
-            }
         }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
-        }
+        else{
+            for (int i=0;i<titulos.length;i++){
+                        if (i!=titulos.length-1){
+                            campos=campos+titulos[i]+",";
+                            datos=datos+"?,";
+                        }
+                        else{
+                            campos=campos+titulos[i];
+                            datos=datos+"?";
+                            }
+                        }
+                }
         return "INSERT INTO clientes("+campos+") values("+datos+")";
     }
     
     public int sqlinsertarCantidad(){
         conexion cc= new conexion();
-        Connection cn=(Connection) cc.conectarBase(ServidorLocal,base);
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,jcBase.getSelectedItem().toString());
         String sql_campos,sql_cantidad;
         sql_cantidad="USE "+jcBase.getSelectedItem().toString()+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         int i=1;
@@ -533,11 +540,13 @@ public static String intervalo="1";
         return 0;
     }
     
-    public void insertar(String base){ 
-        cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
+    public void insertar(String base){
+        conexion cc= new conexion();
+        Connection cn=(Connection) cc.conectarBase(ServidorLocal,jcBase.getSelectedItem().toString());
         String sql_campos="USE "+jcBase.getSelectedItem().toString()+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         int i=1;
         String sql=sqlinsertar();
+        JOptionPane.showMessageDialog(null, sql);
         try {
             PreparedStatement psd_campos=(PreparedStatement) cn.prepareStatement(sql_campos);
             ResultSet rs_campos=psd_campos.executeQuery();
@@ -555,14 +564,13 @@ public static String intervalo="1";
             int n=psd.executeUpdate();
             if(n>0){
                 JOptionPane.showMessageDialog(null, "Se inserto correctamente "); 
-                cargarTabla(ServidorLocal,String.valueOf(jcBase.getSelectedItem()));
+                cargarTabla(servidor,jcBase.getSelectedItem().toString());
             }           
         } 
        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
        }
-
     public void eliminar(int fila){
         cn=(Connection) cc.conectarBase(ServidorLocal, jcBase.getSelectedItem().toString());
         String sql="";

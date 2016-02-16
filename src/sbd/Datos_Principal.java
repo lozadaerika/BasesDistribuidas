@@ -27,14 +27,14 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
     }
     
     String baseDatos,tablaDatos,servidor;
-    
+    String titulos[] = null;
     DefaultTableModel modelo;
     
     public void cargarTabla(String tabla){
         int i=0;
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
-        String titulos[] = null,Registros[] = null;
+        String Registros[] = null;
         String sql_campos,sql_cantidad,sql;
         sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
         sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tablaDatos+"'";
@@ -75,60 +75,94 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
         String sql="";
-        for(int fila=0;fila<tblTabla.getRowCount();fila++){
-            sql="use ["+baseDatos+"]\nUPDATE clientes SET Nombre='"+String.valueOf(tblTabla.getValueAt(fila, 1)).toUpperCase() +"', "
-                            + "Apellido='"+String.valueOf(tblTabla.getValueAt(fila, 2)).toUpperCase() +"', "
-                            + "Telefono='"+String.valueOf(tblTabla.getValueAt(fila, 3)) +"', "
-                            + "Direccion='"+String.valueOf(tblTabla.getValueAt(fila, 4)).toUpperCase() +"', "
-                            + "Ciudad='"+String.valueOf(tblTabla.getValueAt(fila, 5)) +"',"
-                            + "Edad='"+Integer.valueOf((String) tblTabla.getValueAt(fila, 6)) +"'"
-                +"WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";    
+        int op=0;
+        if (("msrepl_tran_version".equals(titulos[titulos.length-1]))||("rowguid".equals(titulos[titulos.length-1]))){
+            for(int fila=0;fila<tblTabla.getRowCount();fila++){
+            sql="use ["+baseDatos+"]\nUPDATE clientes SET ";
+            for(int col=0;col<tblTabla.getColumnCount()-1;col++){
+                if ((col!=titulos.length-2))
+                    sql=sql+titulos[col]+"='"+String.valueOf(tblTabla.getValueAt(fila, col)+"',");
+                else
+                    sql=sql+titulos[col]+"='"+String.valueOf(tblTabla.getValueAt(fila, col)+"' ");
+            }
+            sql=sql+"WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";
             try {
                 PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);     
                 int n=psd.executeUpdate();
             if(n>0){
-                System.out.println("Se ingreso correctamente");
+                System.out.println("Se modifico correctamente");
             }
             }catch(SQLException e){
                   JOptionPane.showMessageDialog(null, "No se ha podido realizar el update"+e+" CODIGO: "+e.getErrorCode());
             }
+            sql="";
+        }
+        }
+        else{
+            for(int fila=0;fila<tblTabla.getRowCount();fila++){
+            sql="use ["+baseDatos+"]\nUPDATE clientes SET ";
+            for(int col=0;col<tblTabla.getColumnCount();col++){
+                if ((col!=titulos.length-1))
+                    sql=sql+titulos[col]+"='"+String.valueOf(tblTabla.getValueAt(fila, col)+"',");
+                else
+                    sql=sql+titulos[col]+"='"+String.valueOf(tblTabla.getValueAt(fila, col)+"' ");
+            }
+            sql=sql+"WHERE CI='"+tblTabla.getValueAt(fila, 0) +"'";
+            try {
+                PreparedStatement psd=(PreparedStatement) cn.prepareStatement(sql);     
+                int n=psd.executeUpdate();
+            if(n>0){
+                System.out.println("Se modifico correctamente");
+            }
+            }catch(SQLException e){
+                  JOptionPane.showMessageDialog(null, "No se ha podido realizar el update"+e+" CODIGO: "+e.getErrorCode());
+            }
+            sql="";
+        }
+            
         }
         cargarTabla(tablaDatos);
     }
     
-    public String sqlinsertar(){
+public String sqlinsertar(){
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);
-        String titulos[] = null,Registros[] = null;
+        String Registros[] = null;
         String sql_campos,sql_cantidad,sql,campos="",datos="";
         sql_cantidad="USE "+baseDatos+" SELECT COUNT(COLUMN_NAME) as C FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         sql="SELECT * FROM clientes";
-        int i=1;
-        try{
-            PreparedStatement psd_cantidad=cn.prepareStatement(sql_cantidad);
-            ResultSet rs_cantidad=psd_cantidad.executeQuery();
-            PreparedStatement psd_campos=cn.prepareStatement(sql_campos);
-            ResultSet rs_campos=psd_campos.executeQuery();
-            if(rs_cantidad.next()){
-                int cant=rs_cantidad.getInt("C");
-                while(rs_campos.next()){
-                    if (i!=cant)
-                        if (i!=cant-1){
-                            campos=campos+rs_campos.getString("COLUMN_NAME")+",";
+        int op=0,last=0;
+        if (("msrepl_tran_version".equals(titulos[titulos.length-1]))||("rowguid".equals(titulos[titulos.length-1]))){
+            for (int i=0;i<titulos.length;i++){
+                if (("msrepl_tran_version".equals(titulos[titulos.length-1]))&&("rowguid".equals(titulos[titulos.length-1])))
+                    op=1;
+                else if (i==titulos.length-2)
+                    last=1;
+                        if ((!"msrepl_tran_version".equals(titulos[i]))&&(!"rowguid".equals(titulos[i]))&&(op!=1)&&(last!=1)){
+                            campos=campos+titulos[i]+",";
                             datos=datos+"?,";
                         }
                         else{
-                            campos=campos+rs_campos.getString("COLUMN_NAME");
+                            if ((!"msrepl_tran_version".equals(titulos[i]))&&(!"rowguid".equals(titulos[i]))&&(op!=1)){
+                            campos=campos+titulos[i];
                             datos=datos+"?";
+                            }
                         }
-                    i++;
                 }
-            }
         }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "No se ha podido realizar el SELECT"+e+" CODIGO: "+e.getErrorCode());
-        }
+        else{
+            for (int i=0;i<titulos.length;i++){
+                        if (i!=titulos.length-1){
+                            campos=campos+titulos[i]+",";
+                            datos=datos+"?,";
+                        }
+                        else{
+                            campos=campos+titulos[i];
+                            datos=datos+"?";
+                            }
+                        }
+                }
         return "INSERT INTO clientes("+campos+") values("+datos+")";
     }
     
@@ -157,6 +191,7 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
         String sql_campos="USE "+baseDatos+" SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'clientes'";
         int i=1;
         String sql=sqlinsertar();
+        JOptionPane.showMessageDialog(null, sql);
         try {
             PreparedStatement psd_campos=(PreparedStatement) cn.prepareStatement(sql_campos);
             ResultSet rs_campos=psd_campos.executeQuery();
@@ -180,8 +215,7 @@ public class Datos_Principal extends javax.swing.JInternalFrame {
        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede insertar la información"+ex+" CODIGO: "+ex.getErrorCode());
         }
-       }    
-    
+       }        
     public void eliminar(int fila){
         conexion cc= new conexion();
         Connection cn=(Connection) cc.conectarBase(servidor,baseDatos);

@@ -1666,7 +1666,7 @@ public void TransaccionalColaSuscripcion()
             try {
                  conexion cc=new conexion();
                 conexion.nodo="A"; 
-                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
+                               conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorUno,baseDestino));
                 ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorUno,baseDestino);
               if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1679,7 +1679,7 @@ public void TransaccionalColaSuscripcion()
             try {
                   conexion cc=new conexion();
                 conexion.nodo="B"; 
-                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
+                               conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
                 ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),servidorDos,baseDestino));
                   ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),servidorDos,baseDestino);
              if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483)JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1692,7 +1692,7 @@ public void TransaccionalColaSuscripcion()
         try {
               conexion cc=new conexion();
                 conexion.nodo="C"; 
-                  conexion.solucion="La suscripcion no se puede crear.\n Intente nuevamente";
+                                 conexion.solucion="La suscripcion se creara.\n Para ver los cambios debe conectarse al servidor y refrescar";
               ejecutar(sqlSuscripcionCola(txtNombrePub.getText(),ServidorLocal,baseDestino));
               ejecutar(sqlSuscripcionColaParteDos(txtNombrePub.getText(),baseDestino),ServidorLocal,baseDestino);
          if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714&&codigo!=18483) JOptionPane.showMessageDialog(null," Suscripcion Creada");
@@ -1712,6 +1712,9 @@ String baseDestino="";
       if (jchA.isSelected()){ 
             baseDestino=jcBaseDestinoA.getSelectedItem().toString();
              try {
+                   conexion cc=new conexion();
+                conexion.nodo="A"; 
+                  conexion.solucion="No se puede crear la tabla.";
                ejecutar(crearTablaSuscripcion(baseDestino),servidorUno,baseDestino);
                llenarDatosPeer(baseDestino,servidorUno);     
              } catch (SQLException ex) {
@@ -1721,6 +1724,9 @@ String baseDestino="";
           if (jchB.isSelected()){ 
                 baseDestino=jcBaseDestinoB.getSelectedItem().toString();
           try {
+                conexion cc=new conexion();
+                conexion.nodo="B"; 
+                  conexion.solucion="No se puede crear la tabla.";
                 ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
                 llenarDatosPeer(baseDestino,servidorDos);
             } catch (SQLException ex) {
@@ -1730,6 +1736,9 @@ String baseDestino="";
     
             if(jchA.isSelected()){
                 try {
+                     conexion cc=new conexion();
+                conexion.nodo="A"; 
+                  conexion.solucion="No se puede crear la publicacion.";
                  ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorUno,baseDestino);//ERIKA-LAP   ERIKA-LAP\\SITIOA
                  ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorUno),ServidorLocal,baseOrigen); 
@@ -1741,6 +1750,9 @@ String baseDestino="";
             if(jchB.isSelected())
             {
                 try {
+                     conexion cc=new conexion();
+                conexion.nodo="B"; 
+                               conexion.solucion="No se puede crear la publicacion.";
                   ejecutar(sqlPublicacionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);
                  ejecutar(sqlSuscripcionPeer(baseDestino,baseOrigen,txtNombrePub.getText(),ServidorLocal),servidorDos,baseDestino);//
                   ejecutar(sqlSuscripcionPeer(baseOrigen,baseDestino,txtNombrePub.getText(),servidorDos),ServidorLocal,baseOrigen);
@@ -1748,7 +1760,9 @@ String baseDestino="";
                           } catch (SQLException ex) {
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"ERROOOORCola");
         } 
-            }            
+            }    
+              conexion.solucion="Conectese a un servidor disponible";
+      conexion.nodo="";
 }
 public void MezclaSuscripcion()
 {

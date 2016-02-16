@@ -57,6 +57,9 @@ public static String intervalo="1";
         MostrarPublicaciones(server);
         MostrarSuscripcion(server);
         this.setTitle(server);
+        jchA.setToolTipText(servidorUno);
+        jchB.setToolTipText(servidorDos);
+        jchC.setToolTipText(ServidorLocal);
        
     }
 
@@ -1482,6 +1485,7 @@ private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
  Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
     modificarTabla();
     conexion.solucion="Conectese a un servidor disponible";
+    conexion.nodo="";
 }//GEN-LAST:event_btnModificarActionPerformed
 
 private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
@@ -1494,6 +1498,7 @@ conexion cc=new conexion();
  Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
     insertar(jcBase.getSelectedItem().toString());   
     conexion.solucion="Conectese a un servidor disponible";
+    conexion.nodo="";
 }//GEN-LAST:event_btnInsertarActionPerformed
 
 private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -1564,7 +1569,6 @@ public void PeerToPeerPublicacion(String baseOrigen)
 }
 public void MezclaPublicacion(String baseOrigen)
 {
-    JOptionPane.showMessageDialog(null, sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen));
     try {
             ejecutar(sqlPublicacionMerge(txtNombrePub.getText(),baseOrigen),ServidorLocal,jcBase.getSelectedItem().toString());            
                 JOptionPane.showMessageDialog(null, "Publicacion creada");
@@ -1605,6 +1609,7 @@ String baseDestino="";
             Logger.getLogger(replicasMenu.class.getName()).log(Level.SEVERE, null, ex+"SNAP");
         } 
      conexion.solucion="Conectese a un servidor disponible";
+     conexion.nodo="";
        //     ejecutar(crearTablaSuscripcion(baseDestino),servidorDos,baseDestino);
 }
 public void TransaccionaEstandarSuscripcion()
@@ -1651,6 +1656,7 @@ String baseDestino="";
         }
     }
       conexion.solucion="Conectese a un servidor disponible";
+      conexion.nodo="";
        // if(codigo!=14016 &&codigo!=20026&&codigo!=14058&&codigo!=2714)  JOptionPane.showMessageDialog(null," Suscripcion Creada");
 }
 public void TransaccionalColaSuscripcion()
@@ -1741,7 +1747,6 @@ String baseDestino="";
     if (jchA.isSelected()){ 
          baseDestino=jcBaseDestinoA.getSelectedItem().toString();
              try {
-                    JOptionPane.showMessageDialog(null, sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino));
                     ejecutarMerge(sqlSuscripcionMerge(txtNombrePub.getText(),servidorUno,baseDestino)); // ERIKA-LAP\\SITIOA
                     JOptionPane.showMessageDialog(null, "Suscripcion creada");
                 } catch (SQLException ex) {
@@ -1838,7 +1843,7 @@ private void jchAItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
       Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
       cargarBasesDestino(servidorUno);
       conexion.solucion="Conectese a un servidor disponible";
-        
+        conexion.nodo="";
     }else
         a="";
 }//GEN-LAST:event_jchAItemStateChanged
@@ -1855,6 +1860,7 @@ private void jchBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
       Connection cn2=cc2.conectarBase(servidorDos,"proyecto");
         cargarBasesDestinoB(servidorDos);
          conexion.solucion="Conectese a un servidor disponible";
+         conexion.nodo="";
     }else
         b="";
 }//GEN-LAST:event_jchBItemStateChanged
@@ -1871,6 +1877,7 @@ private void jchCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:eve
         //a=sqlSuscripcionSnap(txtNombrePub.getText(), ServidorLocal,"");
         cargarBasesDestinoC(ServidorLocal);
     conexion.solucion="Conectese a un servidor disponible";
+    conexion.nodo="";
     }
     else
         c="";
